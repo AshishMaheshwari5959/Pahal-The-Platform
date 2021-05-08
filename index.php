@@ -50,13 +50,6 @@ include('database_connection.php');
         <h1 class="logo"><a href="index.html">pahal.in</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-        <!-- <script>
-        function myFunction() {
-          var x = document.getElementById("snackbar");
-          x.className = "show";
-          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        }
-        </script> -->
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
@@ -117,7 +110,7 @@ include('database_connection.php');
   <section id="hero">
     <div class="hero-container" data-aos="fade-up" data-aos-delay="150">
       
-        <img src="assets\img\Pahal Logo.png" alt="", width="300px" style="padding: 10px;">
+        <img src="assets\img\Pahal Logo.png" alt="Pahal", width="300px" style="padding: 10px;">
      
       <!-- <h1>Plan. Launch. Grow.</h1> -->
       <h2>A platform to empower the women</h2>
@@ -424,8 +417,9 @@ include('database_connection.php');
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <?php 
-  if(isset($_SESSION['status'])){
+  if(isset($_SESSION['status']) and !isset($_SESSION['onetime'])){
     $var = $_SESSION['status'];
+    $_SESSION['onetime'] = 'Done';
     echo '<div id="snackbar">';
     echo "$var";
     echo '</div>';
