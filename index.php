@@ -1,3 +1,8 @@
+<?php
+session_start();
+include('database_connection.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,6 +32,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <script type="text/javascript" src="assets\js\popup.js"></script>
 
   <!-- =======================================================
   * Template Name: Dewi - v4.1.0
@@ -37,7 +43,6 @@
 </head>
 
 <body>
-
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top ">
       <div class="container d-flex align-items-center justify-content-between">
@@ -45,7 +50,13 @@
         <h1 class="logo"><a href="index.html">pahal.in</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
+        <!-- <script>
+        function myFunction() {
+          var x = document.getElementById("snackbar");
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        }
+        </script> -->
         <nav id="navbar" class="navbar">
           <ul>
             <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
@@ -71,13 +82,30 @@
               </ul>
             </li> -->
             <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-            <li><a class="getstarted scrollto" href="login.php">Login</a>
-            <li class="dropdown"><a class="getstarted scrollto"  style="background-color: orangered; border-color: orangered;">Signup<i class="bi bi-chevron-down"></i></a>
-              <ul>
-                <li><a href="user_signup.php">As individual</a></li>
-                <li><a href="org_signup.php">As organization</a></li>
-              </ul>
-            </li>
+            <?php
+            if(!isset($_SESSION['user_id']) && !isset($_SESSION['org_id']))
+            { 
+              echo '<li>';
+              echo '<a class="getstarted scrollto" href="login.php">Login</a>';
+              echo '<li class="dropdown"><a class="getstarted scrollto" href="signup.php" style="background-color: orangered; border-color: orangered;">Signup</a>';
+              echo '</li>';
+            }
+            if(isset($_SESSION['user_id'])){
+              echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: orangered;';
+              echo 'border-color: orangered;">';
+              echo  $_SESSION["fullname"];
+              echo '<i class="bi bi-chevron-down"></i></a>';
+              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="writeBlog.php">Write a Blog';
+              echo '</a></li></ul></li>';
+              echo '<li><a class="getstarted scrollto" href="logout.php">Logout</a></li>';
+            }
+            if(isset($_SESSION['org_id'])){
+              $var = $_SESSION['org_name'];
+              echo '<li><a class="nav-link scrollto" href="#profile">';
+              echo "$var";
+              echo '</a></li><li><a class="getstarted scrollto" href="logout.php">Logout</a></li>';
+            }
+            ?>
           </ul>
           <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -395,7 +423,14 @@
 
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+  <?php 
+  if(isset($_SESSION['status'])){
+    $var = $_SESSION['status'];
+    echo '<div id="snackbar">';
+    echo "$var";
+    echo '</div>';
+  }
+  ?>
   <!-- Vendor JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -407,7 +442,7 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  
 </body>
 
 </html>
