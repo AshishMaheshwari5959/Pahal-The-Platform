@@ -94,7 +94,7 @@ if(isset($_POST['org_login']))
         $statement = $pdo->prepare($sub_query);
         $statement->execute();
         $_SESSION['login_details_id'] = $pdo->lastInsertId();
-        header('location:welcome_org.php');
+        header('location:index.php');
       }
       else
       {
@@ -141,7 +141,7 @@ if(isset($_POST['org_login']))
               border-radius: 30px;
               width: 200%;
               "
-            >Haven't registered yet? <a href="org_signup.php" style="color: #ff6d2a; font-weight: 600; font-size: 14px;">Sign up now!</a></p>
+            >Haven't registered yet? <a href="signup.php" style="color: #ff6d2a; font-weight: 600; font-size: 14px;">Sign up now!</a></p>
         </form>
     </div>
     <div class="form-container sign-in-container">
@@ -158,7 +158,7 @@ if(isset($_POST['org_login']))
             border-radius: 30px;
             width: 200%;
             "
-            >Haven't registered yet? <a href="user_signup.php" style="color: #ff6d2a; font-weight: 600; font-size: 14px;">Sign up now!</a></p>
+            >Haven't registered yet? <a href="signup.php" style="color: #ff6d2a; font-weight: 600; font-size: 14px;">Sign up now!</a></p>
         </form>
     </div>
     <div class="overlay-container">
