@@ -2,101 +2,55 @@
 session_start();
 require_once('database_connection.php');
 
-if(!isset($_SESSION['user_id']) && !isset($_SESSION['org_id']))
-            {
-              header('location:index.php');
-            }
 if(isset($_SESSION['user_id']))
-            {
-              if(isset($_POST['submit']))
-{
-    // if(isset($_POST['title'],$_POST['content'] && !empty($_POST['title']) && !empty($_POST['content']))
-    // {
-    //     $user_id = trim($_POST['user_id']);
-    //     $title = trim($_POST['title']);
-    //     $content = trim($_POST['content']);
-    //     $uploaded_on= date("Y-m-d H:i:s");
-    // }
+            { 
 
- 
-        if(filter_var($user_id, FILTER_VALIDATE_EMAIL))
-    {
-            $sql = 'select * from user where user_id = :user_id';
-            $stmt = $pdo->prepare($sql);
-            $p = ['username'=>$username];
-            $stmt->execute($p);
-            
-            if($stmt->rowCount() == 0)
-            {
-                $sql = "insert into blog (user_id, title, content,uploaded_on ) values(:user_id,:title,:content,:uploaded_on)";
-            
-                try{
-                    $handle = $pdo->prepare($sql);
-                    $params = [
-                        ':user_id'=>$user_id,
-                        ':title'=>$title,
-                        ':content'=>$content,
-                        ':uploaded_on'=>$uploaded_on  
-                    ];
-                    
-                    $handle->execute($params);
-                    
-                    $success = 'User has been created successfully';
-                    header('location:index.php');
-                    
-                }
-                catch(PDOException $e){
-                    $errors[] = $e->getMessage();
-                }
-            }
-            else
-            {
-                $fullname = $fullname;
-                $username = '';
-                $password = $password;
- 
-                $errors[] = 'Email address already registered';
-            }
-        }
-        else
-        {
-            $errors[] = "Email address is not valid";
-        }
-    }
-    else
-    {
-        if(!isset($_POST['fullname']) || empty($_POST['fullname']))
-        {
-            $errors[] = 'Full name is required';
-        }
-        else
-        {
-            $fullname = $_POST['fullname'];
-        }
-        
-        if(!isset($_POST['username']) || empty($_POST['username']))
-        {
-            $errors[] = 'Username is required';
-        }
-        else
-        {
-            $valEmail = $_POST['username'];
-        }
- 
-        if(!isset($_POST['password']) || empty($_POST['password']))
-        {
-            $errors[] = 'Password is required';
-        }
-        else
-        {
-            $valPassword = $_POST['password'];
-        }
-        
-    }
- 
-}
+              if(isset($_POST['submit']))
+              {
+                $title=$_POST['title'];
+                $content=$_POST['content'];
+                $uid=$_SESSION['user_id'];
+
+                $sql = "INSERT INTO blog (user_id,title, content, uploaddate)
+                         VALUES ('$uid','$title','$content',now())";
+                
+
+                if ($pdo->query($sql)) {
+                  echo "<script type= 'text/javascript'>alert('Blog Successfully Submitted');</script>";
+                      }
+                else{
+                  echo "<script type= 'text/javascript'>alert('Error occured.');</script>";
+                  }
+
+              }
+                   
+           }
 if(isset($_SESSION['org_id']))
-            {}          
+            {
+  
+
+              if(isset($_POST['submit']))
+              {
+                $title=$_POST['title'];
+                $content=$_POST['content'];
+                $oid=$_SESSION['org_id'];
+                
+
+
+                $sql = "INSERT INTO blog (org_id,title, content, uploaddate)
+                    VALUES ('$oid','$title','$content',now())";
+                
+
+                if ($pdo->query($sql)) {
+                  echo "<script type= 'text/javascript'>alert('Blog Successfully Submitted');</script>";
+                      }
+                else{
+                  echo "<script type= 'text/javascript'>alert('Error occured.');</script>";
+                  }
+
+              }
+            
+      }
 
 
 ?>
@@ -175,20 +129,28 @@ if(isset($_SESSION['org_id']))
     </nav><!-- .navbar -->
 
   </div>
-</header><!-- End Header -->
-<form method="POST">
+</header>
+<!-- End Header -->
+
+
+<form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data">
 <div class="newPost">
   <div class="top">
   <br>
   <h3>Write to inspire</h3>
+  
   <div class="buttons">
     <!--<button type="button">save draft</button>-->
     <button data-func="clear" type="button" id="clr">Clear <i class="fa fa-trash"></i></button>
     <button data-func="save" type="button" >Save <i class="fa fa-save"></i></button>
-    <button class="btn btn--radius-2 btn--blue" type="submit" name="submit">Submit</button>
+    <button type="submit" name="submit">Submit</button>
+            
+    
   </div>
   <br><br><br>
-</div>
+  </div>
+  
+
   <input class="new" type="text" name="title" placeholder="Title">
   <div class="toolbar">
     <button type="button" data-func="bold"><i class="fa fa-bold"></i></button>
@@ -233,7 +195,7 @@ if(isset($_SESSION['org_id']))
       </select>
     </div>
   </div>
-  <div class="editor" name="content" contenteditable></div>
+  <textarea class="editor" name="content"></textarea>
 </div>
 </form>
 <!-- partial -->

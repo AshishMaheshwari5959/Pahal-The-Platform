@@ -7,35 +7,56 @@
   */
 
   // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
-
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
+  session_start();
+  if(!empty($_POST["send"])) {
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $subject = $_POST["subject"];
+    $content = $_POST["message"];
   }
+  $mail = new PHPMailer();
+  $mail->IsSMTP();
+  $mail->Mailer = "smtp";
+  $mail->SMTPDebug  = 1;  
+  $mail->SMTPAuth   = TRUE;
+  $mail->SMTPSecure = "tls";
+  $mail->Port       = 587;
+  $mail->Host       = "smtp.gmail.com";
+  $mail->Username   = "pahal.the.platform@gmail.com";
+  $mail->Password   = "Pahal1908";
+  $mail->IsHTML(true);
+  $mail->AddAddress("pahal.the.platform@gmail.com", "Pahal");
+  $mail->SetFrom($email, $name);
+  $mail->AddReplyTo("pahal.the.platform@gmail.com", "PAHAL");
+  $mail->AddCC("pahal.the.platform@gmail.com", "PaHaL");
+  $mail->Subject = $subject;
+  $content = $content;
+  $mail->MsgHTML($content); 
+  if(!$mail->Send()) {
+    $_SESSION['message'] = "Error while sending Email.";
+    var_dump($mail);
+  } else {
+     $_SESSION['message'] = "Email sent successfully";
+  }
+  if(!empty($_POST["send"])) {
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $subject = $_POST["subject"];
+    $content = $_POST["message"];
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+    $conn = mysqli_connect("localhost", "fred", "zap", "pahal") or die("Connection Error: " . mysqli_error($conn));
+    mysqli_query($conn, "INSERT INTO tblcontact (user_name, user_email,subject,content) VALUES ('" . $name. "', '" . $email. "','" . $subject. "','" . $content. "')");
+    $insert_id = mysqli_insert_id($conn);
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
-
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
-
-  echo $contact->send();
+    $toEmail = "pahal.the.platform@gmail.com";
+    $mailHeaders = "From: " . $name . "<". $email .">\r\n";
+    if(mail($toEmail, $subject, $content, $mailHeaders)) {
+        $message = "Your contact information is received successfully.";
+        $_SESSION['message']=$message;
+        $type = "success";
+    } else {
+        $message = "Try again after some time";
+        $_SESSION['message']=$message;
+    }
+  }
 ?>

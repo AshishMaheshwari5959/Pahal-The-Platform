@@ -6,7 +6,7 @@
 }
 
 body {
-    background-image: url("https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/content/fi/art/5b4701344f323.jpg");
+    background-image: url("../img/aditya-saxena-_mIXHvl_wzA-unsplash.jpg");
     background-size: cover;
     /* background: #f6f5f7; */
     display: flex;
@@ -57,8 +57,9 @@ button a:hover{
     color: #fff;
 }
 p {
-    color: #fff;
+    color: rgb(43,43,43);
 }
+
 button {
     border-radius: 20px;
     border: 1px solid #ff6d2a;
@@ -102,8 +103,9 @@ input {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
-    margin: 8px 0;
+    margin: 5px 0;
     width: 100%;
+    outline: none;
 }
 
 .container {
@@ -115,7 +117,7 @@ input {
     overflow: hidden;
     width: 768px;
     max-width: 100%;
-    min-height: 480px;
+    min-height: 560px;
 }
 
 .form-container {
@@ -161,6 +163,33 @@ input {
         z-index: 5;
     }
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
 
 .overlay-container {
     position: absolute;
@@ -255,3 +284,57 @@ footer a {
     color: #ff6d2a;
     text-decoration: none;
 }
+
+.dropdown ul {
+    display: block;
+    position: absolute;
+    width: max-content;
+    right: 100%;
+    /* top: calc(150% - 30px); */
+    margin: -12px 0;
+    padding: 10px;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    background: #ffffff;
+    box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+    transition: 0.7s;
+    border-radius: 6px;
+    text-align: left;
+    font-size: 12px;
+  }
+  
+  .dropdown ul li {
+    list-style-type: none;
+  }
+  
+  .dropdown ul a {
+    padding: 10px 20px;
+    font-size: 8px;
+    text-transform: none;
+    color: white;
+    font-weight: 100;
+  }
+  
+  .dropdown ul a:hover, .dropdown ul .active:hover, .dropdown ul li:hover > a {
+    color: whitesmoke;
+  }
+  
+  .dropdown:hover > ul {
+    opacity: 1;
+    top: 100%;
+    visibility: visible;
+  }
+  
+  .dropdown .dropdown ul {
+    top: 0;
+    /* left: calc(100% - 30px); */
+    visibility: hidden;
+  }
+  
+  .dropdown .dropdown:hover > ul {
+    opacity: 1;
+    top: 0;
+    left: 100%;
+    visibility: visible;
+  }

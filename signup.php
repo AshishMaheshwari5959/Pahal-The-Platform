@@ -231,7 +231,7 @@ if(isset($_POST['org_submit']))
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Login</title>
+    <title>Signup</title>
 
     <link
     rel="stylesheet"
@@ -260,18 +260,27 @@ if(isset($_POST['org_submit']))
         ?>
         <form method="POST">
             <h1>Wanna join our mission?<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1><br>
-            <input type="text" placeholder="Organization name" name="org_name" id="org-name" value="" required onkeyup="org_name_check();"/>
-            <span id="on-message"></span>
-            <input type="email" placeholder="Email" name="org_username" id="org-email" required onkeyup="org_email_check();"/>
-            <span id="oe-message"></span>
-            <input type="tel" placeholder="Mobile number" pattern="[0-9]{10}" name="org_mobilenumber" id="org-tel" required onkeyup="org_tel_check();"/>
-            <span id="ot-message"></span>
-            <span style="display: flex;">
-            <input type="password" placeholder="Password" name="org_password" id="org-password" maxlength="100" minlength="8" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})" onkeyup="org_pass_check();"/>
-            <span style="width: 20px;"></span>
-            <input type="password" placeholder="Confirm password" name="re-org-password" id="org-re-password" maxlength="100" minlength="8" required onkeyup="org_passwd_check();" />
-            </span>
-            <span id="ox-message"></span><span id="op-message"></span>
+
+            <div style="width: 100%;">
+                <input type="text" placeholder="Organization name" name="org_name" id="org-name" value="" required onkeyup="org_name_check();"/>
+                <i id="on-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
+            <div style="width: 100%;">
+                <input type="email" placeholder="Email" name="org_username" id="org-email" required onkeyup="org_email_check();"/>
+                <i id="oe-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
+            <div style="width: 100%;">
+                <input type="tel" placeholder="Mobile number" pattern="[0-9]{10}" name="org_mobilenumber" id="org-tel" required onkeyup="org_tel_check();"/>
+                <i id="ot-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
+            <div style="width: 100%;">
+                <input type="password" placeholder="Password" name="org_password" id="org-password" maxlength="100" minlength="8" required onkeyup="org_pass_check();"/>
+                <i id="ox-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
+            <div style="width: 100%;">
+                <input type="password" placeholder="Confirm password" name="re-org-password" id="org-re-password" maxlength="100" minlength="8" required onkeyup="org_passwd_check();" />
+                <i id="op-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
             <span><button type="submit" name="org_submit" style="text-decoration:none; color: white;">Register</button></span>
             <p style="
             background-color: rgba(255, 255, 255, 0.651);
@@ -286,18 +295,26 @@ if(isset($_POST['org_submit']))
     <div class="form-container sign-in-container">
         <form method="POST">
             <h1>Wanna join us?<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1><br>
-            <input type="text" name="fullname" id="fullname" placeholder="Full name" required onkeyup="user_name_check();" />
-            <span id="un-message"></span>
-            <input type="email" name="username" id="user-email" placeholder="Email" required onkeyup="user_email_check();"/>
-            <span id="ue-message"></span>
-            <input type="tel" placeholder="Mobile number" name="mobilenumber" id="user-tel" pattern="[0-9]{10}" required onkeyup="user_tel_check();"/>
-            <span id="ut-message"></span>
-            <span style="display: flex;">
-            <input type="password" placeholder="Password" name="password" id="password" maxlength="100" minlength="8" required onkeyup="user_pass_check();"/>
-            <span style="width: 20px;"></span>
-            <input type="password" placeholder="Confirm password" name="re-password" id="re-password" maxlength="100" minlength="8" required onkeyup='user_passwd_check();' />
-            </span>
-            <span id="ux-message"></span><span id="up-message"></span>
+            <div style="width: 100%;">
+                <input type="text" name="fullname" id="fullname" placeholder="Full name" required onkeyup="user_name_check();" />
+                <i id="un-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
+            <div style="width: 100%;">
+                <input type="email" name="username" id="user-email" placeholder="Email" required onkeyup="user_email_check();"/>
+                <i id="ue-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
+            <div style="width: 100%;">
+                <input type="tel" placeholder="Mobile number" name="mobilenumber" id="user-tel" pattern="[0-9]{10}" required onkeyup="user_tel_check();"/>
+                <i id="ut-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
+            <div style="width: 100%;">
+                <input type="password" placeholder="Password" name="password" id="password" maxlength="100" minlength="8" required onkeyup="user_pass_check();"/>
+                <i id="ux-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
+            <div style="width: 100%;">
+                <input type="password" placeholder="Confirm password" name="re-password" id="re-password" maxlength="100" minlength="8" required onkeyup='user_passwd_check();' />
+                <i id="up-message" style="position: absolute; margin: 20px 5px;"></i>
+            </div>
             <span><button type="submit" name="user_submit" style="text-decoration:none; color: white;">Register</button></span>
             <p style="
             background-color: rgba(255, 255, 255, 0.651);
@@ -315,15 +332,13 @@ if(isset($_POST['org_submit']))
                 <h1>Finding opportunities?</h1>
                 <p>Register to our platform and explore new opportunities</p>
                 <button class="ghost" id="signIn">Register as User</button>
-                <hr>
-                <button type="submit" class="ghost" id="cancel" style="border: none;"><a class="zoom" href="index.php">Go back to home</a></button>
+                <button type="submit" class="ghost" id="cancel" style="border: none; margin: 0;"><a class="zoom" href="index.php">Go back to home</a></button>
             </div>
             <div class="overlay-panel overlay-right">
                 <h1>Not a user?</h1>
                 <p>Click on below button to Register as organization</p>
                 <button type="submit" class="ghost" id="signUp">Register as Organization</button>
-                <hr>
-                <button type="submit" class="ghost" id="cancel" style="border: none;"><a class="zoom" href="index.php">Go back to home</a></button>
+                <button type="submit" class="ghost" id="cancel" style="border: none; margin: 0;"><a class="zoom" href="index.php">Go back to home</a></button>
             </div>
         </div>
     </div>
@@ -332,84 +347,68 @@ if(isset($_POST['org_submit']))
     var user_name_check = function(){
         var name = document.getElementById('fullname').value;
         if ( name == '' || name == null) {
-            document.getElementById('un-message').style.color = 'red';
-            document.getElementById('un-message').innerHTML = 'Cannot leave Empty Be careful!!';
+            document.getElementById('un-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
         } else if ( !/[^a-zA-Z\s]/.test(name) ) {
-            document.getElementById('un-message').style.color = 'green';
-            document.getElementById('un-message').innerHTML = 'Valid';
+            document.getElementById('un-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
+            var field_icon = 'tick'
         } else {
-            document.getElementById('un-message').style.color = 'red';
-            document.getElementById('un-message').innerHTML = 'Should only contain Alphabets and space';   
+            document.getElementById('un-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
         }
 
     }
     var org_name_check = function(){
         var name = document.getElementById('org-name').value;
         if ( name == '' || name == null) {
-            document.getElementById('on-message').style.color = 'red';
-            document.getElementById('on-message').innerHTML = 'Cannot leave Empty';
+            document.getElementById('on-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
         } else if ( !/[^a-zA-Z\s]/.test(name) ) {
-            document.getElementById('on-message').style.color = 'green';
-            document.getElementById('on-message').innerHTML = 'Valid';
+            document.getElementById('on-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('on-message').style.color = 'red';
-            document.getElementById('on-message').innerHTML = 'Should only contain Alphabets and space';   
+            document.getElementById('on-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">'; 
+            // should only contain alphabets  
         }
 
     }
     var user_email_check = function(){
         var name = document.getElementById('user-email').value;
         if ( name == '' || name == null) {
-            document.getElementById('ue-message').style.color = 'red';
-            document.getElementById('ue-message').innerHTML = 'Cannot leave Empty';
+            document.getElementById('ue-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
         } else if ( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(name) ) {
-            document.getElementById('ue-message').style.color = 'green';
-            document.getElementById('ue-message').innerHTML = 'Valid';
+            document.getElementById('ue-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('ue-message').style.color = 'red';
-            document.getElementById('ue-message').innerHTML = 'Not a valid email';   
+            document.getElementById('ue-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
         }
 
     }
     var org_email_check = function(){
         var name = document.getElementById('org-email').value;
         if ( name == '' || name == null) {
-            document.getElementById('oe-message').style.color = 'red';
-            document.getElementById('oe-message').innerHTML = 'Cannot leave Empty';
+            document.getElementById('oe-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
         } else if ( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(name) ) {
-            document.getElementById('oe-message').style.color = 'green';
-            document.getElementById('oe-message').innerHTML = 'Valid';
+            document.getElementById('oe-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('oe-message').style.color = 'red';
-            document.getElementById('oe-message').innerHTML = 'Not a valid email';   
+            document.getElementById('oe-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
         }
 
     }
     var user_tel_check = function(){
         var name = document.getElementById('user-tel').value;
         if ( name == '' || name == null) {
-            document.getElementById('ut-message').style.color = 'red';
-            document.getElementById('ut-message').innerHTML = 'Cannot leave Empty';
+            document.getElementById('ut-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
         } else if ( /^[6789]\d{9}$/.test(name) ) {
-            document.getElementById('ut-message').style.color = 'green';
-            document.getElementById('ut-message').innerHTML = 'Valid';
+            document.getElementById('ut-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('ut-message').style.color = 'red';
-            document.getElementById('ut-message').innerHTML = 'Not a valid Mobile Number';   
+            document.getElementById('ut-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
         }
 
     }
     var org_tel_check = function(){
         var name = document.getElementById('org-tel').value;
         if ( name == '' || name == null) {
-            document.getElementById('ot-message').style.color = 'red';
-            document.getElementById('ot-message').innerHTML = 'Cannot leave Empty';
+            document.getElementById('ot-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
         } else if ( /^[6789]\d{9}$/.test(name) ) {
-            document.getElementById('ot-message').style.color = 'green';
-            document.getElementById('ot-message').innerHTML = 'Valid';
+            document.getElementById('ot-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('ot-message').style.color = 'red';
-            document.getElementById('ot-message').innerHTML = 'Not a valid Mobile Number';   
+            document.getElementById('ot-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
         }
 
     }
@@ -417,14 +416,13 @@ if(isset($_POST['org_submit']))
         var name = document.getElementById('password').value;
         var n = name.length;
         if ( name == '' || name == null) {
-            document.getElementById('ux-message').style.color = 'red';
-            document.getElementById('ux-message').innerHTML = 'Cannot leave Empty';
+            document.getElementById('ux-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
         } else if ( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(name) ) {
-            document.getElementById('ux-message').style.color = 'green';
-            document.getElementById('ux-message').innerHTML = 'Valid';
+            document.getElementById('ux-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            var string = "";
-            string = "<h4>Password must include:</h4><ul>";
+            var string = "<div class=\"dropdown\"><img src=\"assets/img/exclamation-mark.svg\" alt=\"\" width=\"16px\">\
+            <ul>\
+            <h5>Password must include:</h5>";
             if (n<8 || n>20) {
                 string = string + "<li>8-20 <strong>Characters</strong></li>";
             }
@@ -438,7 +436,6 @@ if(isset($_POST['org_submit']))
                 string = string + "<li>No spaces</li>";
             }
             string = string + "</ul>";
-            document.getElementById('ux-message').style.color = 'red';
             document.getElementById('ux-message').innerHTML = string;
             string = "";
         }
@@ -448,14 +445,13 @@ if(isset($_POST['org_submit']))
         var name = document.getElementById('org-password').value;
         var n = name.length;
         if ( name == '' || name == null) {
-            document.getElementById('ox-message').style.color = 'red';
-            document.getElementById('ox-message').innerHTML = 'Cannot leave Empty';
+            document.getElementById('ox-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
         } else if ( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(name) ) {
-            document.getElementById('ox-message').style.color = 'green';
-            document.getElementById('ox-message').innerHTML = 'Valid';
+            document.getElementById('ox-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            var string = "";
-            string = "<h4>Password must include:</h4><ul>";
+            var string = "<div class=\"dropdown\"><img src=\"assets/img/exclamation-mark.svg\" alt=\"\" width=\"16px\">\
+            <ul>\
+            <h5>Password must include:</h5>";
             if (n<8 || n>20) {
                 string = string + "<li>8-20 <strong>Characters</strong></li>";
             }
@@ -469,7 +465,6 @@ if(isset($_POST['org_submit']))
                 string = string + "<li>No spaces</li>";
             }
             string = string + "</ul>";
-            document.getElementById('ox-message').style.color = 'red';
             document.getElementById('ox-message').innerHTML = string;
             //document.write(string);
             string = "";
@@ -478,22 +473,18 @@ if(isset($_POST['org_submit']))
     }
     var user_passwd_check = function() {
       if (document.getElementById('password').value == document.getElementById('re-password').value) {
-        document.getElementById('up-message').style.color = 'green';
-        document.getElementById('up-message').innerHTML = 'Matched';
+        document.getElementById('up-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
       } else {
-        document.getElementById('up-message').style.color = 'red';
-        document.getElementById('up-message').innerHTML = 'Not Matching';
+        document.getElementById('up-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';
       }
 
     }
     var org_passwd_check = function() {
       //window.alert("sometext");
       if (document.getElementById('org-password').value == document.getElementById('org-re-password').value) {
-        document.getElementById('op-message').style.color = 'green';
-        document.getElementById('op-message').innerHTML = 'Matched';
+        document.getElementById('op-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
       } else {
-        document.getElementById('op-message').style.color = 'red';
-        document.getElementById('op-message').innerHTML = 'Not Matching';
+        document.getElementById('op-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';
       }
 
     }

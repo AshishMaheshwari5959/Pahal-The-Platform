@@ -39,6 +39,7 @@ background: radial-gradient(to bottom left, #F9973B, #FFCD60);*/
 .newPost h3 {
   margin: 0px 0px 20px 0px;
   font-size: 30px;
+  display: inline-block;
   font-family: "Pacifico", sans-serif;
   color: #412e2e;
 }

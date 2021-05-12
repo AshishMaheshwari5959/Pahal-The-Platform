@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('database_connection.php');
+
 ?>
 
 <!DOCTYPE html>
@@ -34,12 +35,10 @@ include('database_connection.php');
   <link href="assets/css/style.css" rel="stylesheet">
   <script type="text/javascript" src="assets\js\popup.js"></script>
 
-  <!-- =======================================================
-  * Template Name: Dewi - v4.1.0
-  * Template URL: https://bootstrapmade.com/dewi-free-multi-purpose-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <!-- Contact us ajax -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -52,8 +51,8 @@ include('database_connection.php');
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         <nav id="navbar" class="navbar">
           <ul>
-            <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-            <li><a class="nav-link scrollto" href="#about">About</a></li>
+            <li><a class="nav-link scrollto" href="index.php/#hero">Home</a></li>
+            <li><a class="nav-link scrollto" href="#about-boxes">About</a></li>
             <li><a class="nav-link scrollto" href="#services">Services</a></li>
             <!-- <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
             <li><a class="nav-link scrollto" href="#team">Team</a></li> -->
@@ -78,19 +77,17 @@ include('database_connection.php');
             <?php
             if(!isset($_SESSION['user_id']) && !isset($_SESSION['org_id']))
             { 
-              echo '<li>';
-              echo '<a class="getstarted scrollto" href="login.php">Login</a>';
-              echo '<li class="dropdown"><a class="getstarted scrollto" href="signup.php" style="background-color: orangered; border-color: orangered;">Signup</a>';
-              echo '</li>';
+              echo '<li><a class="getstarted scrollto" href="login.php">Login</a></li>';
+              echo '<li class="dropdown"><a class="getstarted scrollto" href="signup.php" style="background-color: orangered; border-color: orangered;">Signup</a></li>';
             }
             if(isset($_SESSION['user_id'])){
               echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: orangered;';
               echo 'border-color: orangered;">';
               echo  $_SESSION["fullname"];
               echo '<i class="bi bi-chevron-down"></i></a>';
-              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="writeBlog.php">Write a Blog';
-              echo '</a></li></ul></li>';
-              echo '<li><a class="getstarted scrollto" href="logout.php">Logout</a></li>';
+              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="writeBlog.php">Write a Blog</a></li>';
+              echo '<li><a href="logout.php">Logout</a></li></ul></li>';
+              echo '';
             }
             if(isset($_SESSION['org_id'])){
               $var = $_SESSION['org_name'];
@@ -173,53 +170,108 @@ include('database_connection.php');
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
-      <div class="container" data-aos="fade-up">
+          <div class="container" data-aos="fade-up">
 
-        <div class="section-title">
-          <h2>Services</h2>
-          <p>Check our Services</p>
-        </div>
+            <div class="section-title">
+              <h2>Services</h2>
+              <p>Check our Services</p>
+            </div>
 
-        <div class="row" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-md-6">
-            <div class="icon-box">
-              <i class="bi bi-briefcase"></i>
-              <h4><a href="#">Jobs for women</a></h4>
-              <p>We provide job opportunities to unemployed women to empower them.</p>
-            </div>
-          </div>
-          <div class="col-md-6 mt-4 mt-md-0">
-            <div class="icon-box">
-              <i class="bi bi-bar-chart"></i>
-              <h4><a href="#">Recruitment for organizations</a></h4>
-              <p>Organizations can recruit the candidates as per their needs.</p>
-            </div>
-          </div>
-          <div class="col-md-6 mt-4 mt-md-0">
-            <div class="icon-box">
-              <i class="bi bi-blockquote-right"></i>
-              <h4><a href="#">Blogging</a></h4>
-              <p>Blogging feature to inspire or motivate them for their bright future.</p>
-            </div>
-          </div>
-          <div class="col-md-6 mt-4 mt-md-0">
-            <div class="icon-box">
-              <i class="bi bi-laptop"></i>
-              <h4><a href="#">Trainings</a></h4>
-              <p>Provide training to make them industry ready.</p>
-            </div>
-          </div>
-          <div class="col-md-6 mt-4 mt-md-0">
-            <div class="icon-box">
-              <i class="bi bi-command"></i>
-              <h4><a href="#">Direct User-Organisation Commuication</a></h4>
-              <p>Instant messaging will keep the users in touch with organization for any doubt assistance.</p>
-            </div>
-          </div>
-        </div>
+            <div class="row" data-aos="fade-up" data-aos-delay="200">
+              <div class="col-md-6">
+                <div class="icon-box">
+                  <i class="bi bi-briefcase"></i>
+                  <h4><a onclick="openForm()">Jobs for women</a>
+					<div class="form-popup" id="myForm">
+           				<form class="form-container">
+                  			<a href="blogs.html"><h2> Go To Blog Section</h2></a>  
+                  			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+           				</form>
+           			</div>
+            		<script>
+			            function openForm() {
+			            document.getElementById("myForm").style.display = "block";
+			            }
 
-      </div>
-    </section><!-- End Services Section -->
+			            function closeForm() {
+			           document.getElementById("myForm").style.display = "none";
+			            }
+          			</script>
+          			<style>
+			            .form-popup {
+			            display: none;
+			            position: fixed;
+			            border: 3px solid #f1f1f1;
+			            z-index: 9;
+			            }
+
+
+			            .form-container {
+			            max-width: 1000px;
+			            padding: 150px;
+			            background-color: white;
+			            }
+			            .form-container.a
+			            {
+			            padding: 10px 10px;
+			            }
+			            .form-container .btn {
+			            background-color: #04AA6D;
+			            color: white;
+			            padding: 10px 10px;
+			            border: none;
+			            cursor: pointer;
+			            width: 100%;
+			            margin-bottom:10px;
+			            opacity: 0.8;
+			            }
+
+					    /* Add a red background color to the cancel button */
+					    .form-container .cancel {
+					      background-color: red;
+					    }
+
+					    /* Add some hover effects to buttons */
+					    .form-container .btn:hover, .open-button:hover {
+					      opacity: 1;
+					    }
+	                </style>
+                  </h4>
+                  <p>We provide job opportunities to unemployed women to empower them.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box">
+                  <i class="bi bi-bar-chart"></i>
+                  <h4><a href="#">Recruitment for organizations</a></h4>
+                  <p>Organizations can recruit the candidates as per their needs.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box">
+                  <i class="bi bi-blockquote-right"></i>
+                  <h4><a href="#">Blogging</a></h4>
+                  <p>Blogging feature to inspire or motivate them for their bright future.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box">
+                  <i class="bi bi-laptop"></i>
+                  <h4><a href="#">Trainings</a></h4>
+                  <p>Provide training to make them industry ready.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box">
+                  <i class="bi bi-command"></i>
+                  <h4><a href="#">Direct User-Organisation Commuication</a></h4>
+                  <p>Instant messaging will keep the users in touch with organization for any doubt assistance.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section><!-- End Services Section -->
 
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials">
@@ -328,8 +380,27 @@ include('database_connection.php');
 
         </div>
 
+
+        <!-- <form action="mailto:pahal.the.platform@gmail.com" method="post" enctype="text/plain" class="site-form">
+            <h3 class="mb-5">Get In Touch</h3>
+            <div class="form-group">
+              <input type="text" name="name" class="form-control px-3 py-4" placeholder="Your Name">
+            </div>
+            <div class="form-group">
+              <input type="email" name="mail" class="form-control px-3 py-4" placeholder="Your Email">
+            </div>
+            <div class="form-group mb-5">
+              <input class="form-control px-3 py-4"cols="30" rows="10" name="comment" placeholder="Write a Message">
+            </div>
+            <div class="form-group">
+              <input type="submit" value="Send" class="btn btn-primary  px-4 py-3" >
+              <input type="reset" value="Reset" class="btn btn-primary  px-4 py-3" >
+            </div>
+        </form>
+ -->
+
         <div class="col-lg-6 mt-4 mt-lg-0">
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <form name="contactform" id="contactform" method="get" >
             <div class="row">
               <div class="col-md-6 form-group">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -338,19 +409,40 @@ include('database_connection.php');
                 <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
               </div>
             </div>
-            <div class="form-group mt-3">
+            <div class="form-group mt-3" style="margin-top: 0rem!important;">
               <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
             </div>
             <div class="form-group mt-3">
-              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message" required></textarea>
             </div>
-            <div class="my-3">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <div id="statusMessage"> 
             </div>
-            <div class="text-center"><button type="submit">Send Message</button></div>
           </form>
+          <div class="result">
+          </div>
+          <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+          <script>
+            $(document).ready(function () {
+              $('.btn-primary').click(function (e) {
+                e.preventDefault();
+                var name = $('#name').val();
+                var email = $('#email').val();
+                var subject = $('#subject').val();
+                var message = $('#message').val();
+                $.ajax
+                  ({
+                    type: "GET",
+                    url: "contactus.php",
+                    data: { "name": name, "email": email, "subject": subject, "message": message },
+                    success: function (data) {
+                      $('.result').html(data);
+                      $('#contactform')[0].reset();
+                    }
+                  });
+              });
+            });
+          </script>
         </div>
 
       </div>
@@ -394,10 +486,29 @@ include('database_connection.php');
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Our Newsletter</h4>
             <p>Fill your email address to subscribe our Newsletter</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+            <form name="subscribe" id="subscribe" method="get">
+              <input type="email" id="emails" name="emails"><input type="submit" class="btn-subscribe" name="email_subscriber" value="Subscribe">
             </form>
-
+            <div class="result-s">
+          	</div>
+          	<script>
+          	  $(document).ready(function () {
+          	    $('.btn-subscribe').click(function (e) {
+          	      e.preventDefault();
+          	      var email = $('#emails').val();
+          	      $.ajax
+          	        ({
+          	          type: "GET",
+          	          url: "subscribe.php",
+          	          data: {"email": email},
+          	          success: function (data) {
+          	            $('.result-s').html(data);
+          	            $('#subscribe')[0].reset();
+          	          }
+          	        });
+          	    });
+          	  });
+          	</script>
           </div>
 
         </div>
