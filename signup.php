@@ -1,21 +1,40 @@
 <?php
 session_start();
 require_once('database_connection.php');
+
+if(isset($_SESSION['user_id']))
+{
+  header('location:index.php');
+}
+
+if(isset($_SESSION['org_id']))
+{
+  header('location:index.php');
+}
  
 if(isset($_POST['user_submit']))
-{
-    if(isset($_POST['fullname'],$_POST['username'],$_POST['mobilenumber'],$_POST['password']) && !empty($_POST['fullname']) && !empty($_POST['username']) && !empty($_POST['password']))
+
+{   
+    $count = 0;
+    if($_POST['password'] != $_POST['confirmpassword']){
+              $_SESSION['error'] = "Passwords doesn't Match";
+        }
+     
+    
+    elseif(isset($_POST['fullname'],$_POST['username'],$_POST['mobilenumber'],$_POST['password']) && !empty($_POST['fullname']) && !empty($_POST['username']) && !empty($_POST['password']))
     {
         $fullname = trim($_POST['fullname']);
         $username = trim($_POST['username']);
         $mobilenumber = trim($_POST['mobilenumber']);
         $password= trim($_POST['password']);
+        $cpassword = trim($_POST['confirmpassword']);
 
 
         $options = array("cost"=>4);
         $hashPassword = password_hash($password,PASSWORD_BCRYPT,$options);
         $date = date('Y-m-d H:i:s');
- 
+
+
         if(filter_var($username, FILTER_VALIDATE_EMAIL))
         {
             $sql = 'select * from user where username = :username';
@@ -23,6 +42,7 @@ if(isset($_POST['user_submit']))
             $p = ['username'=>$username];
             $stmt->execute($p);
             
+             
             if($stmt->rowCount() == 0)
             {
                 $sql = "insert into user (fullname, username, mobilenumber, password ) values(:fullname,:username,:mobilenumber,:password)";
@@ -62,7 +82,7 @@ if(isset($_POST['user_submit']))
 
                 }
                 catch(PDOException $e){
-                    $errors[] = $e->getMessage();
+                    $_SESSION['error'] = $e->getMessage();
                 }
             }
             else
@@ -71,43 +91,13 @@ if(isset($_POST['user_submit']))
                 $username = '';
                 $password = $password;
  
-                $errors[] = 'Email address already registered';
+                $_SESSION['error'] = 'Email address already registered';
             }
         }
         else
         {
-            $errors[] = "Email address is not valid";
+            $_SESSION['error'] = "Email address is not valid";
         }
-    }
-    else
-    {
-        if(!isset($_POST['fullname']) || empty($_POST['fullname']))
-        {
-            $errors[] = 'Full name is required';
-        }
-        else
-        {
-            $fullname = $_POST['fullname'];
-        }
-        
-        if(!isset($_POST['username']) || empty($_POST['username']))
-        {
-            $errors[] = 'Username is required';
-        }
-        else
-        {
-            $valEmail = $_POST['username'];
-        }
- 
-        if(!isset($_POST['password']) || empty($_POST['password']))
-        {
-            $errors[] = 'Password is required';
-        }
-        else
-        {
-            $valPassword = $_POST['password'];
-        }
-        
     }
  
 }
@@ -116,18 +106,24 @@ if(isset($_POST['user_submit']))
 require_once('database_connection.php');
 if(isset($_POST['org_submit']))
 {
-    if(isset($_POST['org_name'],$_POST['org_username'],$_POST['org_mobilenumber'],$_POST['org_password']) && !empty($_POST['org_name']) && !empty($_POST['org_address']) && !empty($_POST['org_name']) && !empty($_POST['org_password']))
+    $count = 0;
+    if($_POST['password'] != $_POST['orgconfirmpassword']){
+              $_SESSION['error2'] = "passwords doesn't match";
+        }
+     
+    
+    elseif(isset($_POST['org_name'],$_POST['org_username'],$_POST['org_mobilenumber'],$_POST['org_password']) && !empty($_POST['org_name']) && !empty($_POST['org_address']) && !empty($_POST['org_name']) && !empty($_POST['org_password']))
     {
         $org_name = trim($_POST['org_name']);
         $org_username = trim($_POST['org_username']);
         $org_mobilenumber = trim($_POST['org_mobilenumber']);
         $org_password= trim($_POST['org_password']);
-
+        
 
         $options = array("cost"=>4);
         $hashPassword = password_hash($org_password,PASSWORD_BCRYPT,$options);
         $date = date('Y-m-d H:i:s');
- 
+       
         if(filter_var($org_username, FILTER_VALIDATE_EMAIL))
     {
             $sql = 'select * from organization where org_username = :org_username';
@@ -174,7 +170,7 @@ if(isset($_POST['org_submit']))
                     
                 }
                 catch(PDOException $e){
-                    $errors[] = $e->getMessage();
+                    $_SESSION['error2'] = $e->getMessage();
                 }
             }
             else
@@ -183,45 +179,14 @@ if(isset($_POST['org_submit']))
                 $org_username = '';
                 $org_password = $org_password;
  
-                $errors[] = 'Email address already registered';
+                $_SESSION['error2'] = 'Email address already registered';
             }
         }
         else
         {
-            $errors[] = "Email address is not valid";
+            $_SESSION['error2'] = "Email address is not valid";
         }
     }
-    else
-    {
-        if(!isset($_POST['org_name']) || empty($_POST['org_name']))
-        {
-            $errors[] = 'Organization name is required';
-        }
-        else
-        {
-            $org_name = $_POST['org_name'];
-        }
-        
-        if(!isset($_POST['org_username']) || empty($_POST['org_username']))
-        {
-            $errors[] = 'Username is required';
-        }
-        else
-        {
-            $valEmail = $_POST['org_username'];
-        }
- 
-        if(!isset($_POST['org_password']) || empty($_POST['org_password']))
-        {
-            $errors[] = 'Password is required';
-        }
-        else
-        {
-            $valPassword = $_POST['org_password'];
-        }
-        
-    }
- 
 }
 ?>
 
@@ -238,29 +203,23 @@ if(isset($_POST['org_submit']))
     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
     integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
     crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link rel="stylesheet" href="./assets/css/login.css"/>
 </head>
 <body>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
-        <?php 
-        if(isset($errors) && count($errors) > 0)
-        {
-          foreach($errors as $error_msg)
-          {
-            echo '<div class="alert alert-danger">'.$error_msg.'</div>';
-          }
-                }
-                
-                if(isset($success))
-                {
-                    
-                    echo '<div class="alert alert-success">'.$success.'</div>';
-                }
-        ?>
         <form method="POST">
-            <h1>Wanna join our mission?<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1><br>
-
+            <h1 style="color:#ff6d2a;">Wanna join our mission?<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1>
+            <?php 
+            if(isset($_SESSION['error2']) && $count == 0){
+                echo "<div style='color : red'>";
+                echo $_SESSION['error2'];
+                echo "</div>";
+                unset($_SESSION['error2']);
+                $count = 1;
+            }
+            ?>
             <div style="width: 100%;">
                 <input type="text" placeholder="Organization name" name="org_name" id="org-name" value="" required onkeyup="org_name_check();"/>
                 <i id="on-message" style="position: absolute; margin: 20px 5px;"></i>
@@ -278,7 +237,7 @@ if(isset($_POST['org_submit']))
                 <i id="ox-message" style="position: absolute; margin: 20px 5px;"></i>
             </div>
             <div style="width: 100%;">
-                <input type="password" placeholder="Confirm password" name="re-org-password" id="org-re-password" maxlength="100" minlength="8" required onkeyup="org_passwd_check();" />
+                <input type="password" placeholder="Confirm password" name="orgconfirmpassword" id="org-re-password" maxlength="100" minlength="8" required onkeyup="org_passwd_check();" />
                 <i id="op-message" style="position: absolute; margin: 20px 5px;"></i>
             </div>
             <span><button type="submit" name="org_submit" style="text-decoration:none; color: white;">Register</button></span>
@@ -294,7 +253,16 @@ if(isset($_POST['org_submit']))
     </div>
     <div class="form-container sign-in-container">
         <form method="POST">
-            <h1>Wanna join us?<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1><br>
+            <h1 style="color:#ff6d2a;">Wanna join us?<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1>
+            <?php 
+            if(isset($_SESSION['error']) && $count==0){
+                echo "<div style='color : red'>";
+                echo $_SESSION['error'];
+                echo "</div>";
+                unset($_SESSION['error']);
+                $count =1;
+            }
+            ?>
             <div style="width: 100%;">
                 <input type="text" name="fullname" id="fullname" placeholder="Full name" required onkeyup="user_name_check();" />
                 <i id="un-message" style="position: absolute; margin: 20px 5px;"></i>
@@ -308,11 +276,11 @@ if(isset($_POST['org_submit']))
                 <i id="ut-message" style="position: absolute; margin: 20px 5px;"></i>
             </div>
             <div style="width: 100%;">
-                <input type="password" placeholder="Password" name="password" id="password" maxlength="100" minlength="8" required onkeyup="user_pass_check();"/>
+                <input type="password" placeholder="Password" name="password" id="password" maxlength="20" minlength="8" required onkeyup="user_pass_check();"/>
                 <i id="ux-message" style="position: absolute; margin: 20px 5px;"></i>
             </div>
             <div style="width: 100%;">
-                <input type="password" placeholder="Confirm password" name="re-password" id="re-password" maxlength="100" minlength="8" required onkeyup='user_passwd_check();' />
+                <input type="password" placeholder="Confirm password" name="confirmpassword" id="re-password" maxlength="20" minlength="8" required onkeyup='user_passwd_check();' />
                 <i id="up-message" style="position: absolute; margin: 20px 5px;"></i>
             </div>
             <span><button type="submit" name="user_submit" style="text-decoration:none; color: white;">Register</button></span>
@@ -330,13 +298,13 @@ if(isset($_POST['org_submit']))
         <div class="overlay">
             <div class="overlay-panel overlay-left">
                 <h1>Finding opportunities?</h1>
-                <p>Register to our platform and explore new opportunities</p>
+                <p style="color: white">Register to our platform and explore new opportunities</p>
                 <button class="ghost" id="signIn">Register as User</button>
                 <button type="submit" class="ghost" id="cancel" style="border: none; margin: 0;"><a class="zoom" href="index.php">Go back to home</a></button>
             </div>
             <div class="overlay-panel overlay-right">
                 <h1>Not a user?</h1>
-                <p>Click on below button to Register as organization</p>
+                <p style="color: white">Click on below button to Register as organization</p>
                 <button type="submit" class="ghost" id="signUp">Register as Organization</button>
                 <button type="submit" class="ghost" id="cancel" style="border: none; margin: 0;"><a class="zoom" href="index.php">Go back to home</a></button>
             </div>
@@ -472,7 +440,7 @@ if(isset($_POST['org_submit']))
 
     }
     var user_passwd_check = function() {
-      if (document.getElementById('password').value == document.getElementById('re-password').value) {
+      if (document.getElementById('password').value == document.getElementById('re-password').value && document.getElementById('re-password').value.length ) {
         document.getElementById('up-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
       } else {
         document.getElementById('up-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';
@@ -481,7 +449,7 @@ if(isset($_POST['org_submit']))
     }
     var org_passwd_check = function() {
       //window.alert("sometext");
-      if (document.getElementById('org-password').value == document.getElementById('org-re-password').value) {
+      if (document.getElementById('org-password').value == document.getElementById('org-re-password').value && document.getElementById('org-re-password').value.length) {
         document.getElementById('op-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
       } else {
         document.getElementById('op-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';

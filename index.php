@@ -81,7 +81,7 @@ include('database_connection.php');
               echo '<li class="dropdown"><a class="getstarted scrollto" href="signup.php" style="background-color: orangered; border-color: orangered;">Signup</a></li>';
             }
             if(isset($_SESSION['user_id'])){
-              echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: orangered;';
+              echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: orangered; color:white;';
               echo 'border-color: orangered;">';
               echo  $_SESSION["fullname"];
               echo '<i class="bi bi-chevron-down"></i></a>';
@@ -90,10 +90,13 @@ include('database_connection.php');
               echo '';
             }
             if(isset($_SESSION['org_id'])){
-              $var = $_SESSION['org_name'];
-              echo '<li><a class="nav-link scrollto" href="#profile">';
-              echo "$var";
-              echo '</a></li><li><a class="getstarted scrollto" href="logout.php">Logout</a></li>';
+              echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: orangered; color:white;';
+              echo 'border-color: orangered;">';
+              echo  $_SESSION["org_name"];
+              echo '<i class="bi bi-chevron-down"></i></a>';
+              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="writeBlog.php">Write a Blog</a></li>';
+              echo '<li><a href="logout.php">Logout</a></li></ul></li>';
+              echo '';
             }
             ?>
           </ul>
@@ -110,10 +113,10 @@ include('database_connection.php');
         <img src="assets\img\Pahal Logo.png" alt="Pahal", width="300px" style="padding: 10px;">
      
       <!-- <h1>Plan. Launch. Grow.</h1> -->
-      <h2>A platform to empower the women</h2>
+      <h2>A Platform to Empower The Women</h2>
       <div class="d-flex">
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
-        <a href="https://www.youtube.com/watch?v=6elzSKCRuGg" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Tutorial</span></a>
+        <a href="#about" class="btn-get-started scrollto"><b>Get Started</b></a>
+        <a href="https://www.youtube.com/watch?v=6elzSKCRuGg" class="glightbox btn-watch-video" style="color: #ff6d2a"><i class="bi bi-play-circle" style="color: #ff6d2a"></i><span><b>Watch Tutorial</b></span></a>
       </div>
     </div>
   </section><!-- End Hero -->
@@ -176,99 +179,209 @@ include('database_connection.php');
               <h2>Services</h2>
               <p>Check our Services</p>
             </div>
-
+            <?php 
+            if(!isset($_SESSION['user_id']) && !isset($_SESSION['org_id'])){
+            ?>
             <div class="row" data-aos="fade-up" data-aos-delay="200">
+              <script>
+                function openNav1() {
+                  document.getElementById("myNav1").style.width = "100%";
+                  document.getElementById("job").innerHTML = "\
+                  <div style='color: white; justify-content: center; margin:0% 5%;'>\
+                  <h2 style='text-align:left;'>Jobs for Women</h2>\
+                  <p style='text-align:left;'>We provide job opportunities to underprivileged women who lack resources, support & guidance. Our aim is to provide jobs in accordance with the skills sets possessed by the women so that they can earn a living on their own and get empowered.<br>With this we want to bring a change in our society where every women can stand equal to the men with respect to all aspects and prove themselves to be capable of achieving their dreams.<br>\
+                  Steps to get a job :- <ol>\
+                  <li style='text-align:left;'>Firstly signup to be a part of Pahal family and to get ample opportunity to fulfill your dreams.</li>\
+                  <li style='text-align:left;'>After that complete your profile details and build a resume.</li>\
+                  <li style='text-align:left;'>Now on the Jobs section there will be various posts for the requirements of a company so if you are interested then visit that post and check if openings are available , then simply do apply by filling the basics details along with your resume and it's done.</li>\
+                  <li style='text-align:left;'>Keep checking the status of your application .If you are selected then the status will be updated accordingly and the organisation will contact you within 1-2 days</li></ol>\
+                  </p>\
+                  </div>"; 
+                }
+
+                function closeNav1() {
+                  document.getElementById("myNav1").style.width = "0%";
+                }
+                function openNav2() {
+                  document.getElementById("myNav1").style.width = "100%";
+                  document.getElementById("job").innerHTML = "\
+                  <div style='color: white; justify-content: center; margin:0% 5%;'>\
+                  <h2 style='text-align:left;'>Recruitment for Organizations</h2>\
+                  <p style='text-align:left;'>Organizations with varied requirements can join us and recruit their preferred candidates. We provide a one to one communication of the organization and applicants which will enable them to hire the candidates in minimum possible time.<br><br>\
+                  Steps for recruitment :- <ol>\
+                  <li style='text-align:left;'>Firstly signup to be a part of Pahal family.</li>\
+                  <li style='text-align:left;'>After that you can post about the vacancies and skillset required in the post section.</li>\
+                  <li style='text-align:left;'>Interested candidates will apply for it and then you can easily recruit the candidates as per your need.</li>\
+                  <li style='text-align:left;'>Secondly, we will also provide you with the list of skilled candidates as soon as possible so that you can select the candidates and carry on with your work immediately.</li></ol>\
+                  </p>\
+                  </div>"; 
+                }
+
+                function closeNav2() {
+                  document.getElementById("myNav1").style.width = "0%";
+                }
+                function openNav3() {
+                  document.getElementById("myNav1").style.width = "100%";
+                  document.getElementById("job").innerHTML = "\
+                  <div style='color: white; justify-content: center; margin:0% 5%;'>\
+                  <h2 style='text-align:left;'>Blogging</h2>\
+                  <p style='text-align:left;'>With this feature, women can write their stories, problems or achievements through blogs and inspire other women to speak their heart out. It will motivate them to take a stand for themselves and to achieve milestones in their life . It also provides a newsfeed where the latest blogs will be showcased.<br>\
+                  Steps to write a blog :-<ol>\
+                  <li style='text-align:left;'>Firstly signup to be a part of Pahal family and to get ample opportunity to fulfill your dreams.</li>\
+                  <li style='text-align:left;'>After that complete your profile details and build a resume.</li>\
+                  <li style='text-align:left;'>Now you are all set to write a blog by just clicking on write a blog option.</li>\
+                  <li style='text-align:left;'>Give a suitable title to your blog and write any story, event or achievement which can inspire and motivate others also to move ahead in their life with positive attitude to achieve their goals. </li>\
+                  <li style='text-align:left;'>You can also share your problem so that others can come up with some solutions to sort it out.</li></ol>\
+                  </p>\
+                  </div>";
+                }
+
+                function closeNav3() {
+                  document.getElementById("myNav1").style.width = "0%";
+                }
+                function openNav4() {
+                  document.getElementById("myNav1").style.width = "100%";
+                  document.getElementById("job").innerHTML = "\
+                  <div style='color: white; justify-content: center; margin:0% 5%;'>\
+                  <h2 style='text-align:left;'>Trainings</h2>\
+                  <p style='text-align:left;'>We provide trainings to women to make them industry ready. Various trainings will be organized according to the requirements of organizations. Trainings will provide them a chance to gain those skills in which they are lacking and also boost up their self confidence to face challenges.<br>\
+                  Steps to be a part of trainings:-<ol>\
+                  <li style='text-align:left;'>Firstly signup to be a part of Pahal family and to get ample opportunity to fulfill your dreams.</li>\
+                  <li style='text-align:left;'>After that complete your profile details and build a resume.</li>\
+                  <li style='text-align:left;'>To be a part of any training program just visit the training section , if any training opportunity is available then do register for it to enhance your skills.</li>\
+                  </ol>\
+                  </p>\
+                  </div>";
+                }
+
+                function closeNav4() {
+                  document.getElementById("myNav1").style.width = "0%";
+                }
+                function openNav5() {
+                  document.getElementById("myNav1").style.width = "100%";
+                  document.getElementById("job").innerHTML = "\
+                  <div style='color: white; justify-content: center; margin:0% 5%;'>\
+                  <h2 style='text-align:left;'>Direct User-Organisation Commuication</h2>\
+                  <p style='text-align:left;'>Instant messaging will keep the users in touch with organization for any doubt assistance. This will bridge the gap between them and will help the organization know better about their candidates. Candidates will also get a chance to interact with the industry experts to pave their path towards the success.<br>\
+                  </p>\
+                  </div>";
+                }
+
+                function closeNav5() {
+                  document.getElementById("myNav1").style.width = "0%";
+                }
+              </script>
               <div class="col-md-6">
-                <div class="icon-box">
-                  <i class="bi bi-briefcase"></i>
-                  <h4><a onclick="openForm()">Jobs for women</a>
-					<div class="form-popup" id="myForm">
-           				<form class="form-container">
-                  			<a href="blogs.html"><h2> Go To Blog Section</h2></a>  
-                  			<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-           				</form>
-           			</div>
-            		<script>
-			            function openForm() {
-			            document.getElementById("myForm").style.display = "block";
-			            }
-
-			            function closeForm() {
-			           document.getElementById("myForm").style.display = "none";
-			            }
-          			</script>
-          			<style>
-			            .form-popup {
-			            display: none;
-			            position: fixed;
-			            border: 3px solid #f1f1f1;
-			            z-index: 9;
-			            }
-
-
-			            .form-container {
-			            max-width: 1000px;
-			            padding: 150px;
-			            background-color: white;
-			            }
-			            .form-container.a
-			            {
-			            padding: 10px 10px;
-			            }
-			            .form-container .btn {
-			            background-color: #04AA6D;
-			            color: white;
-			            padding: 10px 10px;
-			            border: none;
-			            cursor: pointer;
-			            width: 100%;
-			            margin-bottom:10px;
-			            opacity: 0.8;
-			            }
-
-					    /* Add a red background color to the cancel button */
-					    .form-container .cancel {
-					      background-color: red;
-					    }
-
-					    /* Add some hover effects to buttons */
-					    .form-container .btn:hover, .open-button:hover {
-					      opacity: 1;
-					    }
-	                </style>
-                  </h4>
-                  <p>We provide job opportunities to unemployed women to empower them.</p>
+                <div id="myNav1" class="overlay">
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav1()">&times;</a>
+                  <div class="overlay-content">
+                    <span id="job"></span>
+                  </div>
                 </div>
+                <div class="icon-box " style="cursor:pointer" onclick="openNav1()">
+                  <i class="bi bi-briefcase"></i>
+                  <h4><a><span >Jobs for Women</span></a></h4>
+                  <p>We provide job opportunities to unemployed women to empower them.</p>
+                </div>  
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box">
+                <div class="icon-box" style="cursor:pointer" onclick="openNav2()">
                   <i class="bi bi-bar-chart"></i>
-                  <h4><a href="#">Recruitment for organizations</a></h4>
+                  <h4><a><span>Recruitment for Organizations</span></a></h4>
                   <p>Organizations can recruit the candidates as per their needs.</p>
                 </div>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box">
+                <div class="icon-box" style="cursor:pointer" onclick="openNav3()">
                   <i class="bi bi-blockquote-right"></i>
-                  <h4><a href="#">Blogging</a></h4>
+                  <h4><a><span>Blogging</span></a></h4>
                   <p>Blogging feature to inspire or motivate them for their bright future.</p>
                 </div>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box">
+                <div class="icon-box" style="cursor:pointer" onclick="openNav4()">
                   <i class="bi bi-laptop"></i>
-                  <h4><a href="#">Trainings</a></h4>
+                  <h4><a><span>Trainings</span></a></h4>
                   <p>Provide training to make them industry ready.</p>
                 </div>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box">
+                <div class="icon-box" style="cursor:pointer" onclick="openNav5()">
                   <i class="bi bi-command"></i>
-                  <h4><a href="#">Direct User-Organisation Commuication</a></h4>
+                  <h4><a><span>Direct User-Organisation Commuication</span></a></h4>
                   <p>Instant messaging will keep the users in touch with organization for any doubt assistance.</p>
                 </div>
               </div>
             </div>
+            <?php 
+            }
+            ?>
+            <?php 
+            if(isset($_SESSION['user_id'])){
+            ?>
+            <div class="row" data-aos="fade-up" data-aos-delay="200">
+              <div class="col-md-6">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                  <i class="bi bi-briefcase"></i>
+                  <h4><a>Jobs for women</a></h4>
+                  <p>We provide job opportunities to unemployed women to empower them.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                  <i class="bi bi-blockquote-right"></i>
+                  <h4><a>Blogging</a></h4>
+                  <p>Blogging feature to inspire or motivate them for their bright future.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                  <i class="bi bi-laptop"></i>
+                  <h4><a>Trainings</a></h4>
+                  <p>Provide training to make them industry ready.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                  <i class="bi bi-command"></i>
+                  <h4><a>Direct User-Organisation Commuication</a></h4>
+                  <p>Instant messaging will keep the users in touch with organization for any doubt assistance.</p>
+                </div>
+              </div>
+            </div>
+            <?php 
+            }
+            ?>
+            <?php 
+            if(isset($_SESSION['org_id'])){
+            ?>
+            <div class="row" data-aos="fade-up" data-aos-delay="200">
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                  <i class="bi bi-bar-chart"></i>
+                  <h4><a>Recruitment for organizations</a></h4>
+                  <p>Organizations can recruit the candidates as per their needs.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                  <i class="bi bi-blockquote-right"></i>
+                  <h4><a>Blogging</a></h4>
+                  <p>Blogging feature to inspire or motivate them for their bright future.</p>
+                </div>
+              </div>
+              <div class="col-md-6 mt-4 mt-md-0">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                  <i class="bi bi-command"></i>
+                  <h4><a>Direct User-Organisation Commuication</a></h4>
+                  <p>Instant messaging will keep the users in touch with organization for any doubt assistance.</p>
+                </div>
+              </div>
+            </div>
+            <?php 
+            }
+            ?>
+
 
           </div>
         </section><!-- End Services Section -->
@@ -366,7 +479,7 @@ include('database_connection.php');
               <div class="info-box mt-4">
                 <i class="bx bx-envelope"></i>
                 <h3>Email Us</h3>
-                <p>info@pahal.in<br>contact@pahal.in</p>
+                <p>pahal.the.platform@gmail.com</p>
               </div>
             </div>
             <div class="col-md-6">
@@ -413,9 +526,9 @@ include('database_connection.php');
               <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
             </div>
             <div class="form-group mt-3">
-              <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message" required></textarea>
+              <textarea class="form-control" name="message" id="message" rows="7" placeholder="Message" required style="height: auto;"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" style="background-color:#ff6d2a; border: none; float: right; width:100px; height:40px;" >SUBMIT</button>
             <div id="statusMessage"> 
             </div>
           </form>
@@ -467,10 +580,10 @@ include('database_connection.php');
                 <strong>Email:</strong> info@pahal.in<br>
               </p>
               <div class="social-links mt-3">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                <a class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a class="linkedin"><i class="bx bxl-linkedin"></i></a>
               </div>
             </div>
           </div>
@@ -478,8 +591,8 @@ include('database_connection.php');
           <div class="col-lg-4 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="terms&cond.php">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="terms&cond.php">Privacy policy</a></li>
             </ul>
           </div>
 
@@ -487,7 +600,7 @@ include('database_connection.php');
             <h4>Our Newsletter</h4>
             <p>Fill your email address to subscribe our Newsletter</p>
             <form name="subscribe" id="subscribe" method="get">
-              <input type="email" id="emails" name="emails"><input type="submit" class="btn-subscribe" name="email_subscriber" value="Subscribe">
+              <input type="email" id="emails" name="emails" required /><input type="submit" class="btn-subscribe" name="email_subscriber" value="Subscribe">
             </form>
             <div class="result-s">
           	</div>

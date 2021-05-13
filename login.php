@@ -8,6 +8,10 @@ if(isset($_SESSION['user_id']))
 {
   header('location:index.php');
 }
+if(isset($_SESSION['org_id']))
+{
+  header('location:index.php');
+}
 
 if(isset($_POST['login']))
 {
@@ -124,15 +128,20 @@ if(isset($_POST['org_login']))
     crossorigin="anonymous">
    <link rel="stylesheet" href="./assets/css/login.css" />
 </head>
+<!-- <style>
+body {
+  background-image: url('../img/aditya-saxena-_mIXHvl_wzA-unsplash.jpg');
+}
+</style> -->
 <body>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
         <?php echo $message; ?>
         <form method="POST">
-            <h1>Login as Oraganization</h1><br>
+            <h1>Login as Oraganization<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">Login here to explore new opportunities</p></h1><br>
             <input type="email" name="org_username" placeholder="Email" required />
             <input type="password" name="org_password" placeholder="Password" required />
-            <a class="zoom" href="#">Forgot your password?</a>
+            <a class="zoom2" href="#">Forgot your password?</a>
             <button type="submit" name="org_login" style="text-decoration:none; color: white;">Login</button>
             <p style="
               background-color: rgba(255, 255, 255, 0.651);
@@ -149,7 +158,7 @@ if(isset($_POST['org_login']))
             <h1>Hi, welcome back<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">Login here to explore new opportunities</p></h1><br>
             <input type="email" name="username" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
-            <a class="zoom" href="#">Forgot your password?</a>
+            <a class="zoom2" href="#">Forgot your password?</a>
             <span><button type="submit" name="login" style="text-decoration:none; color: white;">Login</button></span>
             <p style="
             background-color: rgba(255, 255, 255, 0.651);

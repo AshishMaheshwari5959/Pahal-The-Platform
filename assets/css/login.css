@@ -6,9 +6,10 @@
 }
 
 body {
-    background-image: url("../img/aditya-saxena-_mIXHvl_wzA-unsplash.jpg");
+    /*background-image: url("../img/aditya-saxena-_mIXHvl_wzA-unsplash.jpg") center right!important;*/
+    background-image: url("../img/2.jpg");
     background-size: cover;
-    /* background: #f6f5f7; */
+    /*background: #000;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -338,3 +339,12 @@ footer a {
     left: 100%;
     visibility: visible;
   }
+
+
+.zoom2{
+    color: #23527c;
+}
+
+.zoom2:hover{
+    color: #ff6d2a;
+}

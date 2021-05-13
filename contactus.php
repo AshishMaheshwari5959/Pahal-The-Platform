@@ -13,6 +13,7 @@ if(!empty($_GET)){
  mysqli_query($conn, "insert into tblcontact (user_name, user_email, subject, content) values ('$name', '$email', '$subject', '$message')"); 
  $toEmail = "m27sanjay@gmail.com";
  $mailHeaders = "From: " . $name . "<". $email .">\r\n";
- echo "Information Sent Successfully!";
+ echo "<link href='assets/css/style.css' rel='stylesheet'>";
+ echo "<div class='my-3'><div class='sent-message' style='color: green'>Information Sent Successfully!</div></div>";
 }
 ?>
