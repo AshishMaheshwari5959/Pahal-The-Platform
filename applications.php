@@ -1,9 +1,16 @@
+<?php
+session_start();
+include('database_connection.php');
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>News Feed | Pahal</title>
+  <title>Applications | Pahal</title>
   <meta charset="utf-8">
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">

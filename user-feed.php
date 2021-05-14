@@ -157,7 +157,7 @@ session_start();
                   <a href="writeBlog.php"><i class="fa fa-file-alt"></i><span>Write a blog</span></a>
                 </li>
                 <li class="sidebar-dropdown">
-                  <a href="myblogs.php"><i class="fa fa-th-large"></i><span>Blogs</span></a>
+                  <a href="myblogs.php"><i class="fa fa-th-large"></i><span>My Blogs</span></a>
                 </li>
                 <!-- Maps -->
                 <li class="sidebar-dropdown">
