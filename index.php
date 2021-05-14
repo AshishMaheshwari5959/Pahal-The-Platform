@@ -81,11 +81,11 @@ include('database_connection.php');
               echo '<li class="dropdown"><a class="getstarted scrollto" href="signup.php" style="background-color: orangered; border-color: orangered;">Signup</a></li>';
             }
             if(isset($_SESSION['user_id'])){
-              echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: orangered; color:white;';
+              echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: #ff6d2a77; color:white;';
               echo 'border-color: orangered;">';
               echo  $_SESSION["fullname"];
               echo '<i class="bi bi-chevron-down"></i></a>';
-              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="writeBlog.php">Write a Blog</a></li>';
+              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="user-feed.php">News Feed</a></li><li><a href="writeBlog.php">Write a Blog</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
               echo '<li><a href="logout.php">Logout</a></li></ul></li>';
               echo '';
             }
@@ -94,7 +94,7 @@ include('database_connection.php');
               echo 'border-color: orangered;">';
               echo  $_SESSION["org_name"];
               echo '<i class="bi bi-chevron-down"></i></a>';
-              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="writeBlog.php">Write a Blog</a></li>';
+              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="userfeed.php">News Feed</a></li><li><a href="writeBlog.php">Write a Blog</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
               echo '<li><a href="logout.php">Logout</a></li></ul></li>';
               echo '';
             }

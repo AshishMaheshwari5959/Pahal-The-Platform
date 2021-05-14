@@ -136,9 +136,9 @@ body {
 <body>
 <div class="container" id="container">
     <div class="form-container sign-up-container">
-        <?php echo $message; ?>
         <form method="POST">
             <h1>Login as Oraganization<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">Login here to explore new opportunities</p></h1><br>
+            <?php echo $message; ?>
             <input type="email" name="org_username" placeholder="Email" required />
             <input type="password" name="org_password" placeholder="Password" required />
             <a class="zoom2" href="#">Forgot your password?</a>
@@ -156,6 +156,7 @@ body {
     <div class="form-container sign-in-container">
         <form method="POST">
             <h1>Hi, welcome back<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">Login here to explore new opportunities</p></h1><br>
+            <?php echo $message; ?>
             <input type="email" name="username" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
             <a class="zoom2" href="#">Forgot your password?</a>
