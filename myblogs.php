@@ -123,7 +123,7 @@ include('database_connection.php');
 		        <div class="sidebar-menu">
 		          <ul>
 		            <li class="sidebar-dropdown">
-		              <a href="profile.php"><i class="fa fa-user"></i><span>Profile</a>
+		              <a href="user_profile.php"><i class="fa fa-user"></i><span>Profile</a>
 		            </li>
 		            <li class="sidebar-dropdown">
 		              <a href="user-feed.php"><i class="far fa-newspaper"></i><span>News Feed</span></a>

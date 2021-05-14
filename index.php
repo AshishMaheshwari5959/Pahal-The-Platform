@@ -85,7 +85,7 @@ include('database_connection.php');
               echo 'border-color: orangered;">';
               echo  $_SESSION["fullname"];
               echo '<i class="bi bi-chevron-down"></i></a>';
-              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="user-feed.php">News Feed</a></li><li><a href="writeBlog.php">Write a Blog</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
+              echo '<ul><li><a href="user_profile.php">Profile</a></li><li><a href="user-feed.php">News Feed</a></li><li><a href="writeBlog.php">Write a Blog</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
               echo '<li><a href="logout.php">Logout</a></li></ul></li>';
               echo '';
             }

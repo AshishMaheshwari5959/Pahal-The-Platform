@@ -243,7 +243,7 @@ if(isset($_SESSION['org_id']))
 		        <div class="sidebar-menu">
 		          <ul>
 		            <li class="sidebar-dropdown">
-		              <a href="profile.php" style="font-size: medium; font-weight: bold;"><i class="fa fa-user"></i><span>Profile</a>
+		              <a href="user_profile.php" style="font-size: medium; font-weight: bold;"><i class="fa fa-user"></i><span>Profile</a>
 		            </li>
 		            <li class="sidebar-dropdown">
 		              <a href="user-feed.php" style="font-size: medium; font-weight: bold;"><i class="far fa-newspaper"></i><span>News Feed</span></a>
