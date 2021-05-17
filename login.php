@@ -28,10 +28,12 @@ if(isset($_POST['login']))
   $count = $statement->rowCount();
   if($count > 0)
   {
+    $salt = 'XyZzy12*_';
     $result = $statement->fetchAll();
     foreach($result as $row)
     {
-      if(password_verify($_POST["password"], $row["password"]))
+      $check = crypt($_POST['password'],$salt);
+      if($check == $row["password"])
       {
         $_SESSION['user_id'] = $row['user_id'];
         $_SESSION['username'] = $row['username'];
@@ -49,18 +51,19 @@ if(isset($_POST['login']))
       }
       else
       {
-        $message = '<label>Wrong Password</label>';
+        $message = '<label style="color: red;">Incorrect Password</label>';
+        // echo "$message";
       }
     }
   }
   else
   {
-    $message = '<label>Wrong Username</labe>';
+    $message = '<label style="color: red;">Username Does not Exist </label>';
+    // echo "$message";
   }
 }
 ?>
 <?php
-$message = '';
 if(isset($_SESSION['org_id']))
 {
   header('location:index.php');
@@ -81,10 +84,12 @@ if(isset($_POST['org_login']))
   $count = $statement->rowCount();
   if($count > 0)
   {
+    $salt = 'XyZzy12*_';
     $result = $statement->fetchAll();
     foreach($result as $row)
     {
-      if(password_verify($_POST["org_password"], $row["org_password"]))
+      $check = crypt($_POST["org_password"],$salt);
+      if($check == $row["org_password"])
       {
         $_SESSION['org_id'] = $row['org_id'];
         $_SESSION['org_username'] = $row['org_username'];
@@ -102,13 +107,15 @@ if(isset($_POST['org_login']))
       }
       else
       {
-        $message = '<label>Wrong Password</label>';
+        $message = '<label style="color: red;">Incorrect Password</label>';
+        // echo "$message";
       }
     }
   }
   else
   {
-    $message = '<label>Wrong Username</label>';
+    $message = '<label style="color: red;">Username does not Exist</label>';
+    // echo "$message";
   }
 }
 
@@ -119,7 +126,9 @@ if(isset($_POST['org_login']))
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Login</title>
+    <title>Login | Pahal</title>
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <link
     rel="stylesheet"

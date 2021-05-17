@@ -25,6 +25,7 @@ $('.newPost button[data-func]').click(function(){
     $('button[data-func="clear"]').click(function(){
       $('.editor').html('');
       localStorage.removeItem("wysiwyg");
+      localStorage.removeItem("wysiwyz");
     });
     
     

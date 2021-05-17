@@ -30,8 +30,8 @@ if(isset($_POST['user_submit']))
         $cpassword = trim($_POST['confirmpassword']);
 
 
-        $options = array("cost"=>4);
-        $hashPassword = password_hash($password,PASSWORD_BCRYPT,$options);
+        $salt = 'XyZzy12*_';
+        $hashPassword = crypt($password,$salt);
         $date = date('Y-m-d H:i:s');
 
 
@@ -78,7 +78,7 @@ if(isset($_POST['user_submit']))
                     }
                     
                     $success = 'User has been created successfully';
-                    header("location:index.php");
+                    header("location:initial-form.php");
 
                 }
                 catch(PDOException $e){
@@ -120,8 +120,8 @@ if(isset($_POST['org_submit']))
         $org_password= trim($_POST['org_password']);
         
 
-        $options = array("cost"=>4);
-        $hashPassword = password_hash($org_password,PASSWORD_BCRYPT,$options);
+        $salt = 'XyZzy12*_';
+        $hashPassword = crypt($org_password,$salt);
         $date = date('Y-m-d H:i:s');
        
         if(filter_var($org_username, FILTER_VALIDATE_EMAIL))
@@ -196,7 +196,9 @@ if(isset($_POST['org_submit']))
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Signup</title>
+    <title>Signup | Pahal</title>
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <link
     rel="stylesheet"
@@ -233,11 +235,11 @@ if(isset($_POST['org_submit']))
                 <i id="ot-message" style="position: absolute; margin: 20px 5px;"></i>
             </div>
             <div style="width: 100%;">
-                <input type="password" placeholder="Password" name="org_password" id="org-password" maxlength="100" minlength="8" required onkeyup="org_pass_check();"/>
+                <input type="password" placeholder="Password" name="org_password" id="org-password" maxlength="20" minlength="8" required onkeyup="org_pass_check();"/>
                 <i id="ox-message" style="position: absolute; margin: 20px 5px;"></i>
             </div>
             <div style="width: 100%;">
-                <input type="password" placeholder="Confirm password" name="orgconfirmpassword" id="org-re-password" maxlength="100" minlength="8" required onkeyup="org_passwd_check();" />
+                <input type="password" placeholder="Confirm password" name="orgconfirmpassword" id="org-re-password" maxlength="20" minlength="8" required onkeyup="org_passwd_check();" />
                 <i id="op-message" style="position: absolute; margin: 20px 5px;"></i>
             </div>
             <span><button type="submit" name="org_submit" style="text-decoration:none; color: white;">Register</button></span>
@@ -315,23 +317,23 @@ if(isset($_POST['org_submit']))
     var user_name_check = function(){
         var name = document.getElementById('fullname').value;
         if ( name == '' || name == null) {
-            document.getElementById('un-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
+            document.getElementById('un-message').innerHTML = '<div class="dropdown"><img src="assets/img/exclamation-mark.svg" alt="" width="16px"><ul>You cannot leave it empty.</ul></div>';
         } else if ( !/[^a-zA-Z\s]/.test(name) ) {
             document.getElementById('un-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
             var field_icon = 'tick'
         } else {
-            document.getElementById('un-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
+            document.getElementById('un-message').innerHTML = '<div class="dropdown"><img src="assets/img/cancel.svg" alt="" width="16px"><ul>It should only contain alphabets.</ul></div>';   
         }
 
     }
     var org_name_check = function(){
         var name = document.getElementById('org-name').value;
         if ( name == '' || name == null) {
-            document.getElementById('on-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
+            document.getElementById('on-message').innerHTML = '<div class="dropdown"><img src="assets/img/exclamation-mark.svg" alt="" width="16px"><ul>You cannot leave it empty</ul></div>';
         } else if ( !/[^a-zA-Z\s]/.test(name) ) {
             document.getElementById('on-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('on-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">'; 
+            document.getElementById('on-message').innerHTML = '<div class="dropdown"><img src="assets/img/cancel.svg" alt="" width="16px"><ul>It should only contain alphabets.</ul></div>'; 
             // should only contain alphabets  
         }
 
@@ -339,44 +341,44 @@ if(isset($_POST['org_submit']))
     var user_email_check = function(){
         var name = document.getElementById('user-email').value;
         if ( name == '' || name == null) {
-            document.getElementById('ue-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
+            document.getElementById('ue-message').innerHTML = '<div class="dropdown"><img src="assets/img/exclamation-mark.svg" alt="" width="16px"><ul>You cannot leave it empty</ul></div>';
         } else if ( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(name) ) {
             document.getElementById('ue-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('ue-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
+            document.getElementById('ue-message').innerHTML = '<div class="dropdown"><img src="assets/img/cancel.svg" alt="" width="16px"><ul>Not a valid Email ID</ul></div>';   
         }
 
     }
     var org_email_check = function(){
         var name = document.getElementById('org-email').value;
         if ( name == '' || name == null) {
-            document.getElementById('oe-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
+            document.getElementById('oe-message').innerHTML = '<div class="dropdown"><img src="assets/img/exclamation-mark.svg" alt="" width="16px"><ul>You cannot leave it empty</ul></div>';
         } else if ( /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(name) ) {
             document.getElementById('oe-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('oe-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
+            document.getElementById('oe-message').innerHTML = '<div class="dropdown"><img src="assets/img/cancel.svg" alt="" width="16px"><ul>Not a valid Email ID</ul></div>';   
         }
 
     }
     var user_tel_check = function(){
         var name = document.getElementById('user-tel').value;
         if ( name == '' || name == null) {
-            document.getElementById('ut-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
+            document.getElementById('ut-message').innerHTML = '<div class="dropdown"><img src="assets/img/exclamation-mark.svg" alt="" width="16px"><ul>You cannot leave it empty</ul></div>';
         } else if ( /^[6789]\d{9}$/.test(name) ) {
             document.getElementById('ut-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('ut-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
+            document.getElementById('ut-message').innerHTML = '<div class="dropdown"><img src="assets/img/cancel.svg" alt="" width="16px"><ul>Not a valid Mobile Number</ul></div>';   
         }
 
     }
     var org_tel_check = function(){
         var name = document.getElementById('org-tel').value;
         if ( name == '' || name == null) {
-            document.getElementById('ot-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
+            document.getElementById('ot-message').innerHTML = '<div class="dropdown"><img src="assets/img/exclamation-mark.svg" alt="" width="16px"><ul>You cannot leave it empty</ul></div>';
         } else if ( /^[6789]\d{9}$/.test(name) ) {
             document.getElementById('ot-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            document.getElementById('ot-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';   
+            document.getElementById('ot-message').innerHTML = '<div class="dropdown"><img src="assets/img/cancel.svg" alt="" width="16px"><ul>Not a valid Mobile Number</ul></div>';   
         }
 
     }
@@ -384,11 +386,11 @@ if(isset($_POST['org_submit']))
         var name = document.getElementById('password').value;
         var n = name.length;
         if ( name == '' || name == null) {
-            document.getElementById('ux-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
-        } else if ( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(name) ) {
+            document.getElementById('ux-message').innerHTML = '<div class="dropdown"><img src="assets/img/exclamation-mark.svg" alt="" width="16px"><ul>You cannot leave it empty</ul></div>';
+        } else if ( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(name) ) {
             document.getElementById('ux-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            var string = "<div class=\"dropdown\"><img src=\"assets/img/exclamation-mark.svg\" alt=\"\" width=\"16px\">\
+            var string = "<div class='dropdown'><img src='assets/img/exclamation-mark.svg' alt='' width='16px'>\
             <ul>\
             <h5>Password must include:</h5>";
             if (n<8 || n>20) {
@@ -413,11 +415,11 @@ if(isset($_POST['org_submit']))
         var name = document.getElementById('org-password').value;
         var n = name.length;
         if ( name == '' || name == null) {
-            document.getElementById('ox-message').innerHTML = '<img src="assets/img/exclamation-mark.svg" alt="" width="16px">';
-        } else if ( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(name) ) {
+            document.getElementById('ox-message').innerHTML = '<div class="dropdown"><img src="assets/img/exclamation-mark.svg" alt="" width="16px"><ul>You cannot leave it empty</ul></div>';
+        } else if ( /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/.test(name) ) {
             document.getElementById('ox-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
         } else {
-            var string = "<div class=\"dropdown\"><img src=\"assets/img/exclamation-mark.svg\" alt=\"\" width=\"16px\">\
+            var string = "<div class='dropdown'><img src='assets/img/exclamation-mark.svg' alt='' width='16px'>\
             <ul>\
             <h5>Password must include:</h5>";
             if (n<8 || n>20) {
@@ -443,7 +445,7 @@ if(isset($_POST['org_submit']))
       if (document.getElementById('password').value == document.getElementById('re-password').value && document.getElementById('re-password').value.length ) {
         document.getElementById('up-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
       } else {
-        document.getElementById('up-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';
+        document.getElementById('up-message').innerHTML = '<div class="dropdown"><img src="assets/img/cancel.svg" alt="" width="16px"><ul>Password is not matching</ul></div>';
       }
 
     }
@@ -452,7 +454,7 @@ if(isset($_POST['org_submit']))
       if (document.getElementById('org-password').value == document.getElementById('org-re-password').value && document.getElementById('org-re-password').value.length) {
         document.getElementById('op-message').innerHTML = '<img src="assets/img/tick.svg" alt="" width="16px">';
       } else {
-        document.getElementById('op-message').innerHTML = '<img src="assets/img/cancel.svg" alt="" width="16px">';
+        document.getElementById('op-message').innerHTML = '<div class="dropdown"><img src="assets/img/cancel.svg" alt="" width="16px"><ul>Password is not matching</ul></div>';
       }
 
     }

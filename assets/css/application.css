@@ -37,6 +37,7 @@ footer {
   transform: translateY(5px);
 }
 .tabs > li {
+  width: 100%;
   font-weight: bolder;
   transition-duration: 0.25s;
   display: table-cell;

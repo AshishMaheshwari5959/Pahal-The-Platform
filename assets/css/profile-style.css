@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
-* {
+/** {
   transition: all 0.3s ease-out;
-}
+}*/
 
 .flex-container1{
-  margin: 5%;
+  margin: 35px 20px;
   display:flex;
   flex-wrap: wrap;
   border-radius: 4px;
@@ -36,9 +36,9 @@ h1
 .container {
   background-color: transparent;
   margin-top: 5px;
-  max-width: 85%; /*for container */
+  max-width: 100%; /*for container */
   /* height: fit-content; */
-  margin-left: 15%;
+  margin-left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -546,5 +546,18 @@ ul
   font-family: 'Shadows Into Light', cursive;
   font-size: 1.25em;
   margin-left:5px;
+}
+}
+
+@media (min-width: 1400px){
+.container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    margin-left: 18vw;
+    width: 82vw;
+}}
+
+@media (min-width: 768px){
+.container, .container-md, .container-sm {
+    width: 82vw;
+    margin-top: 35px;
 }
 }

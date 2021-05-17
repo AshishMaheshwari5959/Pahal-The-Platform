@@ -11,12 +11,12 @@ include('database_connection.php');
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pahal - A platform to empower the women</title>
+  <title>Pahal - A Platform To Empower The Women</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <!--link href="assets/img/favicon.png" rel="icon"-->
+  <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -32,12 +32,13 @@ include('database_connection.php');
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+
   <script type="text/javascript" src="assets\js\popup.js"></script>
 
   <!-- Contact us ajax -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="assets/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -46,7 +47,7 @@ include('database_connection.php');
   <header id="header" class="fixed-top ">
       <div class="container d-flex align-items-center justify-content-between">
 
-        <h1 class="logo"><a href="index.html">pahal.in</a></h1>
+        <h1 class="logo"><a href="index.php">pahal.in</a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
         <nav id="navbar" class="navbar">
@@ -54,6 +55,7 @@ include('database_connection.php');
             <li><a class="nav-link scrollto" href="index.php/#hero">Home</a></li>
             <li><a class="nav-link scrollto" href="#about-boxes">About</a></li>
             <li><a class="nav-link scrollto" href="#services">Services</a></li>
+            <li><a class="nav-link scrollto" href="user-feed.php">News Feed</a></li>
             <!-- <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
             <li><a class="nav-link scrollto" href="#team">Team</a></li> -->
             <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
@@ -73,7 +75,7 @@ include('database_connection.php');
                 <li><a href="#">Drop Down 4</a></li>
               </ul>
             </li> -->
-            <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+            <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
             <?php
             if(!isset($_SESSION['user_id']) && !isset($_SESSION['org_id']))
             { 
@@ -82,7 +84,7 @@ include('database_connection.php');
             }
             if(isset($_SESSION['user_id'])){
               echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: #ff6d2a77; color:white;';
-              echo 'border-color: orangered;">';
+              echo 'border-color: orangered;" href="user_profile.php">';
               echo  $_SESSION["fullname"];
               echo '<i class="bi bi-chevron-down"></i></a>';
               echo '<ul><li><a href="user_profile.php">Profile</a></li><li><a href="user-feed.php">News Feed</a></li><li><a href="writeBlog.php">Write a Blog</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
@@ -115,7 +117,7 @@ include('database_connection.php');
       <!-- <h1>Plan. Launch. Grow.</h1> -->
       <h2>A Platform to Empower The Women</h2>
       <div class="d-flex">
-        <a href="#about" class="btn-get-started scrollto"><b>Get Started</b></a>
+        <a href="#about-boxes" class="btn-get-started scrollto"><b>Get Started</b></a>
         <a href="https://www.youtube.com/watch?v=6elzSKCRuGg" class="glightbox btn-watch-video" style="color: #ff6d2a"><i class="bi bi-play-circle" style="color: #ff6d2a"></i><span><b>Watch Tutorial</b></span></a>
       </div>
     </div>
@@ -136,7 +138,7 @@ include('database_connection.php');
                 <i class="ri-brush-4-line"></i>
               </div>
               <div class="card-body">
-                <h5 class="card-title"><a href="">Our Mission</a></h5>
+                <h5 class="card-title"><a>Our Mission</a></h5>
                 <p class="card-text">To help every woman break the cycle of suppression and poverty that prevents them from reaching their full potential.</p>
               </div>
             </div>
@@ -148,7 +150,7 @@ include('database_connection.php');
                 <i class="ri-calendar-check-line"></i>
               </div>
               <div class="card-body">
-                <h5 class="card-title"><a href="">Our Plan</a></h5>
+                <h5 class="card-title"><a>Our Plan</a></h5>
                 <p class="card-text">To provide job opportunities to women as per their capabilities and empower them through a platform where their voices can be heard and will inspire others.</p>
               </div>
             </div>
@@ -160,7 +162,7 @@ include('database_connection.php');
                 <i class="ri-movie-2-line"></i>
               </div>
               <div class="card-body">
-                <h5 class="card-title"><a href="">Our Vision</a></h5>
+                <h5 class="card-title"><a>Our Vision</a></h5>
                 <p class="card-text">We envision a world where every woman has the strength to speak up for themselves & to earn a living on their own.</p>
               </div>
             </div>
@@ -328,21 +330,21 @@ include('database_connection.php');
                 </div>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='user-feed.php'">
                   <i class="bi bi-blockquote-right"></i>
                   <h4><a>Blogging</a></h4>
                   <p>Blogging feature to inspire or motivate them for their bright future.</p>
                 </div>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='training.php'">
                   <i class="bi bi-laptop"></i>
                   <h4><a>Trainings</a></h4>
                   <p>Provide training to make them industry ready.</p>
                 </div>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='chat.php'">
                   <i class="bi bi-command"></i>
                   <h4><a>Direct User-Organisation Commuication</a></h4>
                   <p>Instant messaging will keep the users in touch with organization for any doubt assistance.</p>
@@ -364,14 +366,14 @@ include('database_connection.php');
                 </div>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='user-feed.php'">
                   <i class="bi bi-blockquote-right"></i>
                   <h4><a>Blogging</a></h4>
                   <p>Blogging feature to inspire or motivate them for their bright future.</p>
                 </div>
               </div>
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='chat.php'">
                   <i class="bi bi-command"></i>
                   <h4><a>Direct User-Organisation Commuication</a></h4>
                   <p>Instant messaging will keep the users in touch with organization for any doubt assistance.</p>
@@ -591,8 +593,8 @@ include('database_connection.php');
           <div class="col-lg-4 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="terms&cond.php">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="terms&cond.php">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="terms_cond.php">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="terms_cond.php">Privacy policy</a></li>
             </ul>
           </div>
 
@@ -633,7 +635,7 @@ include('database_connection.php');
         &copy; Copyright <strong><span>pahal.in</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-        Designed by <a href="#">Code Smashers</a>
+        Designed by <a>Code Smashers</a>
       </div>
     </div>
   </footer><!-- End Footer -->
