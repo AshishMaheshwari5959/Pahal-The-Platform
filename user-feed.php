@@ -140,71 +140,73 @@ session_start();
           </a>
 
           <nav class="s-sidebar__nav" id="sidebar">
-              <div class="sidebar-header">
-                <!-- <div class="user-pic" style="color: bisque;">
-                  <i class="fa fa-user-circle fa-4x" aria-hidden="true"></i>
-                </div>
-                <div class="user-info">
-                  <span class="user-name"> <strong><?php echo $_SESSION['fullname']; ?></strong></span>
-                </div> -->
-                <div class="circle">
-                  <!-- <img class="profile-pic" src="" style="padding: 0px"> -->
-                  <!-- <i class="fa fa-user fa-2x"></i> -->
-                  <div class="p-image">
-                    <center><i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i></center>
-                    <input class="file-upload" type="file" accept="image/*"/>
-                  </div>
-                </div>
-                <div class="user-info">
-                  <center><span class="user-name"><strong><?php echo $_SESSION['fullname']; ?></strong></span></center>
-                </div>
-              </div>
-              <hr style="height: 1px; margin: 10px 10px 0 10px;">
-              <div class="sidebar-menu">
-                <ul>
-                  <li class="sidebar-dropdown">
-                    <a href="user_profile.php"><i class="fa fa-user"></i><span>Profile</a>
-                  </li>
-                  <li class="sidebar-dropdown  active-tab">
-                    <a href="user-feed.php"><i class="far fa-newspaper"></i><span>News Feed</span></a>
-                  </li>
-                  <li class="sidebar-dropdown">
-                    <a href="writeBlog.php"><i class="fa fa-file-alt"></i><span>Write a blog</span></a>
-                  </li>
-                  <li class="sidebar-dropdown">
-                    <a href="myblogs.php"><i class="fa fa-th-large"></i><span>My Blogs</span></a>
-                  </li>
-                  <li class="sidebar-dropdown">
-                    <a href="training.php"><i class="fas fa-graduation-cap"></i><span>Training</span></a>
-                  </li>
-                  <li class="sidebar-dropdown">
-                    <a href="chat.php"><i class="fas fa-comments"></i><span>Inbox</span></a>
-                  </li>
-                  <li class="sidebar-dropdown">
-                    <a href="joblist.php"><i class="fas fa-briefcase"></i><span>Explore Jobs</span></a>
-                  </li>
-                  <li class="sidebar-dropdown">
-                    <a href="applications.php"><i class="fa fa-thumbtack"></i><span>Application Tracking</span></a>
-                  </li>
-                  <li class="sidebar-dropdown">
-                    <a href="index.php"><i class="fas fa-home"></i><span>Go Back Home</span></a>
-                  </li>
-                  <li class="sidebar-dropdown">
-                    <a href="index.php#contact"><i class="fas fa-headphones"></i><span>Feedback</span></a>
-                  </li>
-                  <li class="sidebar-dropdown"><a href="logout.php"><i class="fa fa-power-off"></i><span>Logout</span></a></li>
-                </ul>
-              </div>
-              <hr style="height: 1px; margin: 10px 10px 0 10px;">
-              <div class="sidebar-footer">
-                <center>
-                <div class="copyright">
-                  <strong><span>pahal.in&copy; </span></strong>2021<br>
-                  Designed by <a>Code Smashers</a><br>
-                </div>
-              </center>
-              </div>
-            </nav>
+                  <?php
+                    if(isset($_SESSION['user_id'])){
+                  ?>
+                    <div class="sidebar-header">
+                      
+                      <div class="circle" id="circlediv">
+                        <div class="p-image">
+                          <center><i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i></center>
+                          <input class="file-upload" type="file" accept="image/*"/>
+                        </div>
+                      </div>
+                      <div class="user-info">
+                        <center><span class="user-name"><strong><?php echo $_SESSION['fullname']; ?></strong></span></center>
+                      </div>
+                    </div>
+                    <hr style="height: 1px; margin: 10px 10px 0 10px;">
+                    <div class="sidebar-menu">
+                      <ul>
+                        <li class="sidebar-dropdown">
+                          <a href="user_profile.php"><i class="fa fa-user"></i><span>Profile</a>
+                        </li>
+                        <li class="sidebar-dropdown  active-tab">
+                          <a href="user-feed.php"><i class="far fa-newspaper"></i><span>News Feed</span></a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                          <a href="writeBlog.php"><i class="fa fa-file-alt"></i><span>Write a blog</span></a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                          <a href="myblogs.php"><i class="fa fa-th-large"></i><span>My Blogs</span></a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                          <a href="training.php"><i class="fas fa-graduation-cap"></i><span>Training</span></a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                          <a href="chat.php"><i class="fas fa-comments"></i><span>Inbox</span></a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                          <a href="joblist.php"><i class="fas fa-briefcase"></i><span>Explore Jobs</span></a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                          <a href="applications.php"><i class="fa fa-thumbtack"></i><span>Application Tracking</span></a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                          <a href="index.php"><i class="fas fa-home"></i><span>Go Back Home</span></a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                          <a href="index.php#contact"><i class="fas fa-headphones"></i><span>Feedback</span></a>
+                        </li>
+                        <li class="sidebar-dropdown"><a href="logout.php"><i class="fa fa-power-off"></i><span>Logout</span></a></li>
+                      </ul>
+                    </div>
+                    <hr style="height: 1px; margin: 10px 10px 0 10px;">
+                    <div class="sidebar-footer">
+                      <center>
+                      <div class="copyright">
+                        <strong><span>pahal.in&copy; </span></strong>2021<br>
+                        Designed by <a>Code Smashers</a><br>
+                      </div>
+                    </center>
+                    </div>
+                  <?php 
+                    } else {}
+                  ?>
+                    <div class="sidebar-menu">
+
+                    </div>
+                </nav>
         </div>
       </div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

@@ -15,10 +15,32 @@ if(isset($_SESSION['user_id'])) {
     )
   );  
   $result = $statement->fetchAll();
+  
   if(isset($_POST['submit'])){
 
 
+  $atul = $_POST['atul'];
+  $user_id=$_SESSION['user_id'];
 
+
+
+foreach ($atul as $key => $value) 
+
+{
+  
+$sql = 'INSERT INTO skills (user_id, skill)
+VALUES (:user_id,:skill);';
+    
+        $handle = $pdo->prepare($sql);
+          $params = [
+            ':user_id'=>$user_id,
+            ':skill'=>$value
+            
+          ];
+
+          $handle->execute($params);
+          
+  }
        
 
 
@@ -28,7 +50,12 @@ if(isset($_SESSION['user_id'])) {
        $dob = $_POST['dob'];
        $gender = $_POST['gender'];
        $state = $_POST['state'];
+       
+       if(!isset($_POST['city']) || $_POST['city']==null ||  $_POST['city']=='')
+      {$_POST['city']=" ";}
+
        $city = $_POST['city'];
+
        $address = $_POST['address'];
        $maritalstatus =$_POST['maritalstatus'];
        
@@ -36,6 +63,9 @@ if(isset($_SESSION['user_id'])) {
       $chk = implode( ',',$_POST['language'] );
 
        $hq = $_POST['hq'];
+
+       if(!isset($_POST['yop']) || $_POST['yop']==null ||  $_POST['yop']=='')
+      {$_POST['yop']=0;}
        $yop = $_POST['yop'];
        $institute = $_POST['institute'];
        $percentage = $_POST['percentage'];
@@ -88,10 +118,14 @@ if(isset($_SESSION['user_id'])) {
             }
             $rank++;
         $pdoExec = $handle->execute($params);
+
+  
+
+
         if($pdoExec)
       {
           echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Data Updated';
-          header("refresh:3;index.php");
+          
            
     } else{
       echo 'ERROR Data Not Updated';
@@ -209,7 +243,7 @@ else{
           window.onload = function () {
               var ddlYears = document.getElementById("ddlYears");
               var currentYear = (new Date()).getFullYear();
-              for (var i = 1950; i <= currentYear; i++) {
+              for (var i = currentYear; i >= 1950; i--) {
                   var option = document.createElement("OPTION");
                   option.innerHTML = i;
                   option.value = i;
@@ -235,7 +269,35 @@ else{
             <option value="Self Employed">
             <option value="Employee">
           </datalist>
-          <input name="skill1" type="text" placeholder="Skill">
+          <input name="skill1" list="skill" placeholder="Skill">
+          <datalist id="skill">
+            <option value="Art and Craft">Art and Craft</option>
+            <option value="Communicational Skills">Communicational Skills</option>
+            <option value="Cooking">Cooking</option>
+            <option value="Creativity">Creativity</option>
+            <option value="Data Entry">Data Entry</option>
+            <option value="Decision Making">Decision Making</option>
+            <option value="Embroidery">Embroidery</option>
+            <option value="Filing and paper management">Filing and paper management</option>
+            <option value="Leadership">Leadership</option>
+            <option value="Listening Skills">Listening Skills</option>
+            <option value="Management">Management</option>
+            <option value="Mehandi">Mehandi</option>
+            <option value="Marketing">Marketing</option>
+            <option value="MS Excel">MS Excel</option>
+            <option value="Painting">Painting</option>
+            <option value="Planning">Planning</option>
+            <option value="Problem Solving">Problem Solving</option>
+            <option value="Public Speaking">Public Speaking</option>
+            <option value="Research Skills">Research Skills</option>
+            <option value="Self Confidence">Self Confidence</option>
+            <option value="Sewing">Sewing</option>
+            <option value="Sketching">Sketching</option>
+            <option value="Story telling">Story telling</option>
+            <option value="Teamwork">Teamwork</option>
+            <option value="Time Management">Time Management</option>
+            <option value="Writing">Writing</option>
+          </datalist>
           <input name="duration1" list="dur" placeholder="Duration of Experience">
           <datalist id="dur">
             <option value="Less than 1 month">
@@ -261,7 +323,7 @@ else{
       <h2 class="fs-title">Skills</h2>
       <h3 class="fs-subtitle">Add your skills to get perfect job</h3>
          <div>
-          <select multiple data-multi-select-plugin name="property-type">
+          <select multiple data-multi-select-plugin name="atul[]">
               <option value="Art and Craft">Art and Craft</option>
               <option value="Communicational Skills">Communicational Skills</option>
               <option value="Cooking">Cooking</option>
@@ -289,6 +351,7 @@ else{
               <option value="Time Management">Time Management</option>
               <option value="Writing">Writing</option>
           </select>
+
           </div>
       
       
@@ -326,7 +389,35 @@ countPos = 1;
                               <option value="Self Employed">\
                               <option value="Employee">\
                             </datalist>\
-                            <input name="skill'+countPos+'" type="text" placeholder="Skill">\
+                            <input name="skill'+countPos+'" list="skill" placeholder="Skill">\
+                            <datalist id="skill">\
+                              <option value="Art and Craft">Art and Craft</option>\
+                              <option value="Communicational Skills">Communicational Skills</option>\
+                              <option value="Cooking">Cooking</option>\
+                              <option value="Creativity">Creativity</option>\
+                              <option value="Data Entry">Data Entry</option>\
+                              <option value="Decision Making">Decision Making</option>\
+                              <option value="Embroidery">Embroidery</option>\
+                              <option value="Filing and paper management">Filing and paper management</option>\
+                              <option value="Leadership">Leadership</option>\
+                              <option value="Listening Skills">Listening Skills</option>\
+                              <option value="Management">Management</option>\
+                              <option value="Mehandi">Mehandi</option>\
+                              <option value="Marketing">Marketing</option>\
+                              <option value="MS Excel">MS Excel</option>\
+                              <option value="Painting">Painting</option>\
+                              <option value="Planning">Planning</option>\
+                              <option value="Problem Solving">Problem Solving</option>\
+                              <option value="Public Speaking">Public Speaking</option>\
+                              <option value="Research Skills">Research Skills</option>\
+                              <option value="Self Confidence">Self Confidence</option>\
+                              <option value="Sewing">Sewing</option>\
+                              <option value="Sketching">Sketching</option>\
+                              <option value="Story telling">Story telling</option>\
+                              <option value="Teamwork">Teamwork</option>\
+                              <option value="Time Management">Time Management</option>\
+                              <option value="Writing">Writing</option>\
+                            </datalist>\
                             <input name="duration'+countPos+'" list="dur" placeholder="Duration in Months">\
                             <datalist id="dur">\
                               <option value="Less than 1 month">\
@@ -337,7 +428,7 @@ countPos = 1;
                               <option value="More than 5 years">  \
                             </datalist>\
                             <textarea name="descp'+countPos+'" rows="7" placeholder="Short Description" style="resize: vertical;"></textarea>\
-                            <input type="button" value="-" onclick="$(\'#position'+countPos+'\').remove();return false;"></p> \
+                            <input type="button" value="-" onclick="$(\'#customer_records'+countPos+'\').remove();return false;"></p> \
                         </div>');
                 });
             });   

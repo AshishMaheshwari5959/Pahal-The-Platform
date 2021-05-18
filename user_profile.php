@@ -2,8 +2,29 @@
 session_start();
 include('database_connection.php');
 
-?>
+if(!isset($_SESSION['user_id']))
+{
+  header('location:login.php');
+}
 
+$user_id = $_SESSION['user_id'];
+$stmt = $pdo->query("select fullname,username,dob,maritalstatus,city,state,address,mobilenumber,language,hq,yop,institute,percentage from user where user_id='$user_id;'");
+
+$row = $stmt->fetch();
+// echo $row;
+
+$stmt2 = $pdo->query("Select skill from skills where user_id = '$user_id;'");
+
+$row2 = $stmt2->fetchAll(PDO::FETCH_COLUMN, 0);
+
+
+$stmt3 = $pdo->query("Select typeofemp,skill,duration,description from exp where user_id = '$user_id;'");
+
+$row3 = $stmt3->fetchAll();
+
+// print_r($row3[0][0]);
+
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -32,8 +53,8 @@ include('database_connection.php');
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  
+  <!-- <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
+  <script  src="assets/js/profile-cities.js"></script>
   <link rel="stylesheet" href="assets/css/profile-skill.css">
   <link rel="stylesheet" href="assets/css/profile-style.css">
   <link rel="stylesheet" href="assets/css/profile-form.css">
@@ -50,30 +71,30 @@ include('database_connection.php');
       <h3>Personal Details</h3>  
       <table class="cleft">
         <tr>
-          <td class="aayuedit">Full Name</td><td>:</td><td>Aasyushi Bahukhandi</td>
+          <td class="aayuedit">Full Name</td><td>:</td><td><?php echo $row['fullname'];?></td>
         </tr>
         <tr>
-          <td class="aayuedit">Contact</td><td>:</td><td>8949857096</td>
+          <td class="aayuedit">Contact</td><td>:</td><td><?php echo $row[7];?></td>
         </tr>
         <tr>
-          <td class="aayuedit">Email id</td><td>:</td><td>aayushib1908@gmail.com</td>
+          <td class="aayuedit">Email id</td><td>:</td><td><?php echo $row[1];?></td>
         </tr>
         <tr>
-          <td class="aayuedit">Location</td><td>:</td><td>Ajmer</td>
+          <td class="aayuedit">Location</td><td>:</td><td><?php echo $row[4];?>, <?php echo $row[5];?></td>
         </tr>
         <tr>
-          <td class="aayuedit">Address</td><td>:</td><td>825, Pragati Nagar, Kotra, Ajmer</td>
+          <td class="aayuedit">Address</td><td>:</td><td><?php echo $row[6];?></td>
         </tr>
       </table>
       <table class="cright">
         <tr>
-          <td class="aayuedit2">Date of Birth</td><td>:</td><td>19/08/2000</td>
+          <td class="aayuedit2">Date of Birth</td><td>:</td><td><?php echo $row[2];?></td>
         </tr>
         <tr>
-          <td class="aayuedit2">Marital Status</td><td>:</td><td>Single</td>
+          <td class="aayuedit2">Marital Status</td><td>:</td><td><?php echo $row[3];?></td>
         </tr>
         <tr>
-          <td class="aayuedit2">Language(s)</td><td>:</td><td>English, Hindi</td>
+          <td class="aayuedit2">Language(s)</td><td>:</td><td><?php echo $row[8];?></td>
         </tr>  
       </table>
       <div class="go-corner" href="#">
@@ -84,12 +105,12 @@ include('database_connection.php');
     <div class="card2" href="#">
       <h3>Highest Qualfication</h3> 
       <div class="aayueducation">
-        <div class="aayudegree">B. Tech.<br>Computer Science & Engineering</div>
-        <div class="aayuinstitute">JECRC Foundation</div>
+        <div class="aayudegree"><?php echo $row[9];?></div>
+        <div class="aayuinstitute"><b>Institute: <?php echo $row[11];?></b></div>
         <div class="aayuyear">
-          <div style="display: inline;">2018-Present</div>
+          <div style="display: inline;"><b>Year of Passing: <?php echo $row[10];?></b></div>
         </div>
-        <div class="aayumarks">RTU: 99%</div>
+        <div class="aayumarks"><b><?php echo $row[12];?>%</b></div>
       </div> 
       <!-- <div class="aayueducation">
         <div class="aayudegree">Senior Secondary(XII), Science</div>
@@ -121,16 +142,11 @@ include('database_connection.php');
             <div class="inner">
               <section>
                 <ul class="skill-set">
-                  <li>Mobile Development</li>
-                  <li>Xamarin</li>
-                  <li>CSS3</li>
-                  <li>Adobe Photoshop</li>
-                  <li>HTML5</li>
-                  <li>CSS3</li>
-                  <li>JQUERY</li>
-                  <li>UI Design</li>
-                  <li>Company Branding</li>
-                  <li>Responsive Web Design</li>
+                  <?php 
+                  foreach( $row2 as $val ){ 
+                  echo "<li>"; echo $val; echo "</li>";
+                    }
+                  ?>
                 </ul>
               </section>
             </div>
@@ -143,17 +159,23 @@ include('database_connection.php');
       
     <div class="card4" href="#">
       <h3>Experience</h3>
+      <?php 
+      foreach( $row3 as $val ){
+      ?>
       <div class="aayuexp">
         <table style="width:100%">
           <tr>
-            <td class="aayucomp">Infosys Ltd</td><td class="aayuprofile">Front End Developer</td>
+            <td class="aayucomp"><?php echo $val[0]; ?></td><td class="aayuprofile"><?php echo $val[1]; ?></td>
           </tr>
           <tr valign="top">
-            <td class="aayudur">Sept 2016 - Present</td><td class="aayudesc">Mangaing complete Front end development Majorly working with UI and Code review, Deployment.</td>
+            <td class="aayudur"><?php echo $val[2]; ?></td><td class="aayudesc"><?php echo $val[3]; ?></td>
           </tr>
         </table>
-      </div>    
-      <div class="aayuexp">
+      </div>
+      <?php 
+      }
+      ?>   
+      <!-- <div class="aayuexp">
         <table style="width:100%">
           <tr>
             <td class="aayucomp">Xchanging Technologies</td><td class="aayuprofile">Web Developer</td>
@@ -162,7 +184,7 @@ include('database_connection.php');
             <td class="aayudur">Aug 2015 - Aug 2016</td><td class="aayudesc">Heading whole front end work. Managing team and Client with following Agile Development Methodology. Taking care of Complete Front End and Back end integration with REST services.  </td>
           </tr>
         </table>
-      </div>    
+      </div>-->    
       <div class="go-corner" href="#">
         <div class="go-arrow">
           <i onclick="openForm4()" class="fa fa-pencil" style="color:white; cursor: pointer;"></i>
@@ -184,16 +206,16 @@ include('database_connection.php');
         <label for="mobile" class="ash-label"><b>Mobile Number</b></label>
         <input type="text" class="ash-input" placeholder="Enter your Mobile Number" name="mobile" required><br>
         <label for="gender" class="ash-label"><b>Gender</b></label>
-        <select name="gender" id="gender" class="ash-select">
-          <option value="" disabled selected>Enter your gender</option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="none">Rather Not to Say</option>
-        </select><br>
+        <input list="gender" name="gender"  id="browser" class="ash-input" placeholder="Select your gender"/>
+        <datalist id="gender" class="ash-datalist">
+          <option value="" selected>Enter your gender</option>
+          <option value="Female">
+          <option value="Rather Not to Say">
+        </datalist><br>
 
         <label for="city" class="ash-label"><b>State</b></label>
-        <select class="ash-select" onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" required> 
-          <option value="" disabled selected>Select State</option>
+        <select  name="state" class="ash-select" onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" required> 
+          <!-- <option value="" disabled selected>Select State</option> -->
         </select><br>
         
         <label for="city" class="ash-label"><b>City</b></label>
@@ -206,27 +228,28 @@ include('database_connection.php');
         <input type="text" onfocus="(this.type='date')" class="ash-input" placeholder="Enter your Date of Birth" name="dob" min="1940-01-01" max="2021-05-25" required><br>
        
         <label for="mstatus" class="ash-label"><b>Maritial Status</b></label>
-        <select name="mstatus" id="mstatus" class="ash-select">
+        <input list="mstatus" name="mstatus" class="ash-input" id="browser" placeholder="Select your Maritial Status">
           <datalist id="mstatus">
             <option value="" disabled selected>Enter your marital status</option>
-            <option value="M">Married</option>
-            <option value="U">Unmarried</option>
-            <option value="W">Widowed</option>
-            <option value="D">Divorced</option>
+            <option value="Married">
+            <option value="Unmarried">
+            <option value="Widowed">
+            <option value="Divorced">
           </datalist>
-        </select><br>
+        <br>
         
-        <label for="lan" class="ash-label"><b>Language(s)</b></label>
-        <select name="lan" id="lan" class="ash-select">
-          <option value="" disabled selected>Select language(s) you know</option>
-          <option value="M">Hindi</option>
-          <option value="U">English</option>
-          <option value="L">Any Other Local Language</option>
-        </select><br><br>
+        <div class="unstyled centered"><br>
+          <label style="float: left; font-size: 14px;" class="ash-label">Choose Language(s)</label><br>
+            <input type="checkbox" class="styled-checkbox ash-input" name="language[]" id="styled-checkbox-1" value="Hindi">
+            <label for="styled-checkbox-1" class="ash-label">Hindi</label>
+            <input type="checkbox" class="styled-checkbox ash-input" name="language[]" id="styled-checkbox-2" value="English" checked>
+            <label for="styled-checkbox-2" class="ash-label">English</label>
+            <input type="checkbox" class="styled-checkbox ash-input" name="language[]" id="styled-checkbox-3" value="Other Local Language" checked>
+            <label for="styled-checkbox-3" class="ash-label">Other Local Language</label>
+        </div><br><br>
         <script language="javascript">print_state("sts");</script>
 
-        <center><button type="submit" class="btn" style="font-size: 15px;
-          font-weight: 600;">SAVE</button></center>
+        <center><button type="submit" class="btn" style="font-size: 15px; font-weight: 600;">SAVE</button></center>
       </form>
       <div class="go-corner-form" href="#">
         <div class="go-arrow">
@@ -240,15 +263,16 @@ include('database_connection.php');
       <form action="/action_page.php">
         <h2>Highest Qualification</h2>
         <label for="degree" class="ash-label"><b>Select your Degree</b></label>
-        <input list="Qualfication" class="ash-input" name="Qualfication" id="browser" placeholder="Highest Qualfication">
-        <datalist id="Qualfication" class="ash-datalist">
-          <option value="PhD"></option>
-          <option value="Masters"></option>
-          <option value="Bachelors"></option>
-          <option value="Diploma"></option>
-          <option value="Senior Secondary(XII)"></option>
-          <option value="Secondary(X)"></option>
-        </datalist><br>
+        <input list="Qualfication" class="ash-input" name="hq" id="browser" placeholder="Highest Qualfication">
+        <datalist id="Qualfication">
+              <option value="Secondary)(X)"> 
+              <option value="Senior Secondary(XII)">
+              <option value="Diploma">
+              <option value="Diploma">
+              <option value="Bachelors">
+              <option value="Masters">
+              <option value="PhD">
+      </datalist><br>
         <label for="yop" class="ash-label"><b>Year Of Passing</b></label>
         <input type="number" class="ash-input" name="yop"  min="1940" max="2021" placeholder="Year of Passing" /><br>
         <label for="institute" class="ash-label"><b>Institute</b></label>
@@ -272,12 +296,32 @@ include('database_connection.php');
         <div>
           <label for="skill" class="ash-label"><b>Select your skills</b></label>
           <select name="skills" class="ash-select" multiple data-multi-select-plugin>
-            <option value="Customer Support">Customer Support</option>
-            <option value="Sewing">Sewing</option>
+            <option value="Art and Craft">Art and Craft</option>
+            <option value="Communicational Skills">Communicational Skills</option>
+            <option value="Cooking">Cooking</option>
+            <option value="Creativity">Creativity</option>
+            <option value="Data Entry">Data Entry</option>
+            <option value="Decision Making">Decision Making</option>
+            <option value="Embroidery">Embroidery</option>
+            <option value="Filing and paper management">Filing and paper management</option>
+            <option value="Leadership">Leadership</option>
+            <option value="Listening Skills">Listening Skills</option>
+            <option value="Management">Management</option>
+            <option value="Mehandi">Mehandi</option>
+            <option value="Marketing">Marketing</option>
             <option value="MS Excel">MS Excel</option>
-            <option value="MS Word">MS Word</option>
-            <option value="Data Handling">Data Handling</option>
-            <option value="Handmade Gifts">Handmade Gifts</option>
+            <option value="Painting">Painting</option>
+            <option value="Planning">Planning</option>
+            <option value="Problem Solving">Problem Solving</option>
+            <option value="Public Speaking">Public Speaking</option>
+            <option value="Research Skills">Research Skills</option>
+            <option value="Self Confidence">Self Confidence</option>
+            <option value="Sewing">Sewing</option>
+            <option value="Sketching">Sketching</option>
+            <option value="Story telling">Story telling</option>
+            <option value="Teamwork">Teamwork</option>
+            <option value="Time Management">Time Management</option>
+            <option value="Writing">Writing</option>
           </select>
         </div><br>
 
@@ -304,9 +348,45 @@ include('database_connection.php');
               <option value="Employee">
             </datalist><br>
             <label for="lan" class="ash-label"><b>Skill</b></label>
-            <input name="skill" class="ash-input" type="text" placeholder="Skill"><br>
+            <input name="skill1" list="skill" class="ash-input" placeholder="Skill">
+            <datalist id="skill">
+              <option value="Art and Craft">Art and Craft</option>
+              <option value="Communicational Skills">Communicational Skills</option>
+              <option value="Cooking">Cooking</option>
+              <option value="Creativity">Creativity</option>
+              <option value="Data Entry">Data Entry</option>
+              <option value="Decision Making">Decision Making</option>
+              <option value="Embroidery">Embroidery</option>
+              <option value="Filing and paper management">Filing and paper management</option>
+              <option value="Leadership">Leadership</option>
+              <option value="Listening Skills">Listening Skills</option>
+              <option value="Management">Management</option>
+              <option value="Mehandi">Mehandi</option>
+              <option value="Marketing">Marketing</option>
+              <option value="MS Excel">MS Excel</option>
+              <option value="Painting">Painting</option>
+              <option value="Planning">Planning</option>
+              <option value="Problem Solving">Problem Solving</option>
+              <option value="Public Speaking">Public Speaking</option>
+              <option value="Research Skills">Research Skills</option>
+              <option value="Self Confidence">Self Confidence</option>
+              <option value="Sewing">Sewing</option>
+              <option value="Sketching">Sketching</option>
+              <option value="Story telling">Story telling</option>
+              <option value="Teamwork">Teamwork</option>
+              <option value="Time Management">Time Management</option>
+              <option value="Writing">Writing</option>
+            </datalist><br>
             <label for="dur" class="ash-label"><b>Duration</b></label>
-            <input name="dur" class="ash-input" type="number" placeholder="Duration in Months"><br>
+            <input name="duration" list="dur" class="ash-input" placeholder="Duration of Experience">
+              <datalist id="dur">
+                <option value="Less than 1 month">
+                <option value="Between 1 month and 6 month">
+                <option value="Between 6 month and a year">
+                <option value="Between 1 year and 2 year">
+                <option value="Between 2 year and 5 year">
+                <option value="More than 5 years">  
+              </datalist><br>
             <label for="desc" class="ash-label"><b>Short Description</b></label>
             <textarea style="float: right; resize: none; height: 60px;" name="desc" class="form-control" rows="7" placeholder="Short Description"></textarea><br>
           </div>
@@ -332,10 +412,12 @@ include('database_connection.php');
       </a>
 
       <nav class="s-sidebar__nav" id="sidebar">
+        <?php
+          if(isset($_SESSION['user_id'])){
+        ?>
           <div class="sidebar-header">
-            <div class="circle">
-              <!-- <img class="profile-pic" src="" style="padding: 0px"> -->
-              <!-- <i class="fa fa-user fa-2x"></i> -->
+            
+            <div class="circle" id="circlediv">
               <div class="p-image">
                 <center><i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i></center>
                 <input class="file-upload" type="file" accept="image/*"/>
@@ -390,7 +472,13 @@ include('database_connection.php');
             </div>
           </center>
           </div>
-        </nav>
+        <?php 
+          } else {}
+        ?>
+          <div class="sidebar-menu">
+
+          </div>
+      </nav>
     </div>
   </div>
 
@@ -402,8 +490,8 @@ include('database_connection.php');
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
 <!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
-<script src="assets/js/dashboard.js"></script>
+<!-- <script src="assets/js/main.js"></script> -->
+<!-- <script src="assets/js/dashboard.js"></script> -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script>
   function openForm1() {

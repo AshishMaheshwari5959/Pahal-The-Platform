@@ -1,6 +1,11 @@
 <?php 
-
+session_start();
 include('database_connection.php');
+
+if(!isset($_SESSION['user_id']))
+{
+  header('location:login.php');
+}
 
 
 
@@ -56,7 +61,6 @@ include('database_connection.php');
 
            <?php
             try {   
-                session_start();
                 $id = $_SESSION['user_id'];
 
                $stmt = $pdo->query('SELECT blog.uploaddate, blog.title, blog.content, blog.image, user.fullname FROM blog INNER JOIN  user ON blog.user_id=user.user_id where blog.user_id='."$id".' ORDER BY uploaddate desc;');
@@ -147,7 +151,7 @@ include('database_connection.php');
               <li class="sidebar-dropdown">
                 <a href="writeBlog.php"><i class="fa fa-file-alt"></i><span>Write a blog</span></a>
               </li>
-              <li class="sidebar-dropdown active-tab">
+              <li class="sidebar-dropdown  active-tab">
                 <a href="myblogs.php"><i class="fa fa-th-large"></i><span>My Blogs</span></a>
               </li>
               <li class="sidebar-dropdown">

@@ -127,6 +127,22 @@ input:-internal-autofill-selected {
   background-image: none !important;
   color: -internal-light-dark(black, white) !important;
 }
+
+select.selector option {
+  color: red;
+}
+
+#msform input, #msform textarea, #msform select, #msform datalist {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  font-size: 13px;
+}
 /*
 b, strong {
   font-weight: larger;

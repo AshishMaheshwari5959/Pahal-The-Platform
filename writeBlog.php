@@ -1,6 +1,11 @@
 <?php
 session_start();
 include('database_connection.php');
+if(!isset($_SESSION['user_id']))
+{
+  header('location:login.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -150,7 +155,7 @@ include('database_connection.php');
               <li class="sidebar-dropdown"><a href="logout.php"><i class="fa fa-power-off"></i><span>Logout</span></a></li>
             </ul>
           </div>
-          <hr style="height: 1px; margin: 10px 10px 0 10px;">
+          <hr style="height: 1px; margin: 10px 10px 0 10px; color: rgba(255,255,255,0.7);">
           <div class="sidebar-footer">
             <center>
             <div class="copyright">

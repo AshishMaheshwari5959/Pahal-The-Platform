@@ -1,6 +1,13 @@
 <?php
 session_start();
 include('database_connection.php');
+
+if(!isset($_SESSION['user_id']))
+{
+  header('location:login.php');
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -215,22 +222,19 @@ include('database_connection.php');
     </ul>
   </section>
   <div class="s-layout">
+    <div class="s-layout">
     <div class="s-layout__sidebar">
       <a class="s-sidebar__trigger" href="#0">
         <i class="fa fa-bars"></i>
       </a>
 
       <nav class="s-sidebar__nav" id="sidebar">
+        <?php
+          if(isset($_SESSION['user_id'])){
+        ?>
           <div class="sidebar-header">
-            <!-- <div class="user-pic" style="color: bisque;">
-              <i class="fa fa-user-circle fa-4x" aria-hidden="true"></i>
-            </div>
-            <div class="user-info">
-              <span class="user-name"> <strong><?php echo $_SESSION['fullname']; ?></strong></span>
-            </div> -->
-            <div class="circle">
-              <!-- <img class="profile-pic" src="" style="padding: 0px"> -->
-              <!-- <i class="fa fa-user fa-2x"></i> -->
+            
+            <div class="circle" id="circlediv">
               <div class="p-image">
                 <center><i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i></center>
                 <input class="file-upload" type="file" accept="image/*"/>
@@ -264,7 +268,7 @@ include('database_connection.php');
               <li class="sidebar-dropdown">
                 <a href="joblist.php"><i class="fas fa-briefcase"></i><span>Explore Jobs</span></a>
               </li>
-              <li class="sidebar-dropdown active-tab">
+              <li class="sidebar-dropdown  active-tab">
                 <a href="applications.php"><i class="fa fa-thumbtack"></i><span>Application Tracking</span></a>
               </li>
               <li class="sidebar-dropdown">
@@ -285,8 +289,15 @@ include('database_connection.php');
             </div>
           </center>
           </div>
-        </nav>
+        <?php 
+          } else {}
+        ?>
+          <div class="sidebar-menu">
+
+          </div>
+      </nav>
     </div>
+  </div>
   </div>
 <!-- partial -->
 <!-- Vendor JS Files -->
