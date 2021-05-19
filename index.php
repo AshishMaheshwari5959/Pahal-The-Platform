@@ -87,7 +87,7 @@ include('database_connection.php');
               echo 'border-color: orangered;" href="user_profile.php">';
               echo  $_SESSION["fullname"];
               echo '<i class="bi bi-chevron-down"></i></a>';
-              echo '<ul><li><a href="user_profile.php">Profile</a></li><li><a href="user-feed.php">News Feed</a></li><li><a href="writeBlog.php">Write a Blog</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
+              echo '<ul><li><a href="user_profile.php">Profile</a></li><li><a href="user-feed.php">News Feed</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
               echo '<li><a href="logout.php">Logout</a></li></ul></li>';
               echo '';
             }
@@ -323,7 +323,7 @@ include('database_connection.php');
             ?>
             <div class="row" data-aos="fade-up" data-aos-delay="200">
               <div class="col-md-6">
-                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='joblist.php'">
                   <i class="bi bi-briefcase"></i>
                   <h4><a>Jobs for women</a></h4>
                   <p>We provide job opportunities to unemployed women to empower them.</p>
@@ -471,7 +471,7 @@ include('database_connection.php');
 
           <div class="row">
             <div class="col-md-12">
-              <div class="info-box">
+              <div class="info-box" onclick="location.href='https://goo.gl/maps/XcACv1Xd8uKmabuC9'">
                 <i class="bx bx-map"></i>
                 <h3>Our Address</h3>
                 <p>JECRC Foundation, Jaipur</p>

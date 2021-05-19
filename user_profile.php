@@ -8,21 +8,142 @@ if(!isset($_SESSION['user_id']))
 }
 
 $user_id = $_SESSION['user_id'];
-$stmt = $pdo->query("select fullname,username,dob,maritalstatus,city,state,address,mobilenumber,language,hq,yop,institute,percentage from user where user_id='$user_id;'");
+$stmt = $pdo->query("select fullname,username,dob,maritalstatus,city,state,address,mobilenumber,language,hq,yop,institute,percentage,uploaddate,image,image_name from user where user_id='$user_id;'");
 
 $row = $stmt->fetch();
-// echo $row;
+
+$userPicture = !empty($row['image'])?$row['image']:'assets/img/user.jpg';
+$userPictureURL = $userPicture;
 
 $stmt2 = $pdo->query("Select skill from skills where user_id = '$user_id;'");
 
 $row2 = $stmt2->fetchAll(PDO::FETCH_COLUMN, 0);
-
+// var_dump($row2);
+// echo strpos(implode(',',$row2),'municational');
 
 $stmt3 = $pdo->query("Select typeofemp,skill,duration,description from exp where user_id = '$user_id;'");
 
 $row3 = $stmt3->fetchAll();
 
-// print_r($row3[0][0]);
+// Display in popup form
+if(isset($_SESSION['user_id'])) {
+  $query = "SELECT * FROM user WHERE user_id = :user_id";
+  $statement = $pdo->prepare($query);
+  $statement->execute(
+    array(
+      ':user_id' => $_SESSION['user_id']
+    )
+  ); 
+  $result = $statement->fetchAll();
+
+  }
+
+ if(isset($_SESSION['user_id'])) {
+  $query1 = "SELECT * FROM exp WHERE user_id = :user_id";
+  $statement1 = $pdo->prepare($query1);
+  $statement1->execute(
+    array(
+      ':user_id' => $_SESSION['user_id']
+    )
+  ); 
+  $result1 = $statement1->fetchAll();
+
+// var_dump($result1);
+  }
+
+
+
+
+
+
+// Form SUBMIT
+
+if(isset($_POST['submit1'])){
+
+
+       $user_id=$_SESSION['user_id'];
+       $fullname = $_POST['fullname'];
+       $mobilenumber = $_POST['mobilenumber'];
+       $dob = $_POST['dob'];
+       $gender = $_POST['gender'];
+       $state = $_POST['state'];
+       
+       if(!isset($_POST['city']) || $_POST['city']==null ||  $_POST['city']=='')
+      {$_POST['city']=" ";}
+
+       $city = $_POST['city'];
+
+       $address = $_POST['address'];
+       $maritalstatus =$_POST['maritalstatus'];
+       
+              
+      $chk = implode( ',',$_POST['language'] );
+
+      $sql = 'UPDATE user SET fullname = :fullname, mobilenumber=:mobilenumber, gender=:gender,dob=:dob, state = :state, city= :city, address= :address, maritalstatus= :maritalstatus, language= :chk WHERE user_id = :user_id;';
+    
+     $handle = $pdo->prepare($sql);
+          $params = [
+            ':fullname'=>$fullname,
+            ':mobilenumber'=>$mobilenumber,
+            ':gender'=>$gender,
+            ':dob'=>$dob,
+            ':state'=>$state,
+            ':city'=>$city,
+            ':address'=>$address,
+            ':maritalstatus'=>$maritalstatus,
+            ':chk'=>$chk,
+            ':user_id'=>$user_id
+          ];
+     $pdoExec = $handle->execute($params);
+
+        if($pdoExec)
+      {
+          echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Data Updated';
+          header("refresh: 0");
+                    
+           
+    } else{
+      echo 'ERROR Data Not Updated';
+    }
+
+}
+
+
+
+if(isset($_POST['submit2'])){
+
+
+       $hq = $_POST['hq'];
+       $yop = $_POST['yop'];
+       $institute = $_POST['institute'];
+       $percentage = $_POST['percentage'];
+
+
+      $sql = 'UPDATE user SET hq= :hq, yop= :yop, institute= :institute, percentage=:percentage WHERE user_id = :user_id;';
+    
+     $handle = $pdo->prepare($sql);
+          $params = [
+            ':hq'=>$hq,
+            ':yop'=>$yop,
+            ':institute'=>$institute,
+            ':percentage'=>$percentage,
+            ':user_id'=>$user_id
+          ];
+     $pdoExec = $handle->execute($params);
+
+        if($pdoExec)
+      {
+          echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Data Updated';
+          header("refresh: 0");
+                    
+           
+    } else{
+      echo 'ERROR Data Not Updated';
+    }
+
+}
+
+
 
 ?>
 <!DOCTYPE html>
@@ -106,11 +227,9 @@ $row3 = $stmt3->fetchAll();
       <h3>Highest Qualfication</h3> 
       <div class="aayueducation">
         <div class="aayudegree"><?php echo $row[9];?></div>
-        <div class="aayuinstitute"><b>Institute: <?php echo $row[11];?></b></div>
-        <div class="aayuyear">
-          <div style="display: inline;"><b>Year of Passing: <?php echo $row[10];?></b></div>
-        </div>
-        <div class="aayumarks"><b><?php echo $row[12];?>%</b></div>
+        <div class="aayuinstitute"><?php echo $row[11];?></div>
+        <div class="aayuyear"><?php echo $row[10];?> Passout</div>
+        <div class="aayumarks"><?php echo $row[12];?>%</div>
       </div> 
       <!-- <div class="aayueducation">
         <div class="aayudegree">Senior Secondary(XII), Science</div>
@@ -198,37 +317,72 @@ $row3 = $stmt3->fetchAll();
 <span style="color: rgb(43,43,43,0.5);">
   <div class="body form-popup" id="myForm1" style="background-color: #000000ad">
     <div class="form-container">
-      <form action="/action_page.php">
+      <form method="POST" enctype="multipart/form-data">
         <h2 style="color: #222222; font-weight: 600; font-size: 30px;">Personal Details</h2>
 
         <label for="name" class="ash-label"><b>Full Name</b></label>
-        <input type="text" class="ash-input" placeholder="Enter your Full Name" name="name" required><br>
+        <input type="text" class="ash-input" placeholder="Enter your Full Name" name="fullname" value="<?php echo $result[0][1]; ?>" required><br>
         <label for="mobile" class="ash-label"><b>Mobile Number</b></label>
-        <input type="text" class="ash-input" placeholder="Enter your Mobile Number" name="mobile" required><br>
+        <input type="text" class="ash-input" placeholder="Enter your Mobile Number" name="mobilenumber" value="<?php echo $result[0][3]; ?>" required><br>
         <label for="gender" class="ash-label"><b>Gender</b></label>
-        <input list="gender" name="gender"  id="browser" class="ash-input" placeholder="Select your gender"/>
+        <input list="gender" name="gender"  id="browser" class="ash-input" value="<?php echo $result[0][5]; ?>" placeholder="Select your gender"/>
         <datalist id="gender" class="ash-datalist">
           <option value="" selected>Enter your gender</option>
           <option value="Female">
           <option value="Rather Not to Say">
         </datalist><br>
-
-        <label for="city" class="ash-label"><b>State</b></label>
-        <select  name="state" class="ash-select" onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" required> 
-          <!-- <option value="" disabled selected>Select State</option> -->
-        </select><br>
+        <label for="state" class="ash-label"><b>State</b></label>
+        <input list="state" name="state" id="browser" class="ash-input" value="<?php echo $result[0][7]; ?>" placeholder="Select your State"/>
+        <datalist id="state" class="ash-datalist">
+          <option value="Andhra Pradesh">Andhra Pradesh</option>
+          <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+          <option value="Assam">Assam</option>
+          <option value="Bihar">Bihar</option>
+          <option value="Chandigarh">Chandigarh</option>
+          <option value="Chhattisgarh">Chhattisgarh</option>
+          <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+          <option value="Daman and Diu">Daman and Diu</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Lakshadweep">Lakshadweep</option>
+          <option value="Puducherry">Puducherry</option>
+          <option value="Goa">Goa</option>
+          <option value="Gujarat">Gujarat</option>
+          <option value="Haryana">Haryana</option>
+          <option value="Himachal Pradesh">Himachal Pradesh</option>
+          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+          <option value="Jharkhand">Jharkhand</option>
+          <option value="Karnataka">Karnataka</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Madhya Pradesh">Madhya Pradesh</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Manipur">Manipur</option>
+          <option value="Meghalaya">Meghalaya</option>
+          <option value="Mizoram">Mizoram</option>
+          <option value="Nagaland">Nagaland</option>
+          <option value="Odisha">Odisha</option>
+          <option value="Punjab">Punjab</option>
+          <option value="Rajasthan">Rajasthan</option>
+          <option value="Sikkim">Sikkim</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Telangana">Telangana</option>
+          <option value="Tripura">Tripura</option>
+          <option value="Uttar Pradesh">Uttar Pradesh</option>
+          <option value="Uttarakhand">Uttarakhand</option>
+          <option value="West Bengal">West Bengal</option>
+        </datalist>
+        <br>
         
         <label for="city" class="ash-label"><b>City</b></label>
-        <select class="ash-select" name="city" id ="state" required><option value="" disabled selected hidden>Select City</option></select><br>
-        
+        <input type="text" name="city" id="browser" class="ash-input" value="<?php echo $result[0][8]; ?>" placeholder="Select your City"/><br>
         <label for="address" class="ash-label"><b>Address</b></label>
-        <input type="text" class="ash-input" placeholder="Enter your address" name="address" required><br>
+        <input type="text" class="ash-input" placeholder="Enter your address" name="address" value="<?php echo $result[0][9]; ?>" required><br>
         
         <label for="dob" class="ash-label"><b>Date of Birth</b></label>
-        <input type="text" onfocus="(this.type='date')" class="ash-input" placeholder="Enter your Date of Birth" name="dob" min="1940-01-01" max="2021-05-25" required><br>
+        <input type="text" onfocus="(this.type='date')" class="ash-input" placeholder="Enter your Date of Birth" name="dob" value="<?php echo $result[0][4]; ?>" min="1940-01-01" max="2021-05-25" required><br>
        
         <label for="mstatus" class="ash-label"><b>Maritial Status</b></label>
-        <input list="mstatus" name="mstatus" class="ash-input" id="browser" placeholder="Select your Maritial Status">
+        <input list="mstatus" name="maritalstatus" class="ash-input" id="browser" value="<?php echo $result[0][10]; ?>" placeholder="Select your Maritial Status">
           <datalist id="mstatus">
             <option value="" disabled selected>Enter your marital status</option>
             <option value="Married">
@@ -238,18 +392,22 @@ $row3 = $stmt3->fetchAll();
           </datalist>
         <br>
         
-        <div class="unstyled centered"><br>
-          <label style="float: left; font-size: 14px;" class="ash-label">Choose Language(s)</label><br>
-            <input type="checkbox" class="styled-checkbox ash-input" name="language[]" id="styled-checkbox-1" value="Hindi">
-            <label for="styled-checkbox-1" class="ash-label">Hindi</label>
-            <input type="checkbox" class="styled-checkbox ash-input" name="language[]" id="styled-checkbox-2" value="English" checked>
-            <label for="styled-checkbox-2" class="ash-label">English</label>
-            <input type="checkbox" class="styled-checkbox ash-input" name="language[]" id="styled-checkbox-3" value="Other Local Language" checked>
-            <label for="styled-checkbox-3" class="ash-label">Other Local Language</label>
-        </div><br><br>
+     <label for="lan" class="ash-label">Choose Language(s)</label>
+  
+    <br>
+    <input type="checkbox" name="language[]" id="lan" class="ash-select" value="Hindi" <?php echo (strpos($result[0][11],'indi') ? 'checked' : '');?> >
+    <label for="styled-checkbox-1"  class="ash-label">Hindi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><br>
+  
+    <input type="checkbox" name="language[]" id="lan" class="ash-select" value="English" <?php echo (strpos($result[0][11],'nglish') ? 'checked' : '');?> >
+    <label for="styled-checkbox-2"  class="ash-label">English&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+  
+    <input type="checkbox" name="language[]" id="lan" class="ash-select" value="Other Local Language" <?php echo (strpos($result[0][11],'ther') ? 'checked' : '');?> >
+    <label for="styled-checkbox-3"  class="ash-label">Other Local Language</label>
+    <br> 
+    <br>
         <script language="javascript">print_state("sts");</script>
 
-        <center><button type="submit" class="btn" style="font-size: 15px; font-weight: 600;">SAVE</button></center>
+        <center><button type="submit" class="btn" name="submit1" style="font-size: 15px; font-weight: 600;">SAVE</button></center>
       </form>
       <div class="go-corner-form" href="#">
         <div class="go-arrow">
@@ -260,11 +418,13 @@ $row3 = $stmt3->fetchAll();
   </div>
   <div class="body form-popup" id="myForm2" style="background-color: #000000ad">
     <div class="form-container">
-      <form action="/action_page.php">
+     
+
+      <form method="post" enctype="multipart/form-data">
         <h2>Highest Qualification</h2>
         <label for="degree" class="ash-label"><b>Select your Degree</b></label>
-        <input list="Qualfication" class="ash-input" name="hq" id="browser" placeholder="Highest Qualfication">
-        <datalist id="Qualfication">
+        <input list="Qualfication" class="ash-input" name="hq" id="browser" value="<?php echo $result[0][12]; ?>" placeholder="Highest Qualfication">
+        <datalist id="Qualfication" >
               <option value="Secondary)(X)"> 
               <option value="Senior Secondary(XII)">
               <option value="Diploma">
@@ -274,14 +434,16 @@ $row3 = $stmt3->fetchAll();
               <option value="PhD">
       </datalist><br>
         <label for="yop" class="ash-label"><b>Year Of Passing</b></label>
-        <input type="number" class="ash-input" name="yop"  min="1940" max="2021" placeholder="Year of Passing" /><br>
+        <input type="number" class="ash-input" name="yop"  min="1940" max="2021" value="<?php echo $result[0][13]; ?>" placeholder="Year of Passing" />
         <label for="institute" class="ash-label"><b>Institute</b></label>
-        <input type="text" class="ash-input" name="institute" placeholder="Institution" />
+        <input type="text" class="ash-input" name="institute" value="<?php echo $result[0][14]; ?>" placeholder="Institution" />
         <label for="percentage" class="ash-label"><b>Aggregate/Percentage</b></label>
-        <input type="number" class="ash-input" name="percentage"  min="1" max="100" placeholder="Percentage" /><br><br>
+        <input type="number" class="ash-input" name="percentage"  min="1" max="100" value="<?php echo $result[0][15]; ?>" placeholder="Percentage" />
         
-        <center><button type="submit" class="btn">SAVE</button></center>
+         <center><button type="submit" class="btn" name="submit2" style="font-size: 15px; font-weight: 600;">SAVE</button></center>
       </form>
+
+
       <div class="go-corner-form" href="#">
         <div class="go-arrow">
           <i onclick="closeForm()" class="fa fa-close" style="color:white; cursor: pointer;"></i>
@@ -296,32 +458,32 @@ $row3 = $stmt3->fetchAll();
         <div>
           <label for="skill" class="ash-label"><b>Select your skills</b></label>
           <select name="skills" class="ash-select" multiple data-multi-select-plugin>
-            <option value="Art and Craft">Art and Craft</option>
-            <option value="Communicational Skills">Communicational Skills</option>
-            <option value="Cooking">Cooking</option>
-            <option value="Creativity">Creativity</option>
-            <option value="Data Entry">Data Entry</option>
-            <option value="Decision Making">Decision Making</option>
-            <option value="Embroidery">Embroidery</option>
-            <option value="Filing and paper management">Filing and paper management</option>
-            <option value="Leadership">Leadership</option>
-            <option value="Listening Skills">Listening Skills</option>
-            <option value="Management">Management</option>
-            <option value="Mehandi">Mehandi</option>
-            <option value="Marketing">Marketing</option>
-            <option value="MS Excel">MS Excel</option>
-            <option value="Painting">Painting</option>
-            <option value="Planning">Planning</option>
-            <option value="Problem Solving">Problem Solving</option>
-            <option value="Public Speaking">Public Speaking</option>
-            <option value="Research Skills">Research Skills</option>
-            <option value="Self Confidence">Self Confidence</option>
-            <option value="Sewing">Sewing</option>
-            <option value="Sketching">Sketching</option>
-            <option value="Story telling">Story telling</option>
-            <option value="Teamwork">Teamwork</option>
-            <option value="Time Management">Time Management</option>
-            <option value="Writing">Writing</option>
+            <option value="Art and Craft" <?php echo (strpos(implode(',',$row2),'rt and Craf') ? 'selected' : '');?>>Art and Craft</option>
+            <option value="Communicational Skills" <?php echo (strpos(implode(',',$row2),'tional Skill') ? 'selected' : '');?>>Communicational Skills</option>
+            <option value="Cooking" <?php echo (strpos(implode(',',$row2),'ooking') ? 'selected' : '');?>>Cooking</option>
+            <option value="Creativity" <?php echo (strpos(implode(',',$row2),'tivity') ? 'selected' : '');?>>Creativity</option>
+            <option value="Data Entry" <?php echo (strpos(implode(',',$row2),'ta Entry') ? 'selected' : '');?>>Data Entry</option>
+            <option value="Decision Making" <?php echo (strpos(implode(',',$row2),'ision Makin') ? 'selected' : '');?>>Decision Making</option>
+            <option value="Embroidery" <?php echo (strpos(implode(',',$row2),'mbroider') ? 'selected' : '');?>>Embroidery</option>
+            <option value="Filing and paper management" <?php echo (strpos(implode(',',$row2),'paper') ? 'selected' : '');?>>Filing and paper management</option>
+            <option value="Leadership" <?php echo (strpos(implode(',',$row2),'adershi') ? 'selected' : '');?>>Leadership</option>
+            <option value="Listening Skills" <?php echo (strpos(implode(',',$row2),'ing Skill') ? 'selected' : '');?>>Listening Skills</option>
+            <option value="Management" <?php echo (strpos(implode(',',$row2),'gemen') ? 'selected' : '');?>>Management</option>
+            <option value="Mehandi" <?php echo (strpos(implode(',',$row2),'ehand') ? 'selected' : '');?>>Mehandi</option>
+            <option value="Marketing" <?php echo (strpos(implode(',',$row2),'arketing') ? 'selected' : '');?>>Marketing</option>
+            <option value="MS Excel" <?php echo (strpos(implode(',',$row2),'Excel') ? 'selected' : '');?>>MS Excel</option>
+            <option value="Painting" <?php echo (strpos(implode(',',$row2),'ainting') ? 'selected' : '');?>>Painting</option>
+            <option value="Planning" <?php echo (strpos(implode(',',$row2),'lanning') ? 'selected' : '');?>>Planning</option>
+            <option value="Problem Solving" <?php echo (strpos(implode(',',$row2),'blem Sol') ? 'selected' : '');?>>Problem Solving</option>
+            <option value="Public Speaking" <?php echo (strpos(implode(',',$row2),'blic Speak') ? 'selected' : '');?>>Public Speaking</option>
+            <option value="Research Skills" <?php echo (strpos(implode(',',$row2),'search Skil') ? 'selected' : '');?>>Research Skills</option>
+            <option value="Self Confidence" <?php echo (strpos(implode(',',$row2),'elf Con') ? 'selected' : '');?>>Self Confidence</option>
+            <option value="Sewing" <?php echo (strpos(implode(',',$row2),'ewing') ? 'selected' : '');?>>Sewing </option>
+            <option value="Sketching" <?php echo (strpos(implode(',',$row2),'ketching') ? 'selected' : '');?>>Sketching</option>
+            <option value="Story telling" <?php echo (strpos(implode(',',$row2),'tory telli') ? 'selected' : '');?>>Story telling</option>
+            <option value="Teamwork" <?php echo (strpos(implode(',',$row2),'eamwork') ? 'selected' : '');?>>Teamwork</option>
+            <option value="Time Management" <?php echo (strpos(implode(',',$row2),'ime Managemen') ? 'selected' : '');?>>Time Management</option>
+            <option value="Writing" <?php echo (strpos(implode(',',$row2),'riting') ? 'selected' : '');?>>Writing</option>
           </select>
         </div><br>
 
@@ -340,15 +502,19 @@ $row3 = $stmt3->fetchAll();
       <form action="/action_page.php">
         <h2 style="color: #222222; font-weight: 600; font-size: 30px;">Experience</h2>
         <div>
+          <?php 
+          $count_pos = 1;
+          foreach( $row3 as $val ){
+          ?>
           <div class="customer_records1">
             <label for="types" class="ash-label"><b>Employement Type</b></label>
-            <input list="types" class="ash-input" name="emps" id="browser" placeholder="Type of Employement">
+            <input list="types" class="ash-input" name="emps<?php echo $count_pos; ?>" id="browser" value="<?php echo $val[0]; ?>" placeholder="Type of Employement">
             <datalist id="types">
               <option value="Self Employed">
               <option value="Employee">
             </datalist><br>
             <label for="lan" class="ash-label"><b>Skill</b></label>
-            <input name="skill1" list="skill" class="ash-input" placeholder="Skill">
+            <input name="skill<?php echo $count_pos; ?>" list="skill" class="ash-input" placeholder="Skill" value="<?php echo $val[1]; ?>">
             <datalist id="skill">
               <option value="Art and Craft">Art and Craft</option>
               <option value="Communicational Skills">Communicational Skills</option>
@@ -378,7 +544,7 @@ $row3 = $stmt3->fetchAll();
               <option value="Writing">Writing</option>
             </datalist><br>
             <label for="dur" class="ash-label"><b>Duration</b></label>
-            <input name="duration" list="dur" class="ash-input" placeholder="Duration of Experience">
+            <input name="duration<?php echo $count_pos; ?>" list="dur" class="ash-input" placeholder="Duration of Experience" value="<?php echo $val[2]; ?>">
               <datalist id="dur">
                 <option value="Less than 1 month">
                 <option value="Between 1 month and 6 month">
@@ -388,14 +554,13 @@ $row3 = $stmt3->fetchAll();
                 <option value="More than 5 years">  
               </datalist><br>
             <label for="desc" class="ash-label"><b>Short Description</b></label>
-            <textarea style="float: right; resize: none; height: 60px;" name="desc" class="form-control" rows="7" placeholder="Short Description"></textarea><br>
-          </div>
+            <input type="text" name="desc<?php echo $count_pos; ?>" class="ash-input" value="<?php echo $val[3]; ?>" placeholder="Short Description"><br>
+          </div><br><br>
+          <?php $count_pos = $count_pos + 1; } ?>
           <div class="customer_records_dynamic1"></div>
-        </div><br><br>
-        <div style="display: flex; flex-direction: row; justify-content: space-between;">
-        <a class="extra-fields-customer1" href="#"><i class="fa fa-plus"></i> Add other</a><br>
-        <button type="submit" class="btn">SAVE</button>
-      </div>
+        </div>
+        <!-- <a class="extra-fields-customer1" href="#"><i class="fa fa-plus"></i> Add other</a><br> -->
+        <button type="submit" class="btn" style="margin: auto; float:right;">SAVE</button>
       </form>
       <div class="go-corner-form" href="#">
         <div class="go-arrow">
@@ -405,6 +570,7 @@ $row3 = $stmt3->fetchAll();
     </div>
   </div>
 </span>
+<span id="uploaded_image"></span>
 <div class="s-layout">
     <div class="s-layout__sidebar">
       <a class="s-sidebar__trigger" href="#0">
@@ -417,17 +583,61 @@ $row3 = $stmt3->fetchAll();
         ?>
           <div class="sidebar-header">
             
-            <div class="circle" id="circlediv">
+            <div class="circle" id="circlediv" style="background-image: url(<?php echo $userPicture; ?>);">
               <div class="p-image">
                 <center><i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i></center>
-                <input class="file-upload" type="file" accept="image/*"/>
+                <input class="file-upload" name="file" id="file" type="file" accept="image/*"/>
               </div>
             </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+            <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script>
+            $(document).ready(function(){
+             $(document).on('change', '#file', function(){
+              var name = document.getElementById("file").files[0].name;
+              var form_data = new FormData();
+              var ext = name.split('.').pop().toLowerCase();
+              if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1) 
+              {
+               alert("Invalid Image File");
+              }
+              var oFReader = new FileReader();
+              oFReader.readAsDataURL(document.getElementById("file").files[0]);
+              var f = document.getElementById("file").files[0];
+              var fsize = f.size||f.fileSize;
+              if(fsize > 2000000)
+              {
+               alert("Image File Size is very big");
+              }
+              else
+              {
+               form_data.append("file", document.getElementById('file').files[0]);
+               $.ajax({
+                url:"dpupload.php",
+                method:"POST",
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend:function(){
+                 $('#uploaded_image').html("<label class='text-success'>Image Uploading...</label>");
+                },   
+                success:function(data)
+                {
+                 $('#uploaded_image').html(data);
+                }
+               });
+              }
+             });
+            });
+            </script>
+
             <div class="user-info">
-              <center><span class="user-name"><strong><?php echo $_SESSION['fullname']; ?></strong></span></center>
+              <center><span class="user-name"><?php echo $_SESSION['fullname']; ?></span></center>
             </div>
           </div>
-          <hr style="height: 1px; margin: 10px 10px 0 10px;">
+          <hr>
           <div class="sidebar-menu">
             <ul>
               <li class="sidebar-dropdown active-tab">
@@ -455,7 +665,7 @@ $row3 = $stmt3->fetchAll();
                 <a href="applications.php"><i class="fa fa-thumbtack"></i><span>Application Tracking</span></a>
               </li>
               <li class="sidebar-dropdown">
-                <a href="index.php"><i class="fas fa-home"></i><span>Go Back Home</span></a>
+                <a href="index.php"><i class="fas fa-home"></i><span>Back to Home</span></a>
               </li>
               <li class="sidebar-dropdown">
                 <a href="index.php#contact"><i class="fas fa-headphones"></i><span>Feedback</span></a>
@@ -463,7 +673,7 @@ $row3 = $stmt3->fetchAll();
               <li class="sidebar-dropdown"><a href="logout.php"><i class="fa fa-power-off"></i><span>Logout</span></a></li>
             </ul>
           </div>
-          <hr style="height: 1px; margin: 10px 10px 0 10px;">
+          <hr>
           <div class="sidebar-footer">
             <center>
             <div class="copyright">
@@ -536,10 +746,12 @@ $row3 = $stmt3->fetchAll();
       e.preventDefault();      
     });
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
   <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>

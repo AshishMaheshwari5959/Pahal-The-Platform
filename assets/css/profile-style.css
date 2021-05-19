@@ -168,7 +168,7 @@ tr{
 .card2 {
   display: block;
   position: relative;
-  width: 64%;
+  width: 48%;
   height: auto;
   background-color: #fff;
   border-radius: 4px;
@@ -209,7 +209,7 @@ tr{
 .card3 {
   display: block;
   position: relative;
-  width: 32%;
+  width: 48%;
   
   height: auto;
   background-color: #fff;
@@ -327,11 +327,12 @@ tr{
 
 .aayuyear{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   
 }
 .aayumarks{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 15px;
   display: inline;
   /* float: right; */
 }
@@ -397,7 +398,7 @@ tr{
   
   height:100%;
   position:relative;
-  width:66.66%;
+  width:100%;
 }
 
 
@@ -459,10 +460,10 @@ tr{
 {
   /* margin:0 auto; */
   
-  width: 300px;
+  width: 100%;
   height: fit-content;
   padding-left: 10px;
-  padding-top: 0px;
+  padding-bottom: 10px;
   
 }
 

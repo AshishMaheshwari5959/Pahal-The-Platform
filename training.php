@@ -1,7 +1,7 @@
 <?php 
-session_start();
-include('database_connection.php');
 
+include('database_connection.php');
+session_start();
 if(!isset($_SESSION['user_id']))
 {
   header('location:login.php');
@@ -13,15 +13,13 @@ $row = $stmt->fetch();
 
 $userPicture = !empty($row['image'])?$row['image']:'assets/img/user.jpg';
 $userPictureURL = $userPicture;
-
-
- ?>       
+ ?>           
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>My Blogs | Pahal</title>
+  <title>Training | Pahal</title>
   <meta charset="utf-8">
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,8 +30,10 @@ $userPictureURL = $userPicture;
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
   <!-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css'> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
   <link
@@ -41,16 +41,14 @@ $userPictureURL = $userPicture;
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
   <link rel="stylesheet" href="assets/css/dash-image.css">
-  <link href="/css/index.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/dashboard.css">
-  <link href="assets/css/myblogs.css" rel="stylesheet">
   <style>
         body{
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -75,89 +73,20 @@ $userPictureURL = $userPicture;
 </head>
 
 <body>
-
-  <!-- partial:index.partial.html -->
-  
-  <main class="page-content" id="main">
-    <section id="blog" class="blog">
-      <div class="container" data-aos="fade-up">
-        <div class="row">
-          <div class="col-lg-12 entries">
-            
-
-           <?php
-            try {   
-                $id = $_SESSION['user_id'];
-
-               $stmt = $pdo->query('SELECT blog.uploaddate, blog.title, blog.content, blog.image, user.fullname FROM blog INNER JOIN  user ON blog.user_id=user.user_id where blog.user_id='."$id".' ORDER BY uploaddate desc;');
-               $rows = $stmt->fetch();
-                $n = sizeof($rows);
-                $t = gettype($n);
-                $stmt = $pdo->query('SELECT blog.uploaddate, blog.title, blog.content, blog.image, user.fullname FROM blog INNER JOIN  user ON blog.user_id=user.user_id where blog.user_id='."$id".' ORDER BY uploaddate desc;');
-                if ($n > 1) {
-
-                while($row = $stmt->fetch()){
-
-              ?>
-            <article class="entry">
-                      <?php $var = (int)$row['blog_id']; ?>
-                      <div class="entry-img">
-                        <img src="<?php echo $row['image'];?>" alt="" class="img-fluid">
-                      </div>
-                      <h2 class="entry-title">
-                        <a href="blog.php?blog_id='<?php echo $var; ?>'"><?php echo $row["title"];?></a>
-                      </h2>
-                      <div class="entry-meta">
-                        <ul>
-                          <li style="float: left;" class="d-flex align-items-center"><i class="bi bi-person"><a href="#">&nbsp;<?php echo $row["fullname"];?></a></i></li>
-                          <li style="float: right;" class="d-flex align-items-center"><i class="bi bi-clock"><a href="#"><time datetime="2020-01-01">&nbsp;<?php echo $row["uploaddate"];?></time></a></i></li>
-                          <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"><a href="#">&nbsp;12 Comments</a></i></li> -->
-                        </ul>
-                      </div>
-                      <div class="entry-content">
-                        <p>
-                         <?php
-                         $string = substr($row['content'],0,240); 
-                         echo $string;
-                         if (strlen($row['content']) > 240) {
-                          echo "....";
-                         ?>
-                        </p>
-                        <div class="read-more">
-                          <a href="blog.php?blog_id='<?php echo $var; ?>'">Read More</a>
-                        </div>
-                        <?php } ?>
-                      </div>
-                    </article>
-          <?php 
-               } } else {
-                ?>
-                <div class=package>
-                      <h3 style="margin-top: 150px">Wanna share your experiences?<br>Start writing your first blog!</h3>
-                      <img src="assets/img/blog.png" style="max-width: fit-content;">
-                  </div>
-                <?php
-               }
-             }
-
-               catch(PDOException $e) {
-                  echo $e->getMessage();
-                }
-          ?>
-    <!-- End blog entry -->
-            
-          </div><!-- End blog entries list --><!-- End blog sidebar -->
-        </div>
-      </div>
-    </section>
-  </main>
-    <div class="s-layout">
+  <div class=package>
+        <h3 style="margin-top: 150px">We're coming up with lots of useful trainings for you!<br>Stay tuned!</h3>
+        <img src="assets/img/training.png" style="max-width: fit-content;">
+    </div>
+  <div class="s-layout">
     <div class="s-layout__sidebar">
       <a class="s-sidebar__trigger" href="#0">
         <i class="fa fa-bars"></i>
       </a>
 
       <nav class="s-sidebar__nav" id="sidebar">
+        <?php
+          if(isset($_SESSION['user_id'])){
+        ?>
           <div class="sidebar-header">
                       
                       <div class="circle" id="circlediv" style="background-image: url(<?php echo $userPicture; ?>);">
@@ -214,7 +143,7 @@ $userPictureURL = $userPicture;
                         <center><span class="user-name"><?php echo $_SESSION['fullname']; ?></span></center>
                       </div>
                     </div>
-                    <hr>
+          <hr>
           <div class="sidebar-menu">
             <ul>
               <li class="sidebar-dropdown">
@@ -226,10 +155,10 @@ $userPictureURL = $userPicture;
               <li class="sidebar-dropdown">
                 <a href="writeBlog.php"><i class="fa fa-file-alt"></i><span>Write a blog</span></a>
               </li>
-              <li class="sidebar-dropdown  active-tab">
+              <li class="sidebar-dropdown">
                 <a href="myblogs.php"><i class="fa fa-th-large"></i><span>My Blogs</span></a>
               </li>
-              <li class="sidebar-dropdown">
+              <li class="sidebar-dropdown active-tab">
                 <a href="training.php"><i class="fas fa-graduation-cap"></i><span>Training</span></a>
               </li>
               <li class="sidebar-dropdown">
@@ -259,10 +188,33 @@ $userPictureURL = $userPicture;
             </div>
           </center>
           </div>
-        </nav>
+        <?php 
+          } else {
+        ?>
+          <div class="sidebar-no-user">
+            <img src="assets/img/Pahal Logo white.png" alt="">
+            <p>A Platform to Empower The Women</p>
+            <div class="ask">
+              <div class="ask-login">
+                <a href="login.php">Log In</a>
+              </div>
+              <div class="ask-signup">
+                <a href="signup.php">Sign Up</a>
+              </div>
+            </div>
+            <div class="sidebar-footer">
+            <div class="copyright">
+              <strong><span>pahal.in&copy; </span></strong>2021<br>
+              Designed by <a>Code Smashers</a><br>
+            </div>
+          </div>
+          </div>
+          <?php
+        }
+        ?>
+      </nav>
     </div>
   </div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <!-- page-wrapper" -->
   <!-- partial -->
   <!-- Vendor JS Files -->
@@ -276,7 +228,6 @@ $userPictureURL = $userPicture;
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/dashboard.js"></script>
-  <script  src="assets/js/dash-image.js"></script>
 
 </body>
 

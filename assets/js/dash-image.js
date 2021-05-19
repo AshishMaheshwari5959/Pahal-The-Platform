@@ -6,7 +6,6 @@ $(document).ready(function() {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                // $('.profile-pic').attr('src', e.target.result);
                 document.getElementById("circlediv").style.backgroundImage = "url("+e.target.result+")";
             }
     

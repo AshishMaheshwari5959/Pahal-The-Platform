@@ -6,6 +6,98 @@ if(!isset($_SESSION['user_id']))
   header('location:login.php');
 }
 
+$user_id = $_SESSION['user_id'];
+$stmt = $pdo->query("select uploaddate,image,image_name from user where user_id='$user_id;'");
+
+$row = $stmt->fetch();
+
+$userPicture = !empty($row['image'])?$row['image']:'assets/img/user.jpg';
+$userPictureURL = $userPicture;
+
+if(isset($_SESSION['user_id']))
+            {
+              if(isset($_REQUEST['btn_insert'])){
+
+
+                try
+  {
+  $title = $_REQUEST['title'];
+  $content = $_REQUEST['content'];
+  $uploaddate = date('Y-m-d H:i:s');
+  $user_id = $_SESSION['user_id'];
+  $name = $_REQUEST['title'];
+
+  $image_file = $_FILES["txt_file"]["name"];
+  $type  = $_FILES["txt_file"]["type"]; //file name "txt_file" 
+  $size  = $_FILES["txt_file"]["size"];
+  $temp  = $_FILES["txt_file"]["tmp_name"];
+  
+  $path="upload/".$image_file; //set upload folder path
+  
+  if(empty($title)){
+   $errorMsg="Please Enter Title";
+  }
+  else if(empty($image_file)){
+   echo "Please Select Image";
+  }
+  else if($type=="image/jpg" || $type=='image/jpeg' || $type=='image/png' || $type=='image/gif') //check file extension
+  { 
+   if(!file_exists($path)) //check file not exist in your upload folder path
+   {
+    if($size < 5000000) //check file size 5MB
+    {
+     move_uploaded_file($temp, "upload/" .$image_file); //move upload file temperory directory to your upload folder
+    }
+    else
+    {
+     echo "Your File To large Please Upload 5MB Size"; //error message file size not large than 5MB
+    }
+   }
+   else
+   { 
+    echo "File Already Exists...Check Upload Folder"; //error message file not exists your upload folder path
+   }
+  }
+  else
+  {
+   echo "Upload JPG , JPEG , PNG & GIF File Formate.....CHECK FILE EXTENSION"; //error message file extension
+  }
+  
+  if(!isset($errorMsg))
+  {
+   $insert_stmt=$pdo->prepare('INSERT INTO blog(user_id,title,content,image,uploaddate,image_name) VALUES(:user_id,:title,:content,:loc,:uploaddate,:image_file)'); //sql insert query     
+   $insert_stmt->bindParam(':user_id',$user_id); 
+   $insert_stmt->bindParam(':title',$title);
+   $insert_stmt->bindParam(':content',$content);  
+   $insert_stmt->bindParam(':loc',$path); 
+   $insert_stmt->bindParam(':uploaddate',$uploaddate);
+   $insert_stmt->bindParam(':image_file',$image_file);   //bind all parameter 
+  
+   if($insert_stmt->execute())
+   {
+    echo '<script type ="text/JavaScript">';  
+    echo 'alert("Blog Created Succesfully")';  
+    echo '</script>';   //execute query success message
+    header("refresh:0;user-feed.php"); //refresh 3 second and redirect to index.php page
+   }
+  }
+ }
+ catch(PDOException $e)
+ {
+  echo $e->getMessage();
+ }
+              }
+            
+
+            else{
+              header("login.php");
+            }
+  
+    
+ 
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +154,7 @@ if(!isset($_SESSION['user_id']))
   <div class="form-group">
     <span class="tagline">Write to inspire</span>
     <span style="display: inline-flex; float: right;">
-    <input type="submit" name="Submit" value="Publish" class="btn btn-primary form-control publish-btn" />
+    
     <!-- <div class="thumbnail-container">
       Upload thumbnail
       <span class="img-placeholder"></span>
@@ -74,11 +166,13 @@ if(!isset($_SESSION['user_id']))
       <span id="demo"></span>
       <div class="thumbnail-container" id="myDiv">
         <button class="upload-button2"><i class="fa fa-image"></i> Upload thumbnail</button>
-        <input class="file-upload2" type="file" accept="image/*"/>
+        
       </div>
-      <form method="post" role="form">
+      <form method="post" enctype="multipart/form-data">
+        <input class="file-upload2" type="file" name="txt_file" accept="image/*"/>
         <div class="form-group title-container">
           <input type="text" class="form-control title" name="title" placeholder="Title"/>
+          <span style="display: inline-flex; float: right;"><button type="submit" name="btn_insert" class="btn btn-primary form-control publish-btn">Publish</button></span>
         </div>
         <!-- <div class="form-group">
           <div class="input-group">
@@ -91,7 +185,7 @@ if(!isset($_SESSION['user_id']))
            </div>
         </div> -->
         <div class="form-group content-container">
-          <textarea class="form-control bcontent" name="content" placeholder="Start writing from here..."></textarea>
+          <textarea class="form-control bcontent" name="content" style="resize: none; overflow: auto; height: 100%" placeholder="Start writing from here..."></textarea>
         </div>
       </form>
     </div>
@@ -104,22 +198,63 @@ if(!isset($_SESSION['user_id']))
       </a>
 
       <nav class="s-sidebar__nav" id="sidebar">
-        <?php
-          if(isset($_SESSION['user_id'])){
-        ?>
           <div class="sidebar-header">
-            
-            <div class="circle" id="circlediv">
-              <div class="p-image">
-                <center><i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i></center>
-                <input class="file-upload" type="file" accept="image/*"/>
-              </div>
-            </div>
-            <div class="user-info">
-              <center><span class="user-name"><strong><?php echo $_SESSION['fullname']; ?></strong></span></center>
-            </div>
-          </div>
-          <hr style="height: 1px; margin: 10px 10px 0 10px;">
+                      
+                      <div class="circle" id="circlediv" style="background-image: url(<?php echo $userPicture; ?>);">
+                        <div class="p-image">
+                          <center><i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i></center>
+                          <input class="file-upload" name="file" id="file" type="file" accept="image/*"/>
+                        </div>
+                      </div>
+                      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
+                      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                      <script>
+                      $(document).ready(function(){
+                       $(document).on('change', '#file', function(){
+                        var name = document.getElementById("file").files[0].name;
+                        var form_data = new FormData();
+                        var ext = name.split('.').pop().toLowerCase();
+                        if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1) 
+                        {
+                         alert("Invalid Image File");
+                        }
+                        var oFReader = new FileReader();
+                        oFReader.readAsDataURL(document.getElementById("file").files[0]);
+                        var f = document.getElementById("file").files[0];
+                        var fsize = f.size||f.fileSize;
+                        if(fsize > 2000000)
+                        {
+                         alert("Image File Size is very big");
+                        }
+                        else
+                        {
+                         form_data.append("file", document.getElementById('file').files[0]);
+                         $.ajax({
+                          url:"dpupload.php",
+                          method:"POST",
+                          data: form_data,
+                          contentType: false,
+                          cache: false,
+                          processData: false,
+                          beforeSend:function(){
+                           $('#uploaded_image').html("<label class='text-success'>Image Uploading...</label>");
+                          },   
+                          success:function(data)
+                          {
+                           $('#uploaded_image').html(data);
+                          }
+                         });
+                        }
+                       });
+                      });
+                      </script>
+
+                      <div class="user-info">
+                        <center><span class="user-name"><?php echo $_SESSION['fullname']; ?></span></center>
+                      </div>
+                    </div>
+          <hr>
           <div class="sidebar-menu">
             <ul>
               <li class="sidebar-dropdown">
@@ -147,7 +282,7 @@ if(!isset($_SESSION['user_id']))
                 <a href="applications.php"><i class="fa fa-thumbtack"></i><span>Application Tracking</span></a>
               </li>
               <li class="sidebar-dropdown">
-                <a href="index.php"><i class="fas fa-home"></i><span>Go Back Home</span></a>
+                <a href="index.php"><i class="fas fa-home"></i><span>Back to Home</span></a>
               </li>
               <li class="sidebar-dropdown">
                 <a href="index.php#contact"><i class="fas fa-headphones"></i><span>Feedback</span></a>
@@ -163,12 +298,6 @@ if(!isset($_SESSION['user_id']))
               Designed by <a>Code Smashers</a><br>
             </div>
           </center>
-          </div>
-        <?php 
-          } else {}
-        ?>
-          <div class="sidebar-menu">
-
           </div>
       </nav>
     </div>
@@ -189,7 +318,7 @@ if(!isset($_SESSION['user_id']))
 <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
 
 <!-- <script src="assets/js/main.js"></script> -->
-<script src="assets/js/dashboard.js"></script>
+<!-- <script src="assets/js/dashboard.js"></script> -->
 <script  src="assets/js/write-blog.js"></script>
 <script  src="assets/js/dash-image.js"></script>
 

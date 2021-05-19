@@ -16,8 +16,7 @@ html {
 
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	background-image: url('../img/aditya-saxena-_mIXHvl_wzA-unsplash.jpg');
-	background-size: 120%;
+	background-image: linear-gradient(90deg, #ffb9994b, #eccccc, #ffb9994b);
 }
 /*form styles*/
 #msform {
@@ -27,7 +26,7 @@ body {
 	position: relative;
 }
 #msform fieldset {
-	background: white;
+	background: transparent;
 	border: 0 none;
 	border-radius: 10px;
 	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.4);
@@ -53,7 +52,38 @@ body {
 	box-sizing: border-box;
 	font-family: montserrat;
 	color: #2C3E50;
-	font-size: 13px;
+	font-size: 1rem;
+	background: #ffffff94;
+}
+
+#msform #addPos {
+	background-color: #fff!important;
+    border-radius: 100px!important;
+    width: fit-content!important;
+    color: #ff6d2a!important;
+	font-weight: bold;
+    padding: 10px 20px!important;
+	transition: box-shadow 0.3 ease;
+}
+
+#msform #addPos:hover{
+	box-shadow: 0 0px 10px 1px #fff!important;
+}
+
+.subPos{
+	background: none!important;
+    border-radius: 100px!important;
+    border: none!important;
+    width: fit-content!important;
+    color: #ff4747eb!important;
+	font-weight: bold;
+    padding: 5px 20px!important;
+    box-shadow: none!important;
+	transition: box-shadow 0.3 ease;
+}
+
+.subPos:hover {
+	color: #ff474794;
 }
 /*buttons*/
 #msform .action-button {
@@ -73,6 +103,7 @@ body {
 /*headings*/
 .fs-title {
 	font-size: 15px;
+	font-weight: bold;
 	text-transform: uppercase;
 	color: #2C3E50;
 	margin-bottom: 10px;
@@ -92,9 +123,9 @@ body {
 }
 #progressbar li {
 	list-style-type: none;
-	color: white;
+	color: rgb(49, 49, 49);
 	text-transform: uppercase;
-	font-size: 9px;
+	font-size: 14px;
 	width: 25%;
 	float: left;
 	position: relative;
@@ -105,7 +136,8 @@ body {
 	width: 20px;
 	line-height: 20px;
 	display: block;
-	font-size: 10px;
+	font-size: 16px;
+	padding: 3px;
 	color: #333;
 	background: white;
 	border-radius: 3px;
@@ -193,14 +225,3 @@ body {
 }
 
 
-.ash-button{
-	width: 100px;
-    background: #ff6d2a;
-    font-weight: bold;
-    color: white;
-    border: 0 none;
-    border-radius: 20px;
-    cursor: pointer;
-    padding: 10px 5px;
-    margin: 10px 5px;
-}

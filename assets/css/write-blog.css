@@ -52,6 +52,8 @@ input[readonly] {
     padding: 24px 0px;
     max-height: fit-content;
     margin-top: 18px;
+    width: 80%;
+    float: left;
     background: none!important;
 }
 
@@ -89,7 +91,8 @@ iframe:focus {
     border-color: #ff6d2a;
 }
 .publish-btn {
-    margin-bottom: 10px;
+    margin-top: 18px;
+    margin-bottom: 14px;
     background-color: #ff6d2a;
     /* border: 2px solid #ff6d2a; */
     border: none;

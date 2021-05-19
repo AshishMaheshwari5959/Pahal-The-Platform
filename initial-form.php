@@ -125,6 +125,7 @@ VALUES (:user_id,:skill);';
         if($pdoExec)
       {
           echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Data Updated';
+          header('location:user-feed.php');
           
            
     } else{
@@ -146,6 +147,8 @@ else{
 <head>
   <meta charset="UTF-8">
   <title>Form | Pahal</title>
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
@@ -165,7 +168,7 @@ else{
 <form method="POST" id="msform" action="initial-form.php">
   <!-- progressbar -->
   <ul id="progressbar">
-    <li class="active">Basic Details</li>
+    <li class="active">Personal Details</li>
     <li>Education</li>
     <li>Experience</li>
     <li>Skills</li>
@@ -228,7 +231,6 @@ else{
       <datalist id="Qualfication">
             <option value="Secondary)(X)"> 
             <option value="Senior Secondary(XII)">
-            <option value="Diploma">
             <option value="Diploma">
             <option value="Bachelors">
             <option value="Masters">
@@ -311,12 +313,12 @@ else{
            
            
         </div>
-       <input type="submit" name="addPos" value="+" id="addPos">
-           <div id="position_fields"></div>
- 
+        <div id="position_fields"></div>
+       
 
       </div>
       <input type="button" name="previous" class="previous action-button" value="Previous" />
+      <input type="submit" name="addPos" value="+ Add" id="addPos">
       <input type="button" name="next" class="next action-button" value="Next" />
     </fieldset>
     <fieldset>
@@ -356,7 +358,7 @@ else{
       
       
       <input type="button" name="previous" class="previous action-button" value="Previous" />
-      <button type="submit" name="submit" id="submit" style="width: 100px; background: #ff6d2a; font-weight: bold; color: white; border: 0 none; border-radius: 20px; cursor: pointer; padding: 10px 5px; margin: 10px 5px;">Submit</button>
+      <button type="submit" name="submit" id="submit" style="width: 100px; background: white; font-weight: bold; color: #ff6d2a; border: 0 none; border-radius: 20px; cursor: pointer; padding: 12px 5px; margin: 10px 5px;">Submit</button>
     </fieldset>
 </form>
 
@@ -428,7 +430,7 @@ countPos = 1;
                               <option value="More than 5 years">  \
                             </datalist>\
                             <textarea name="descp'+countPos+'" rows="7" placeholder="Short Description" style="resize: vertical;"></textarea>\
-                            <input type="button" value="-" onclick="$(\'#customer_records'+countPos+'\').remove();return false;"></p> \
+                            <input class="subPos" type="button" value="Remove" onclick="$(\'#customer_records'+countPos+'\').remove();return false;"></p> \
                         </div>');
                 });
             });   

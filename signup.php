@@ -165,7 +165,7 @@ if(isset($_POST['org_submit']))
                     
                     $success = 'Organization has been created successfully';
                     
-                    header("location:index.php");
+                    header("location:initial-form.php");
                     
                     
                 }
