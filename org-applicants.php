@@ -1,20 +1,19 @@
 <?php
 session_start();
 include('database_connection.php');
+
+
 if(!isset($_SESSION['user_id']))
 {
   header('location:login.php');
 }
 $user_id = $_SESSION['user_id'];
-$stmt = $pdo->query("select * from user where user_id='$user_id;'");
+$stmt = $pdo->query("select uploaddate,image,image_name from user where user_id='$user_id;'");
 
 $row = $stmt->fetch();
 
-$userPicture = !empty($row[17])?$row[17]:'assets/img/user.jpg';
+$userPicture = !empty($row['image'])?$row['image']:'assets/img/user.jpg';
 $userPictureURL = $userPicture;
-$username = $row[1];
-// var_dump($row);
-
 
 ?>
 
@@ -23,7 +22,7 @@ $username = $row[1];
 
 <head>
   <meta charset="UTF-8">
-  <title>Jobs | Pahal</title>
+  <title>Received Applications | Pahal</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,15 +34,15 @@ $username = $row[1];
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-  <!-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css'> -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css'>
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
   <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -56,150 +55,101 @@ $username = $row[1];
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/linearicons.css">
-	<link rel="stylesheet" href="assets/css/bootstrap.css">
-	<link rel="stylesheet" href="assets/css/job-listing.css">
-  <link rel="stylesheet" href="assets/css/dashboard.css">
   <link rel="stylesheet" href="assets/css/dash-image.css">
+  <link rel="stylesheet" href="assets/css/org-application.css">
+  <link href="/css/index.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
 
 </head>
 
 <body>
 
-  <!-- Start post Area -->
-	<section class="post-area section-gap">
-		<div class="container">
-			<div class="row justify-content-center d-flex">
-				<div class="col-lg-8 post-list">
-					<ul class="cat-list">
-						<li><a>Recent</a></li>
-						<li><a>Full Time</a></li>
-						<li><a>Intern</a></li>
-						<li><a>Part Time</a></li>
-					</ul>
-
-					<?php  
-					  $stmt = $pdo->query('SELECT j.job_role, j.vaccancies, o.org_name, j.job_state, j.job_city, o.org_logo, j.job_desc, j.job_skills, j.job_nature, j.min_salary, j.max_salary FROM job j INNER JOIN organization o ON j.org_id=o.org_id ORDER BY apply_by desc;');
-					  $rows = $stmt->fetch();
-					  // var_dump($rows);
-					  $n = sizeof($rows);
-					  $t = gettype($n);
-					  $stmt = $pdo->query('SELECT j.job_role, j.vaccancies, o.org_name, j.job_state, j.job_city, o.org_logo, j.job_desc, j.job_skills, j.job_nature, j.min_salary, j.max_salary FROM job j INNER JOIN organization o ON j.org_id=o.org_id ORDER BY apply_by desc;');
-					  if ($n > 1) {
-					    while($row = $stmt->fetch()){
-					    	$abc = explode(",",$row[7]);
-					?>
-
-					<div class="single-post d-flex flex-row">
-						<div class="thumb">
-							<img src="<?php echo $row[5]; ?>" alt="">
-							<div class="vacancy"><?php echo $row[1]; ?> Vacancies</div>
-						</div>
-						<div class="details">
-							<div class="title d-flex flex-row justify-content-between">
-								<div class="titles">
-									<a href="single.html">
-										<h4><?php echo $row[0]; ?></h4>
-									</a>
-									<h6><?php echo $row[2]; ?>, <?php echo $row[4]; ?>, <?php echo $row[3]; ?></h6>
-								</div>
-								<ul class="btns">
-									<!-- <li class="fav"><a href="#"><span class="lnr lnr-heart"></span></a></li> -->
-									<li class="apply"><a href="#">Apply</a></li>
-								</ul>
-							</div>
-							<p><?php echo $row[6]; ?></p>
-							<div class="bottom-info" style="display: flex; justify-content: space-between;">
-								
-								<h5 class="job-type"><?php echo $row[8]; ?></h5>
-								<p class="address"><span class="lnr lnr-database"></span> <?php echo $row[9]; ?>-<?php echo $row[10]; ?></p>
-								</div>
-								
-								<ul class="tags">
-									<?php 
-									$i = 0;
-									foreach ($abc as $xyz) {
-										echo "<li style='margin-right: 10px;'><a>".$abc[$i]."</a></li>";
-										$i++;
-									}
-									?>
-								</ul>
-						</div>
-					</div>
-					<?php 
-					}} else { echo "string"; }
-					?>
-
-
-					<a class="loadmore-btn mx-auto d-block" href="category.html">Explore more</a>
-
-				</div>
-				<div class="col-lg-4 sidebar">
-					<div class="single-slidebar">
-						<h4>Jobs by Location</h4>
-						<ul class="cat-list">
-							<li><a class="justify-content-between d-flex">
-									<p>Mumbai</p><span>37</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Delhi</p><span>57</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Bangalore</p><span>33</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Jaipur</p><span>36</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Hyderabad</p><span>47</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Ayodhya</p><span>27</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Lucknow</p><span>17</span>
-								</a></li>
-						</ul>
-					</div>
-					<div class="single-slidebar">
-						<h4>Jobs by Category</h4>
-						<ul class="cat-list">
-							<li><a class="justify-content-between d-flex">
-									<p>Technology</p><span>37</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Media & News</p><span>57</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Goverment</p><span>33</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Medical</p><span>36</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Restaurants</p><span>47</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Developer</p><span>27</span>
-								</a></li>
-							<li><a class="justify-content-between d-flex">
-									<p>Accounting</p><span>17</span>
-								</a></li>
-						</ul>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End post Area -->
+  <!-- partial:index.partial.html -->
+  <section class="wrapper">
+    <h2>Received Applicants for Mask Production</h2>
+  
+    <ul class="tab__content">
+      <li class="active">
+        <div class="container-fluid">
+          <div class="row">
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="content__wrapper">
+            <div class="table-responsive">
+            <table id="customers">
+              <tr>
+                <th>Applicant</th>
+                <th>Lives in</th>
+                <th>Skills</th>
+                <th>Qualification</th>
+                <th>Applied on</th>
+              </tr>
+              <tr>
+                <td><a href="#">Aayushi Bahukhandi</a></td>
+                <td>Ajmer</td>
+                <td>Communication Skills,Communication Skills,Communication Skills,Communication Skills,Communication Skills</td>
+                <td>B.tech</td>
+                <td>15 April 2021</td>
+              </tr>
+              <tr>
+                <td><a href="#">Nishtha Garg</a></td>
+                <td>Bhilwara</td>
+                <td>Sewing</td>
+                <td>B.tech</td>
+                <td>10 May 2021</td>
+              </tr>
+              <tr>
+                <td><a href="#">Aditi Birla</a></td>
+                <td>Bhilwara</td>
+                <td>Sewing</td>
+                <td>12th Standard</td>
+                <td>11 May 2021</td>
+  
+              </tr>
+              <tr>
+                <td><a href="#">Vilsi Jain</a></td>
+                <td>Bharatpur</td>
+                <td>Communication Skills</td>
+                <td>B.tech</td>
+                <td>11 May 2021</td>
+              </tr>
+              <tr>
+                <td><a href="#">Divya Jangir</a></td>
+                <td>Churu</td>
+                <td>Mehandi Design</td>
+                <td>12th Standards</td>
+                <td>15 May 2021</td>
+              </tr>
+              
+            </table>
+            
+            </div>
+            </div>
+      
+          </main>
+          </div>
+        </div>
+        </div>
+      </li>
+      <li>
+        <div class="content__wrapper">
+          <h2 class="text-color">About</h2>
+          
+          <p>Created by <a class="text-color" href="http://lewihussey.com" target="_blank">Code Smashers</a></p>
+        </div>
+      </li>
+    </ul>
+  </section>
   <div class="s-layout">
+    <div class="s-layout">
     <div class="s-layout__sidebar">
       <a class="s-sidebar__trigger" href="#0">
         <i class="fa fa-bars"></i>
       </a>
 
       <nav class="s-sidebar__nav" id="sidebar">
+        <?php
+          if(isset($_SESSION['user_id'])){
+        ?>
           <div class="sidebar-header">
             
             <div class="circle" id="circlediv" style="background-image: url(<?php echo $userPicture; ?>);">
@@ -253,7 +203,7 @@ $username = $row[1];
             </script>
 
             <div class="user-info">
-              <center><span class="user-name"><?php echo $username; ?></span></center>
+              <center><span class="user-name"><?php echo $_SESSION['fullname']; ?></span></center>
             </div>
           </div>
           <hr>
@@ -272,15 +222,15 @@ $username = $row[1];
                 <a href="myblogs.php"><i class="fa fa-th-large"></i><span>My Blogs</span></a>
               </li>
               <li class="sidebar-dropdown">
-                <a href="training.php"><i class="fas fa-graduation-cap"></i><span>Training</span></a>
+                <a href="training.php"><i class="fas fa-graduation-cap"></i><span>Create a job</span></a>
               </li>
               <li class="sidebar-dropdown">
                 <a href="chat.php"><i class="fas fa-comments"></i><span>Inbox</span></a>
               </li>
-              <li class="sidebar-dropdown active-tab">
+              <li class="sidebar-dropdown">
                 <a href="joblist.php"><i class="fas fa-briefcase"></i><span>Explore Jobs</span></a>
               </li>
-              <li class="sidebar-dropdown">
+              <li class="sidebar-dropdown  active-tab">
                 <a href="applications.php"><i class="fa fa-thumbtack"></i><span>Application Tracking</span></a>
               </li>
               <li class="sidebar-dropdown">
@@ -292,7 +242,7 @@ $username = $row[1];
               <li class="sidebar-dropdown"><a href="logout.php"><i class="fa fa-power-off"></i><span>Logout</span></a></li>
             </ul>
           </div>
-          <hr style="height: 1px; margin-bottom: 0;">
+          <hr>
           <div class="sidebar-footer">
             <center>
             <div class="copyright">
@@ -301,8 +251,15 @@ $username = $row[1];
             </div>
           </center>
           </div>
-        </nav>
+        <?php 
+          } else {}
+        ?>
+          <div class="sidebar-menu">
+
+          </div>
+      </nav>
     </div>
+  </div>
   </div>
 <!-- partial -->
 <!-- Vendor JS Files -->
@@ -316,7 +273,10 @@ $username = $row[1];
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
+<!-- <script src="assets/js/dashboard.js"></script> -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script  src="assets/js/application.js"></script>
+  <script src="./table.js"></script>
 
 </body>
 

@@ -40,6 +40,9 @@ $userPictureURL = $userPicture;
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
   <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -76,7 +79,7 @@ $userPictureURL = $userPicture;
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div class="content__wrapper">
             <div class="table-responsive">
-            <!-- <table id="customers">
+            <table id="customers">
               <tr>
                 <th>Company</th>
                 <th>Applied on</th>
@@ -127,10 +130,7 @@ $userPictureURL = $userPicture;
                 <td>Art and craft</td>
               </tr>
               
-            </table> -->
-            <h4>Oops, no applications yet.</h4>
-            <h4 style="margin-top: 2px;">Go and apply for your desired job!</h4>
-            <img src="assets/img/application.png" style="max-width: 256px">
+            </table>
             
             </div>
             </div>
@@ -143,7 +143,7 @@ $userPictureURL = $userPicture;
       <li>
         <div class="content__wrapper">
           <div class="table-responsive">
-            <table id="customers">
+            <!-- <table id="customers">
               <tr>
                 <th>Company</th>
                 <th>Job Role</th>
@@ -180,7 +180,10 @@ $userPictureURL = $userPicture;
                 <td>8k-10k</td>
               </tr>
               
-              </table>
+              </table> -->
+              <h4>Seems like no organization has shortlisted you.</h4>
+              <h4 style="margin-top: 2px;">Have Patience you will be selected soon</h4>
+              <img src="assets/img/application.png" style="max-width: 256px">
             </div>
           <!--<h2 class="text-color">Her</h2>
           
@@ -191,7 +194,7 @@ $userPictureURL = $userPicture;
         <div class="content__wrapper">
           <h2 class="text-color">About</h2>
           
-          <p>Created by <a class="text-color" href="http://lewihussey.com" target="_blank">Lewi Hussey</a></p>
+          <p>Created by <a class="text-color" href="http://lewihussey.com" target="_blank">Code Smashers</a></p>
         </div>
       </li>
     </ul>
@@ -330,7 +333,7 @@ $userPictureURL = $userPicture;
 
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
-<script src="assets/js/dashboard.js"></script>
+<!-- <script src="assets/js/dashboard.js"></script> -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script  src="assets/js/application.js"></script>
   <script src="./table.js"></script>

@@ -4,17 +4,28 @@ include('database_connection.php');
 session_start();
 if(isset($_SESSION['user_id']))
 {
-$user_id = $_SESSION['user_id'];
-$stmt = $pdo->query("select uploaddate,image,image_name from user where user_id='$user_id;'");
+  $user_id = $_SESSION['user_id'];
+  $stmt = $pdo->query("select * from user where user_id='$user_id;'");
 
-$row = $stmt->fetch();
+  $row = $stmt->fetch();
 
-$userPicture = !empty($row['image'])?$row['image']:'assets/img/user.jpg';
-$userPictureURL = $userPicture;
-}
-else{
+  $userPicture = !empty($row[17])?$row[17]:'assets/img/user.jpg';
+  $userPictureURL = $userPicture;
+  $username = $row[1];
+
+} elseif (isset($_SESSION['org_id'])) {
+  $org_id = $_SESSION['org_id'];
+  $stmt = $pdo->query("select * from organization where org_id='$org_id;'");
+
+  $row = $stmt->fetch();
+
+  $userPicture = !empty($row[13])?$row[13]:'assets/img/user.jpg';
+  $userPictureURL = $userPicture;
+  $username = $row[2];
+  
+} else{
   $userPicture = 'assets/img/user.jpg';
-$userPictureURL = $userPicture;
+  $userPictureURL = $userPicture;
 }
  ?>           
 <!DOCTYPE html>
@@ -36,6 +47,9 @@ $userPictureURL = $userPicture;
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
@@ -71,35 +85,45 @@ $userPictureURL = $userPicture;
             
               <?php
                 try {   
-                $stmt = $pdo->query('SELECT blog.blog_id, blog.uploaddate, blog.title, blog.content, blog.image, user.fullname FROM blog INNER JOIN  user ON blog.user_id=user.user_id ORDER BY uploaddate desc;');
+                $stmt = $pdo->query('SELECT * FROM blog ORDER BY uploaddate desc;');
                 $rows = $stmt->fetch();
                 $n = sizeof($rows);
                 $t = gettype($n);
-                $stmt = $pdo->query('SELECT blog.blog_id, blog.uploaddate, blog.title, blog.content, blog.image, user.fullname FROM blog INNER JOIN  user ON blog.user_id=user.user_id ORDER BY uploaddate desc;');
+                $stmt = $pdo->query('SELECT * FROM blog ORDER BY uploaddate desc;');
                 if ($n > 1) {
                   while($row = $stmt->fetch()){
+                    if (!empty($row[1])){
+                      $statement = $pdo->query("SELECT * FROM user WHERE user_id = '$row[1]';");
+                      $details = $statement->fetch();
+                      $author = $details[1];
+                    }
+                    if (!empty($row[2])){
+                      $statement = $pdo->query("SELECT * FROM organization WHERE org_id = '$row[2]';");
+                      $details = $statement->fetch();
+                      $author = $details[2];
+                    }
               ?>
                     <article class="entry">
-                      <?php $var = (int)$row['blog_id']; ?>
+                      <?php $var = (int)$row[0]; ?>
                       <div class="entry-img">
-                        <img src="<?php echo $row['image'];?>" alt="" class="img-fluid">
+                        <img src="<?php echo $row[6];?>" alt="" class="img-fluid">
                       </div>
                       <h2 class="entry-title">
-                        <a href="blog.php?blog_id='<?php echo $var; ?>'"><?php echo $row["title"];?></a>
+                        <a href="blog.php?blog_id='<?php echo $var; ?>'"><?php echo $row[3];?></a>
                       </h2>
                       <div class="entry-meta">
                         <ul>
-                          <li style="float: left;" class="d-flex align-items-center"><i class="bi bi-person"><a href="#">&nbsp;<?php echo $row["fullname"];?></a></i></li>
-                          <li style="float: right;" class="d-flex align-items-center"><i class="bi bi-clock"><a href="#"><time datetime="2020-01-01">&nbsp;<?php echo $row["uploaddate"];?></time></a></i></li>
+                          <li style="float: left;" class="d-flex align-items-center"><i class="bi bi-person"><a href="#">&nbsp;<?php echo $author;?></a></i></li>
+                          <li style="float: right;" class="d-flex align-items-center"><i class="bi bi-clock"><a href="#"><time datetime="2020-01-01">&nbsp;<?php echo $row[5];?></time></a></i></li>
                           <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"><a href="#">&nbsp;12 Comments</a></i></li> -->
                         </ul>
                       </div>
                       <div class="entry-content">
                         <p>
                          <?php
-                         $string = substr($row['content'],0,240); 
+                         $string = substr($row[4],0,240); 
                          echo $string;
-                         if (strlen($row['content']) > 240) {
+                         if (strlen($row[4]) > 240) {
                           echo "....";
                          ?>
                         </p>
@@ -125,24 +149,27 @@ $userPictureURL = $userPicture;
               <h3 class="sidebar-title">Categories</h3>
               <div class="sidebar-item categories">
                 <ul>
-                  <li><a href="#">General <span>(25)</span></a></li>
-                  <li><a href="#">Leadership<span>(12)</span></a></li>
-                  <li><a href="#">Women Safety<span>(5)</span></a></li>
-                  <li><a href="#">Working women<span>(22)</span></a></li>
-                  <li><a href="#">Economic Justice<span>(8)</span></a></li>
-                  <li><a href="#">Domestic Violence<span>(14)</span></a></li>
+                  <li><a>General <span>(25)</span></a></li>
+                  <li><a>Leadership<span>(12)</span></a></li>
+                  <li><a>Women Safety<span>(5)</span></a></li>
+                  <li><a>Working women<span>(22)</span></a></li>
+                  <li><a>Economic Justice<span>(8)</span></a></li>
+                  <li><a>Domestic Violence<span>(14)</span></a></li>
                 </ul>
               </div> <!-- End sidebar categories-->
             </div><!-- End sidebar -->
             <br><br>
             <div class="write-blog">
-              <a href="#" style="color: white;">Write a blog</a>
+              <a href="writeBlog.php" style="color: white;">Write a blog</a>
             </div>
           </div>
           <?php 
-               } else {
-                echo "Oops Please try after some time ................ \n Looks like there are no blogs";
-               }
+               } else { ?>
+                <div class=package>
+                      <h3 style="margin-top: 150px">Wanna share your experiences?<br>Start writing your first blog!</h3>
+                      <img src="assets/img/blog.png" style="max-width: fit-content;">
+                  </div>
+               <?php }
              }
 
                catch(PDOException $e) {
@@ -216,7 +243,7 @@ $userPictureURL = $userPicture;
                       </script>
 
                       <div class="user-info">
-                        <center><span class="user-name"><?php echo $_SESSION['fullname']; ?></span></center>
+                        <center><span class="user-name"><?php echo $username; ?></span></center>
                       </div>
                     </div>
           <hr>
@@ -264,6 +291,108 @@ $userPictureURL = $userPicture;
             </div>
           </center>
           </div>
+
+          <?php
+            } elseif(isset($_SESSION['org_id'])){
+          ?>
+            <div class="sidebar-header">
+                        <div class="circle" id="circlediv" style="background-image: url('<?php echo $userPicture; ?>');">
+                          <div class="p-image">
+                            <center><i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i></center>
+                            <input class="file-upload" name="file" id="file" type="file" accept="image/*"/>
+                          </div>
+                        </div>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" /> -->
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                        <script>
+                        $(document).ready(function(){
+                         $(document).on('change', '#file', function(){
+                          var name = document.getElementById("file").files[0].name;
+                          var form_data = new FormData();
+                          var ext = name.split('.').pop().toLowerCase();
+                          if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1) 
+                          {
+                           alert("Invalid Image File");
+                          }
+                          var oFReader = new FileReader();
+                          oFReader.readAsDataURL(document.getElementById("file").files[0]);
+                          var f = document.getElementById("file").files[0];
+                          var fsize = f.size||f.fileSize;
+                          if(fsize > 2000000)
+                          {
+                           alert("Image File Size is very big");
+                          }
+                          else
+                          {
+                           form_data.append("file", document.getElementById('file').files[0]);
+                           $.ajax({
+                            url:"dpupload.php",
+                            method:"POST",
+                            data: form_data,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            beforeSend:function(){
+                             $('#uploaded_image').html("<label class='text-success'>Image Uploading...</label>");
+                            },   
+                            success:function(data)
+                            {
+                             $('#uploaded_image').html(data);
+                            }
+                           });
+                          }
+                         });
+                        });
+                        </script>
+
+                        <div class="user-info">
+                          <center><span class="user-name"><?php echo $username; ?></span></center>
+                        </div>
+                      </div>
+            <hr>
+            <div class="sidebar-menu">
+              <ul>
+                <li class="sidebar-dropdown">
+                  <a href="org-profile.php"><i class="fa fa-user"></i><span>Profile</a>
+                </li>
+                <li class="sidebar-dropdown active-tab">
+                  <a href="user-feed.php"><i class="far fa-newspaper"></i><span>News Feed</span></a>
+                </li>
+                <li class="sidebar-dropdown">
+                  <a href="writeBlog.php"><i class="fa fa-file-alt"></i><span>Write a blog</span></a>
+                </li>
+                <li class="sidebar-dropdown">
+                  <a href="myblogs.php"><i class="fa fa-th-large"></i><span>My Blogs</span></a>
+                </li>
+                <li class="sidebar-dropdown">
+                  <a href="chat.php"><i class="fas fa-comments"></i><span>Inbox</span></a>
+                </li>
+                <li class="sidebar-dropdown">
+                  <a href="job-post.php"><i class="fas fa-graduation-cap"></i><span>Create a Job</span></a>
+                </li>
+                <li class="sidebar-dropdown">
+                  <a href="org-myjobs.php"><i class="fa fa-thumbtack"></i><span>Track Jobs</span></a>
+                </li>
+                <li class="sidebar-dropdown">
+                  <a href="index.php"><i class="fas fa-home"></i><span>Back to Home</span></a>
+                </li>
+                <li class="sidebar-dropdown">
+                  <a href="index.php#contact"><i class="fas fa-headphones"></i><span>Feedback</span></a>
+                </li>
+                <li class="sidebar-dropdown"><a href="logout.php"><i class="fa fa-power-off"></i><span>Logout</span></a></li>
+              </ul>
+            </div> 
+            <hr>
+            <div class="sidebar-footer">
+              <center>
+              <div class="copyright">
+                <strong><span>pahal.in&copy; </span></strong>2021<br>
+                Designed by <a>Code Smashers</a><br>
+              </div>
+            </center>
+            </div>
+
         <?php 
           } else {
         ?>
@@ -301,10 +430,11 @@ $userPictureURL = $userPicture;
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+  <script  src="assets/js/dash-image.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/dashboard.js"></script>
+  <!-- <script src="assets/js/dashboard.js"></script> -->
 
 </body>
 

@@ -546,9 +546,12 @@ a {
 	
 	.s-sidebar__nav:hover,
 	.s-sidebar__nav:focus,
-	.s-sidebar__trigger:hover + .s-sidebar_nav,
-	.s-sidebar__trigger:focus + .s-sidebar_nav {
+	.s-sidebar__trigger:hover + .s-sidebar__nav,
+	.s-sidebar__trigger:focus + .s-sidebar__nav {
 	   width: 18%;
+	}
+	span{
+		translate: -50%;
 	}
 
   }

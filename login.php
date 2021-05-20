@@ -103,7 +103,7 @@ if(isset($_POST['org_login']))
         $statement = $pdo->prepare($sub_query);
         $statement->execute();
         $_SESSION['login_details_id'] = $pdo->lastInsertId();
-        header('location:user-name.php');
+        header('location:user-feed.php');
       }
       else
       {
@@ -129,6 +129,9 @@ if(isset($_POST['org_login']))
     <title>Login | Pahal</title>
     <link href="assets/img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
     <link
     rel="stylesheet"

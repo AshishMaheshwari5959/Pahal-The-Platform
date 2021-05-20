@@ -15,6 +15,14 @@ if (!empty($row['user_id'])) {
   $email = $rows[0]['username'];
   $image = $rows[0]['image'];
 }
+if (!empty($row['org_id'])) {
+  $stmt1 = $pdo->prepare("SELECT * FROM organization WHERE org_id = :abc");
+  $stmt1->execute(array(":abc" => $row['org_id']));
+  $rows = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+  $name = $rows[0]['org_name'];
+  $email = $rows[0]['org_username'];
+  $image = $rows[0]['org_logo'];
+}
 
 ?>
 
@@ -36,6 +44,9 @@ if (!empty($row['user_id'])) {
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -102,7 +113,7 @@ if (!empty($row['user_id'])) {
               <div class="author-section">
               <?php 
               if (!empty($image)) {
-                echo '<img src='.$image.' alt=" " class="author-profile">';
+                echo "<img src='".$image."' alt='' class='author-profile'>";
               }
               ?>
               <div class="author-details">

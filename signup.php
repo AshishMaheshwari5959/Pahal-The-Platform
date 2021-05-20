@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 require_once('database_connection.php');
 
@@ -107,12 +110,12 @@ require_once('database_connection.php');
 if(isset($_POST['org_submit']))
 {
     $count = 0;
-    if($_POST['password'] != $_POST['orgconfirmpassword']){
+    if($_POST['org_password'] != $_POST['orgconfirmpassword']){
               $_SESSION['error2'] = "passwords doesn't match";
         }
      
     
-    elseif(isset($_POST['org_name'],$_POST['org_username'],$_POST['org_mobilenumber'],$_POST['org_password']) && !empty($_POST['org_name']) && !empty($_POST['org_address']) && !empty($_POST['org_name']) && !empty($_POST['org_password']))
+    elseif(isset($_POST['org_name'],$_POST['org_username'],$_POST['org_mobilenumber'],$_POST['org_password']) && !empty($_POST['org_name']) && !empty($_POST['org_name']) && !empty($_POST['org_password']))
     {
         $org_name = trim($_POST['org_name']);
         $org_username = trim($_POST['org_username']);
@@ -165,7 +168,7 @@ if(isset($_POST['org_submit']))
                     
                     $success = 'Organization has been created successfully';
                     
-                    header("location:initial-form.php");
+                    header("location:org-initial-form.php");
                     
                     
                 }
@@ -207,6 +210,9 @@ if(isset($_POST['org_submit']))
     crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link rel="stylesheet" href="./assets/css/login.css"/>
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="container" id="container">

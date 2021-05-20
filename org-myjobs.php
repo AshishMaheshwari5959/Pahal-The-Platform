@@ -1,24 +1,17 @@
-<?php 
-
-include('database_connection.php');
+<?php
 session_start();
-if(!isset($_SESSION['user_id']) and !isset($_SESSION['org_id']))
+include('database_connection.php');
+
+
+if (isset($_SESSION['user_id'])) {
+  header('loaction:index.php');
+}
+
+if(!isset($_SESSION['org_id']))
 {
   header('location:login.php');
 }
-
-if(isset($_SESSION['user_id']))
-{
-  $user_id = $_SESSION['user_id'];
-  $stmt = $pdo->query("select * from user where user_id='$user_id;'");
-
-  $row = $stmt->fetch();
-
-  $userPicture = !empty($row[17])?$row[17]:'assets/img/user.jpg';
-  $userPictureURL = $userPicture;
-  $username = $row[1];
-
-} elseif (isset($_SESSION['org_id'])) {
+if (isset($_SESSION['org_id'])) {
   $org_id = $_SESSION['org_id'];
   $stmt = $pdo->query("select * from organization where org_id='$org_id;'");
 
@@ -32,23 +25,26 @@ if(isset($_SESSION['user_id']))
   $userPicture = 'assets/img/user.jpg';
   $userPictureURL = $userPicture;
 }
- ?>           
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Inbox | Pahal</title>
+  <title>Created Jobs | Pahal</title>
   <meta charset="utf-8">
-
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
-  <!-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css'> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css'>
 
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
@@ -63,42 +59,83 @@ if(isset($_SESSION['user_id']))
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <!-- <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/dash-image.css">
+  <link rel="stylesheet" href="assets/css/org-application.css">
+  <link href="/css/index.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/dashboard.css">
-  <style>
-        body{
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            /*background: url("assets/img/training.png");
-             background-size: contain; 
-            background-repeat: no-repeat;
-            background-position: 50% -800%;*/
-        }
-        .package{
-            margin: auto;
-            text-align: center;
-        }
-        h3{
-            font-size: medium;
-            font-style: italic;
-            font-weight: 500;
-            justify-content: center;  
-        }
-
-    </style>
 
 </head>
 
 <body>
-  <div class=package>
-        <h3 style="margin-top: 150px">Stay tuned! Chat feature is coming soon!</h3>
-        <img src="assets/img/chatting.png" style="max-width: fit-content;">
-    </div>
+
+  <!-- partial:index.partial.html -->
+  <section class="wrapper">
+    <?php  
+         $id = $_SESSION['org_id'];
+
+        $stmt = $pdo->query('SELECT j.job_role, j.job_city, j.vaccancies, j.applied_on, j.apply_by FROM job j INNER JOIN organization o ON j.org_id=o.org_id where j.org_id='."$id".' ORDER BY apply_by desc;');
+        $rows = $stmt->fetch();
+         $n = sizeof($rows);
+         $t = gettype($n);
+        ?>
+    <h2>Active Jobs: <span><?php echo $n/5; ?></span></h2>
+    <ul class="tab__content">
+      <li class="active">
+        <div class="container-fluid">
+          <div class="row">
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="content__wrapper">
+            <div class="table-responsive">
+            <?php
+              $stmt = $pdo->query('SELECT j.job_role, j.job_city, j.vaccancies, j.applied_on, j.apply_by FROM job j INNER JOIN organization o ON j.org_id=o.org_id where j.org_id='."$id".' ORDER BY apply_by desc;');
+              if ($n > 1) { 
+            ?>
+            <table id="customers">
+              <tr>
+                <th>Job Title</th>
+                <th>Location</th>
+                <th>Total Vacancies</th>
+                <th>Received Applications</th>
+                <th>Created on</th>
+                <th>Closing on</th>
+              </tr>
+              <?php
+                 while($row = $stmt->fetch()){
+               ?>            
+              <tr>
+                <td><a><?php echo $row[0]; ?></a></td>
+                <td><?php echo $row[1]; ?></td>
+                <td><?php echo $row[2]; ?></td>
+                <td>0</td>
+                <td><?php echo $row[3]; ?></td>
+                <td><?php echo $row[4]; ?></td>
+              </tr>
+              <?php } ?>
+            </table>
+            <?php } else {} ?>
+            </div>
+            </div>
+      
+          </main>
+          </div>
+        </div>
+        </div>
+      </li>
+      <li>
+        <div class="content__wrapper">
+          <h2 class="text-color">About</h2>
+          
+          <p>Created by <a class="text-color" href="http://lewihussey.com" target="_blank">Code Smashers</a></p>
+        </div>
+      </li>
+    </ul>
+  </section>
   <div class="s-layout">
       <div class="s-layout__sidebar">
         <a class="s-sidebar__trigger" href="#0">
@@ -171,7 +208,7 @@ if(isset($_SESSION['user_id']))
                 <li class="sidebar-dropdown">
                   <a href="user_profile.php"><i class="fa fa-user"></i><span>Profile</a>
                 </li>
-                <li class="sidebar-dropdown">
+                <li class="sidebar-dropdown active-tab">
                   <a href="user-feed.php"><i class="far fa-newspaper"></i><span>News Feed</span></a>
                 </li>
                 <li class="sidebar-dropdown">
@@ -183,7 +220,7 @@ if(isset($_SESSION['user_id']))
                 <li class="sidebar-dropdown">
                   <a href="training.php"><i class="fas fa-graduation-cap"></i><span>Training</span></a>
                 </li>
-                <li class="sidebar-dropdown  active-tab">
+                <li class="sidebar-dropdown">
                   <a href="chat.php"><i class="fas fa-comments"></i><span>Inbox</span></a>
                 </li>
                 <li class="sidebar-dropdown">
@@ -284,13 +321,13 @@ if(isset($_SESSION['user_id']))
                   <li class="sidebar-dropdown">
                     <a href="myblogs.php"><i class="fa fa-th-large"></i><span>My Blogs</span></a>
                   </li>
-                  <li class="sidebar-dropdown  active-tab">
+                  <li class="sidebar-dropdown">
                     <a href="chat.php"><i class="fas fa-comments"></i><span>Inbox</span></a>
                   </li>
                   <li class="sidebar-dropdown">
                     <a href="job-post.php"><i class="fas fa-graduation-cap"></i><span>Create a Job</span></a>
                   </li>
-                  <li class="sidebar-dropdown">
+                  <li class="sidebar-dropdown  active-tab">
                     <a href="org-myjobs.php"><i class="fa fa-thumbtack"></i><span>Track Jobs</span></a>
                   </li>
                   <li class="sidebar-dropdown">
@@ -339,19 +376,23 @@ if(isset($_SESSION['user_id']))
         </nav>
       </div>
     </div>
-  <!-- page-wrapper" -->
-  <!-- partial -->
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-  <script  src="assets/js/dash-image.js"></script>
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
-  <!-- <script src="assets/js/dashboard.js"></script> -->
+  </div>
+<!-- partial -->
+<!-- Vendor JS Files -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+<script  src="assets/js/dash-image.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+<!-- <script src="assets/js/dashboard.js"></script> -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script  src="assets/js/application.js"></script>
+  <script src="./table.js"></script>
 
 </body>
 

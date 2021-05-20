@@ -159,6 +159,9 @@ if(isset($_POST['submit2'])){
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic|Open+Sans:300,400,500,700|Waiting+for+the+Sunrise|Shadows+Into+Light' rel='stylesheet' type='text/css'>
   <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"> <!--Skills css--> 
   <!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'> -->
@@ -231,22 +234,6 @@ if(isset($_POST['submit2'])){
         <div class="aayuyear"><?php echo $row[10];?> Passout</div>
         <div class="aayumarks"><?php echo $row[12];?>%</div>
       </div> 
-      <!-- <div class="aayueducation">
-        <div class="aayudegree">Senior Secondary(XII), Science</div>
-        <div class="aayuinstitute">Bright India Public School, Ajmer</div>
-        <div class="aayuyear">
-          <div style="display: inline;">2016-2018</div>
-          <div class="aayumarks">CBSE Board: 86.0%</div>
-        </div>
-      </div> 
-      <div class="aayueducation">
-        <div class="aayudegree">Secondary (X)</div>
-        <div class="aayuinstitute">Queen Mary's Girls School, Ajmer</div>
-        <div class="aayuyear">
-          <div style="display: inline;">2003-2016</div>
-          <div class="aayumarks">CBSE Board: 10.0 CGPA</div>
-        </div>
-      </div>  -->
       <div class="go-corner" href="#">
         <div class="go-arrow">
           <i onclick="openForm2()" class="fa fa-pencil" style="color:white; cursor: pointer;"></i>
@@ -293,17 +280,7 @@ if(isset($_POST['submit2'])){
       </div>
       <?php 
       }
-      ?>   
-      <!-- <div class="aayuexp">
-        <table style="width:100%">
-          <tr>
-            <td class="aayucomp">Xchanging Technologies</td><td class="aayuprofile">Web Developer</td>
-          </tr>
-          <tr valign="top">
-            <td class="aayudur">Aug 2015 - Aug 2016</td><td class="aayudesc">Heading whole front end work. Managing team and Client with following Agile Development Methodology. Taking care of Complete Front End and Back end integration with REST services.  </td>
-          </tr>
-        </table>
-      </div>-->    
+      ?>  
       <div class="go-corner" href="#">
         <div class="go-arrow">
           <i onclick="openForm4()" class="fa fa-pencil" style="color:white; cursor: pointer;"></i>
@@ -325,14 +302,14 @@ if(isset($_POST['submit2'])){
         <label for="mobile" class="ash-label"><b>Mobile Number</b></label>
         <input type="text" class="ash-input" placeholder="Enter your Mobile Number" name="mobilenumber" value="<?php echo $result[0][3]; ?>" required><br>
         <label for="gender" class="ash-label"><b>Gender</b></label>
-        <input list="gender" name="gender"  id="browser" class="ash-input" value="<?php echo $result[0][5]; ?>" placeholder="Select your gender"/>
+        <input list="gender" name="gender"  id="browser" class="ash-input" value="<?php echo $result[0][5]; ?>" placeholder="Select your gender" required/>
         <datalist id="gender" class="ash-datalist">
           <option value="" selected>Enter your gender</option>
           <option value="Female">
           <option value="Rather Not to Say">
         </datalist><br>
         <label for="state" class="ash-label"><b>State</b></label>
-        <input list="state" name="state" id="browser" class="ash-input" value="<?php echo $result[0][7]; ?>" placeholder="Select your State"/>
+        <input list="state" name="state" id="browser" class="ash-input" value="<?php echo $result[0][7]; ?>" placeholder="Select your State" required/>
         <datalist id="state" class="ash-datalist">
           <option value="Andhra Pradesh">Andhra Pradesh</option>
           <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
@@ -374,7 +351,7 @@ if(isset($_POST['submit2'])){
         <br>
         
         <label for="city" class="ash-label"><b>City</b></label>
-        <input type="text" name="city" id="browser" class="ash-input" value="<?php echo $result[0][8]; ?>" placeholder="Select your City"/><br>
+        <input type="text" name="city" id="browser" class="ash-input" value="<?php echo $result[0][8]; ?>" placeholder="Select your City" required/><br>
         <label for="address" class="ash-label"><b>Address</b></label>
         <input type="text" class="ash-input" placeholder="Enter your address" name="address" value="<?php echo $result[0][9]; ?>" required><br>
         
@@ -382,7 +359,7 @@ if(isset($_POST['submit2'])){
         <input type="text" onfocus="(this.type='date')" class="ash-input" placeholder="Enter your Date of Birth" name="dob" value="<?php echo $result[0][4]; ?>" min="1940-01-01" max="2021-05-25" required><br>
        
         <label for="mstatus" class="ash-label"><b>Maritial Status</b></label>
-        <input list="mstatus" name="maritalstatus" class="ash-input" id="browser" value="<?php echo $result[0][10]; ?>" placeholder="Select your Maritial Status">
+        <input list="mstatus" name="maritalstatus" class="ash-input" id="browser" value="<?php echo $result[0][10]; ?>" placeholder="Select your Maritial Status" required>
           <datalist id="mstatus">
             <option value="" disabled selected>Enter your marital status</option>
             <option value="Married">
@@ -423,7 +400,7 @@ if(isset($_POST['submit2'])){
       <form method="post" enctype="multipart/form-data">
         <h2>Highest Qualification</h2>
         <label for="degree" class="ash-label"><b>Select your Degree</b></label>
-        <input list="Qualfication" class="ash-input" name="hq" id="browser" value="<?php echo $result[0][12]; ?>" placeholder="Highest Qualfication">
+        <input list="Qualfication" class="ash-input" name="hq" id="browser" value="<?php echo $result[0][12]; ?>" placeholder="Highest Qualfication" required>
         <datalist id="Qualfication" >
               <option value="Secondary)(X)"> 
               <option value="Senior Secondary(XII)">
@@ -434,11 +411,11 @@ if(isset($_POST['submit2'])){
               <option value="PhD">
       </datalist><br>
         <label for="yop" class="ash-label"><b>Year Of Passing</b></label>
-        <input type="number" class="ash-input" name="yop"  min="1940" max="2021" value="<?php echo $result[0][13]; ?>" placeholder="Year of Passing" />
+        <input type="number" class="ash-input" name="yop"  min="1940" max="2021" value="<?php echo $result[0][13]; ?>" placeholder="Year of Passing" required/>
         <label for="institute" class="ash-label"><b>Institute</b></label>
-        <input type="text" class="ash-input" name="institute" value="<?php echo $result[0][14]; ?>" placeholder="Institution" />
+        <input type="text" class="ash-input" name="institute" value="<?php echo $result[0][14]; ?>" placeholder="Institution" required/>
         <label for="percentage" class="ash-label"><b>Aggregate/Percentage</b></label>
-        <input type="number" class="ash-input" name="percentage"  min="1" max="100" value="<?php echo $result[0][15]; ?>" placeholder="Percentage" />
+        <input type="number" class="ash-input" name="percentage"  min="1" max="100" value="<?php echo $result[0][15]; ?>" placeholder="Percentage" required/>
         
          <center><button type="submit" class="btn" name="submit2" style="font-size: 15px; font-weight: 600;">SAVE</button></center>
       </form>
@@ -453,7 +430,7 @@ if(isset($_POST['submit2'])){
   </div>
   <div class="body form-popup" id="myForm3" style="background-color: #000000ad">
     <div class="form-container">
-      <form action="/action_page.php">
+      <form>
         <h2 style="font-size: 30px; font-weight: 600; color: #222222;">Skills</h2>
         <div>
           <label for="skill" class="ash-label"><b>Select your skills</b></label>
@@ -499,7 +476,7 @@ if(isset($_POST['submit2'])){
   </div>
   <div class="body form-popup" id="myForm4" style="background-color: #000000ad">
     <div class="form-container">
-      <form action="/action_page.php">
+      <form>
         <h2 style="color: #222222; font-weight: 600; font-size: 30px;">Experience</h2>
         <div>
           <?php 
