@@ -8,8 +8,8 @@ body {
     display: block;
 }
 
-.file-upload {
-    display: none;
+.file-upload , .file-upload2{
+    display: none!important;
 }
 .circle { 
     border-radius: 1000px !important;

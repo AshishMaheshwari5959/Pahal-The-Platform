@@ -761,9 +761,7 @@ h1, h2, h3, h4, h5, h6 {
     flex: 0 0 auto;
     width: 20%;
     margin-right: 2%;
-}}
-
-@media (min-width: 768px){
+}
 .col-lg-8 {
     flex: 0 0 auto;
     margin-left: 4em;
@@ -771,6 +769,9 @@ h1, h2, h3, h4, h5, h6 {
     width: 70%;
     height: 95vh;
 }}
+
+@media (min-width: 768px){
+}
 
 
 .img-fluid {
@@ -789,4 +790,28 @@ h1, h2, h3, h4, h5, h6 {
 .container, .container-md, .container-sm {
     width: 100vw;
 }
+}
+
+@media (min-width: 42em) {
+    .container{
+        margin: 4em;
+        padding: 0 20px; 
+    }
+    
+}
+  
+@media (min-width: 68em) {
+    .container{
+        max-width: 100%;
+        margin-left: 18em;
+        width: auto;
+        margin-right: 0;
+        padding: 0 30px;
+    }
+    
+}
+ 
+
+@media screen and (max-width: 1440px) {
+
 }

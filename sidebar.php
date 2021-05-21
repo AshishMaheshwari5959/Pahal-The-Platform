@@ -1,5 +1,5 @@
 <?php
-function sidebar($userPicture,$username,$profile,$newsfeed,$writeblog,$myblogs,$training,$chat,$joblist,$applcation,$jobpost,$myjobs){
+function sidebar($userPicture,$username,$profile,$newsfeed,$writeblog,$myblogs,$training,$chat,$joblist,$application,$jobpost,$myjobs){
 ?>
 
 <div class="s-layout">
@@ -69,7 +69,7 @@ function sidebar($userPicture,$username,$profile,$newsfeed,$writeblog,$myblogs,$
             <li class="<?php echo $profile; ?>">
               <a href="user_profile.php" class="menu-label s-sidebar__nav-link"><i class="fa fa-user"></i><em>Profile</em></a>
             </li>
-            <li class="<?php echo $userfeed; ?>">
+            <li class="<?php echo $newsfeed; ?>">
               <a href="user-feed.php" class="menu-label s-sidebar__nav-link"><i class="far fa-newspaper"></i><em>News Feed</em></a>
             </li>
             <li class="<?php echo $writeblog; ?>">
