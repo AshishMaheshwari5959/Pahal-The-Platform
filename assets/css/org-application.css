@@ -23,10 +23,10 @@ footer {
 }
 
 .wrapper {
-  width: 70%;
+  width: 100%;
   /*min-width: 600px;*/
   /*max-width: 900px;*/
-  margin-left: 20%;
+  /*margin-left: 20%;*/
 }
 
 .wrapper span {
@@ -219,7 +219,7 @@ body {
 }
 
 @media (min-width: 42em) {
-  .container{
+  .container, .wrapper{
       margin: 4em;
       padding: 0 20px; 
   }
@@ -227,7 +227,7 @@ body {
 }
 
 @media (min-width: 68em) {
-  .container{
+  .container, .wrapper{
       max-width: 100%;
       margin-left: 18em;
       width: auto;

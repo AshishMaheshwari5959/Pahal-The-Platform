@@ -271,3 +271,34 @@ table.table td .add {
     width: 100%;
     max-width: none;
 }}
+
+@media (min-width: 768px){
+.col-md-9 {
+    flex: 0 0 auto;
+    width: 100%;
+}}
+
+@media (min-width: 42em) {
+    .wrapper{
+        margin: 4em;
+        padding: 0 20px; 
+        width: 90%;
+    }
+    
+}
+  
+@media (min-width: 68em) {
+    .wrapper{
+        max-width: 100%;
+        margin-left: 18em;
+        width: auto;
+        margin-right: 0;
+        padding: 0 30px;
+    }
+    
+}
+ 
+
+@media screen and (max-width: 1440px) {
+
+}

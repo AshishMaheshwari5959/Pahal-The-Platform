@@ -31,8 +31,7 @@ if(isset($_SESSION['user_id']))
   $userPicture = 'assets/img/user.jpg';
   $userPictureURL = $userPicture;
 }
- ?> 
- ?>       
+ ?>      
 <!DOCTYPE html>
 <html lang="en">
 

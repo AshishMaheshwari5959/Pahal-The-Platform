@@ -88,7 +88,7 @@ function sidebar($userPicture,$username,$profile,$newsfeed,$writeblog,$myblogs,$
               <a href="joblist.php" class="menu-label s-sidebar__nav-link"><i class="fas fa-briefcase"></i><em>Explore Jobs</em></a>
             </li>
             <li class="<?php echo $application; ?>">
-              <a href="applications.php" class="menu-label s-sidebar__nav-link"><i class="fa fa-thumbtack"></i><em>Application Tracking</em></a>
+              <a href="applications.php" class="menu-label s-sidebar__nav-link"><i class="fas fa-chart-line"></i><em>Application Tracking</em></a>
             </li>
             <li>
               <a href="index.php" class="menu-label s-sidebar__nav-link"><i class="fas fa-home"></i><em>Back to Home</em></a>
@@ -157,13 +157,13 @@ function sidebar($userPicture,$username,$profile,$newsfeed,$writeblog,$myblogs,$
           <div>           
             <ul>
               <li class="user">
-                <a class="user-dp s-sidebar__nav-link"><i class="circle" id="circlediv" style="background-image: url(<?php echo $userPicture; ?>); ">
+                <a class="user-dp s-sidebar__nav-link"><i class="circle" id="circlediv" style="background-image: url('<?php echo $userPicture; ?>'); ">
                 <div class="p-image">
                   <i class="fa fa-camera fa-2x upload-button" style="color: orangered"></i>
                   <input class="file-upload" name="file" id="file" type="file" accept="image/*" />
                 </div>
                 </i>
-                <em><?php echo $username; ?></em></a>
+                <em class="header_username"> <?php echo $username; ?></em></a>
               </li>
               <br><hr>
               <li class="<?php echo $profile; ?>">
@@ -182,10 +182,10 @@ function sidebar($userPicture,$username,$profile,$newsfeed,$writeblog,$myblogs,$
                 <a href="chat.php" class="menu-label s-sidebar__nav-link"><i class="fas fa-comments"></i><em>Inbox</em></a>
               </li>
               <li class="<?php echo $jobpost; ?>">
-                <a href="job-post.php" class="menu-label s-sidebar__nav-link"><i class="fas fa-graduation-cap"></i><em>Create a Job</em></a>
+                <a href="job-post.php" class="menu-label s-sidebar__nav-link"><i class="far fa-plus-square"></i><em>Create a Job</em></a>
               </li>
               <li class="<?php echo $myjobs; ?>">
-                <a href="org-myjobs.php" class="menu-label s-sidebar__nav-link"><i class="fa fa-thumbtack"></i><em>Track Jobs</em></a>
+                <a href="org-myjobs.php" class="menu-label s-sidebar__nav-link"><i class="fas fa-chart-line"></i><em>Track Jobs</em></a>
               </li>
               <li>
                 <a href="index.php" class="menu-label s-sidebar__nav-link"><i class="fas fa-home"></i><em>Back to Home</em></a>

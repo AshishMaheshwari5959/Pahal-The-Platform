@@ -4298,3 +4298,28 @@ img {
     margin-left: 18vw;
     width: 82vw;
 }}
+
+
+@media (min-width: 42em) {
+    .container{
+        margin: 4em;
+        padding: 0 20px; 
+    }
+    
+}
+  
+@media (min-width: 68em) {
+    .container{
+        max-width: 100%;
+        margin-left: 18em;
+        width: auto;
+        margin-right: 0;
+        padding: 0 30px;
+    }
+    
+}
+ 
+
+@media screen and (max-width: 1440px) {
+
+}
