@@ -85,12 +85,13 @@ if(isset($_SESSION['user_id']))
             
               <?php
                 try {   
+                  $connection = mysqli_connect("localhost", "fred", "zap", "pahal");
+                  $query = 'SELECT * FROM blog ORDER BY uploaddate desc;';
+                  $result = mysqli_query($connection,$query);
+                  $rows = mysqli_num_rows($result);
+                  $n = $rows;
                 $stmt = $pdo->query('SELECT * FROM blog ORDER BY uploaddate desc;');
-                $rows = $stmt->fetch();
-                $n = sizeof($rows);
-                $t = gettype($n);
-                $stmt = $pdo->query('SELECT * FROM blog ORDER BY uploaddate desc;');
-                if ($n > 1) {
+                if ($n > 0) {
                   while($row = $stmt->fetch()){
                     if (!empty($row[1])){
                       $statement = $pdo->query("SELECT * FROM user WHERE user_id = '$row[1]';");
@@ -165,9 +166,9 @@ if(isset($_SESSION['user_id']))
           </div>
           <?php 
                } else { ?>
-                <div class=package>
+                <div class=package><center>
                       <h3 style="margin-top: 150px">Wanna share your experiences?<br>Start writing your first blog!</h3>
-                      <img src="assets/img/blog.png" style="max-width: fit-content;">
+                      <img src="assets/img/blog.png" style="max-width: fit-content;"></center>
                   </div>
                <?php }
              }

@@ -58,9 +58,9 @@ $username = $row[1];
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/linearicons.css">
 	<link rel="stylesheet" href="assets/css/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/dash-image.css">
 	<link rel="stylesheet" href="assets/css/job-listing.css">
   <link rel="stylesheet" href="assets/css/dashboard.css">
-  <link rel="stylesheet" href="assets/css/dash-image.css">
 
 </head>
 
@@ -93,7 +93,7 @@ $username = $row[1];
 					<div class="single-post d-flex flex-row">
 						<div class="thumb">
 							<img src="<?php echo $row[5]; ?>" alt="">
-							<div class="vacancy"><?php echo $row[1]; ?> Vacancies</div>
+							
 						</div>
 						<div class="details">
 							<div class="title d-flex flex-row justify-content-between">
@@ -104,17 +104,21 @@ $username = $row[1];
 									<h6><?php echo $row[2]; ?>, <?php echo $row[4]; ?>, <?php echo $row[3]; ?></h6>
 								</div>
 								<ul class="btns">
-									<!-- <li class="fav"><a href="#"><span class="lnr lnr-heart"></span></a></li> -->
 									<li class="apply"><a href="#">Apply</a></li>
 								</ul>
 							</div>
 							<p><?php echo $row[6]; ?></p>
-							<div class="bottom-info" style="display: flex; justify-content: space-between;">
-								
+							<div class="row">
+								<div class="col-md-4">
 								<h5 class="job-type"><?php echo $row[8]; ?></h5>
-								<p class="address"><span class="lnr lnr-database"></span> <?php echo $row[9]; ?>-<?php echo $row[10]; ?></p>
+                </div>
+                <div class="col-md-4">
+								<h5 class="vacancy"><?php echo $row[1]; ?> Vacancies</h5>
+                </div>
+                <div class="col-md-4">
+								<h5 class="salary"><i class="fas fa-rupee-sign"></i> <?php echo $row[9]; ?>-<?php echo $row[10]; ?></h5>
 								</div>
-								
+              </div>
 								<ul class="tags">
 									<?php 
 									$i = 0;

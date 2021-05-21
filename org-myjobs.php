@@ -77,14 +77,14 @@ if (isset($_SESSION['org_id'])) {
   <!-- partial:index.partial.html -->
   <section class="wrapper">
     <?php  
-         $id = $_SESSION['org_id'];
-
-        $stmt = $pdo->query('SELECT j.job_role, j.job_city, j.vaccancies, j.applied_on, j.apply_by FROM job j INNER JOIN organization o ON j.org_id=o.org_id where j.org_id='."$id".' ORDER BY apply_by desc;');
-        $rows = $stmt->fetch();
-         $n = sizeof($rows);
-         $t = gettype($n);
+        $id = $_SESSION['org_id'];
+        $connection = mysqli_connect("localhost", "fred", "zap", "pahal");
+        $query = 'SELECT * FROM job j INNER JOIN organization o ON j.org_id=o.org_id where j.org_id='."$id".' ORDER BY apply_by desc;';
+        $result = mysqli_query($connection,$query);
+        $rows = mysqli_num_rows($result);
+        $n = $rows;
         ?>
-    <h2>Active Jobs: <span><?php echo $n/5; ?></span></h2>
+    <h2>Active Jobs: <span><?php echo $n; ?></span></h2>
     <ul class="tab__content">
       <li class="active">
         <div class="container-fluid">
@@ -94,7 +94,7 @@ if (isset($_SESSION['org_id'])) {
             <div class="table-responsive">
             <?php
               $stmt = $pdo->query('SELECT j.job_role, j.job_city, j.vaccancies, j.applied_on, j.apply_by FROM job j INNER JOIN organization o ON j.org_id=o.org_id where j.org_id='."$id".' ORDER BY apply_by desc;');
-              if ($n > 1) { 
+              if ($n > 0) { 
             ?>
             <table id="customers">
               <tr>
@@ -118,7 +118,10 @@ if (isset($_SESSION['org_id'])) {
               </tr>
               <?php } ?>
             </table>
-            <?php } else {} ?>
+            <?php } else {
+              echo "No jobs";
+              echo "<img src='assets/img/no-data.svg' style='width: 40%;'>";
+            } ?>
             </div>
             </div>
       

@@ -105,6 +105,7 @@ if (isset($_POST['submit'])) {
     ':max' => $max
   ];
   $handle->execute($params);
+  header('location:org-myjobs.php');
   // echo "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu did it yessssssssssssss";
 }
 
@@ -152,7 +153,7 @@ if (isset($_POST['submit'])) {
     <form method="post" role="form">
 
       <span class="tagline" style="margin-bottom: 40px; ">
-        <center style="font-family: Pacifico,Cursive;">Lost and Found Foundation</center>
+        <center style="font-family: Pacifico,Cursive;"><?php echo "$username";?></center>
       </span>
       <label for="job">Job Role</label>
       <select id="job" name="job_role">

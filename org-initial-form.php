@@ -198,7 +198,7 @@ if(isset($_SESSION['org_id'])) {
       <label for="styled-checkbox-2">Indian Government&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
       <br><br><br>
     </div>
-    <input type="submit" name="next" class="next action-button" value="Next" />
+    <input type="button" name="next" class="next action-button" value="Next" />
     <script language="javascript">print_state("sts");</script>
   </fieldset>
   <fieldset>

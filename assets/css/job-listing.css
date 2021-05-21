@@ -1,4 +1,4 @@
-/*--------------------------- Color variations ----------------------*/
+  /*--------------------------- Color variations ----------------------*/
 /* Medium Layout: 1280px */
 /* Tablet Layout: 768px */
 /* Mobile Layout: 320px */
@@ -2463,12 +2463,15 @@ body.mobile-nav-active #mobile-nav-toggle {
   padding: 20px;
 }
 
-.single-popular-post .details {
-  margin-left: 40px;
+.single-post .details {
+  margin-left: 10px;
+  max-width: 100%;
+  width: 100%;
+  justify-content: space-between;
 }
 
-.single-popular-post .details p {
-  margin-bottom: 0;
+.single-post .details p {
+  margin-bottom: 5px;
 }
 
 .single-popular-post h4 {
@@ -2494,6 +2497,7 @@ img {
   margin-bottom: 8px;
   border-radius: 8px;
   width: 100px;
+  max-width: fit-content;
   height: 100px;
 }
 
@@ -2649,7 +2653,7 @@ img {
 .post-list .single-post .address { /* 25-26k*/
   color: #222;
   margin-bottom: 5px;
-  margin-right: 60px;
+  /* margin-right: 60px; */
   margin-top: -2px;
   /* float: left; */
 }
@@ -2697,11 +2701,24 @@ img {
 
 .vacancy {
   /* border: 1px solid darkslategrey; */
-  background-color: rgba(231, 229, 229, 0.418);
-  color: darkslategray;
+  background-color: #2a2eff28;
+  color: #2a51ff!important;
+  padding: 4px 8px;
   border-radius: 4px;
-  padding: 2px 3px;
-  width: fit-content;
+  font-size: 14px;
+  font-weight: 400!important;
+  text-align: center;
+}
+
+.salary {
+  /* border: 1px solid darkslategrey; */
+  background-color: #43ff2a28;
+  color: #48da1c!important;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 400!important;
+  text-align: center;
 }
 
 @media (max-width: 414px) {

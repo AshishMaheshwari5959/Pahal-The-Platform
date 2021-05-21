@@ -11,7 +11,7 @@ body {
 .file-upload {
     display: none;
 }
-.circle { 
+.circle {
     border-radius: 1000px !important;
     overflow: hidden;
     margin: auto;
