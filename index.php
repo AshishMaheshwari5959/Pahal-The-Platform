@@ -1,6 +1,32 @@
 <?php
 session_start();
 include('database_connection.php');
+if(isset($_SESSION['user_id']))
+{
+  $user_id = $_SESSION['user_id'];
+  $stmt = $pdo->query("select * from user where user_id='$user_id;'");
+
+  $row = $stmt->fetch();
+
+  $userPicture = !empty($row[17])?$row[17]:'assets/img/user.jpg';
+  $userPictureURL = $userPicture;
+  $username = $row[1];
+
+} elseif (isset($_SESSION['org_id'])) {
+  $org_id = $_SESSION['org_id'];
+  $stmt = $pdo->query("select * from organization where org_id='$org_id;'");
+
+  $row = $stmt->fetch();
+
+  $userPicture = !empty($row[13])?$row[13]:'assets/img/user.jpg';
+  $userPictureURL = $userPicture;
+  $username = $row[2];
+  
+} else{
+  $userPicture = 'assets/img/user.jpg';
+  $userPictureURL = $userPicture;
+}
+
 
 ?>
 
@@ -39,6 +65,9 @@ include('database_connection.php');
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Farro&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
 </head>
 
@@ -85,7 +114,7 @@ include('database_connection.php');
             if(isset($_SESSION['user_id'])){
               echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: #ff6d2a77; color:white;';
               echo 'border-color: orangered;" href="user_profile.php">';
-              echo  $_SESSION["fullname"];
+              echo  $username;
               echo '<i class="bi bi-chevron-down"></i></a>';
               echo '<ul><li><a href="user_profile.php">Profile</a></li><li><a href="user-feed.php">News Feed</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
               echo '<li><a href="logout.php">Logout</a></li></ul></li>';
@@ -94,9 +123,9 @@ include('database_connection.php');
             if(isset($_SESSION['org_id'])){
               echo '<li class="dropdown"><a class="getstarted scrollto"  style="background-color: orangered; color:white;';
               echo 'border-color: orangered;">';
-              echo  $_SESSION["org_name"];
+              echo  $username;
               echo '<i class="bi bi-chevron-down"></i></a>';
-              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="userfeed.php">News Feed</a></li><li><a href="writeBlog.php">Write a Blog</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="applications.php">My Applications</a></li>';
+              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="userfeed.php">News Feed</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="job-post.php">Create a Job</a></li><li><a href="org_myjobs.php">Track Jobs</a></li>';
               echo '<li><a href="logout.php">Logout</a></li></ul></li>';
               echo '';
             }
@@ -359,7 +388,7 @@ include('database_connection.php');
             ?>
             <div class="row" data-aos="fade-up" data-aos-delay="200">
               <div class="col-md-6 mt-4 mt-md-0">
-                <div class="icon-box" style="cursor:pointer" onclick="location.href='terms_cond.php'">
+                <div class="icon-box" style="cursor:pointer" onclick="location.href='job-post.php'">
                   <i class="bi bi-bar-chart"></i>
                   <h4><a>Recruitment for organizations</a></h4>
                   <p>Organizations can recruit the candidates as per their needs.</p>

@@ -149,10 +149,10 @@ if (!empty($row['org_id'])) {
                 <strong>Email:</strong> info@pahal.in<br>
               </p>
               <div class="social-links mt-3">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                <a class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a class="linkedin"><i class="bx bxl-linkedin"></i></a>
               </div>
             </div>
           </div>
@@ -160,8 +160,8 @@ if (!empty($row['org_id'])) {
           <div class="col-lg-4 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="terms_cond.php">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="terms_cond.php">Privacy policy</a></li>
             </ul>
           </div>
 
@@ -183,7 +183,7 @@ if (!empty($row['org_id'])) {
         &copy; Copyright <strong><span>pahal.in</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-        Designed by <a href="#">Code Smashers</a>
+        Designed by <a>Code Smashers</a>
       </div>
     </div>
   </footer><!-- End Footer -->

@@ -212,7 +212,7 @@ if(isset($_SESSION['user_id']))
         <div class="content__wrapper">
           <h2 class="text-color">About</h2>
           
-          <p>Created by <a class="text-color" href="http://lewihussey.com" target="_blank">Code Smashers</a></p>
+          <p>Created by <a class="text-color" target="_blank">Code Smashers</a></p>
         </div>
       </li>
     </ul>

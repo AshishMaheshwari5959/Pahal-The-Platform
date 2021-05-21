@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Terms & Conditions</title>
+    <title>Terms & Conditions | Pahal</title>
 </head>
 <body style="margin: 5%">
     <div>

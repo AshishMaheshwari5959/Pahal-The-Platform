@@ -4,6 +4,7 @@ include('database_connection.php');
 
 
 $conn = mysqli_connect('localhost', 'fred', 'zap' , 'pahal') or die($conn); 
+// $conn = mysqli_connect('172.31.1.238:3306', 'root', 'Ashish@5959' , 'pahal') or die($conn);
 
 if(!empty($_GET)){
  $name = $_GET['name'];

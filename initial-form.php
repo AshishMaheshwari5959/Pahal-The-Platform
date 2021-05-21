@@ -232,7 +232,7 @@ else{
       <input list="Qualfication" name="hq" id="browser" placeholder="Highest Qualfication">
 
       <datalist id="Qualfication">
-            <option value="Secondary)(X)"> 
+            <option value="Secondary(X)"> 
             <option value="Senior Secondary(XII)">
             <option value="Diploma">
             <option value="Bachelors">

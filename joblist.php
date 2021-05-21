@@ -23,7 +23,7 @@ $username = $row[1];
 
 <head>
   <meta charset="UTF-8">
-  <title>Jobs | Pahal</title>
+  <title>Explore Jobs | Pahal</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -98,7 +98,7 @@ $username = $row[1];
 						<div class="details">
 							<div class="title d-flex flex-row justify-content-between">
 								<div class="titles">
-									<a href="single.html">
+									<a>
 										<h4><?php echo $row[0]; ?></h4>
 									</a>
 									<h6><?php echo $row[2]; ?>, <?php echo $row[4]; ?>, <?php echo $row[3]; ?></h6>
@@ -135,7 +135,7 @@ $username = $row[1];
 					?>
 
 
-					<a class="loadmore-btn mx-auto d-block" href="category.html">Explore more</a>
+					<a class="loadmore-btn mx-auto d-block">Explore more</a>
 
 				</div>
 				<div class="col-lg-4 sidebar">

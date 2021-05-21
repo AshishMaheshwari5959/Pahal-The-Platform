@@ -3,6 +3,9 @@
 $dsn = 'mysql:dbname=pahal;host=localhost';
 $user = 'fred';
 $password = 'zap';
+// $dsn = 'mysql:dbname=pahal;host=172.31.1.238:3306';
+// $user = 'root';
+// $password = 'Ashish@5959';
 
 date_default_timezone_set('UTC'); 
 try

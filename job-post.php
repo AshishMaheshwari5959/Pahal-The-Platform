@@ -116,7 +116,7 @@ if (isset($_POST['submit'])) {
 
 <head>
   <meta charset="UTF-8">
-  <title>Job Posting | Pahal</title>
+  <title>Create a Job | Pahal</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link href="assets/img/favicon.png" rel="icon">

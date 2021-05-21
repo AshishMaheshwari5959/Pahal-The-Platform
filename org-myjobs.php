@@ -32,7 +32,7 @@ if (isset($_SESSION['org_id'])) {
 
 <head>
   <meta charset="UTF-8">
-  <title>Created Jobs | Pahal</title>
+  <title>Track Jobs | Pahal</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -134,7 +134,7 @@ if (isset($_SESSION['org_id'])) {
         <div class="content__wrapper">
           <h2 class="text-color">About</h2>
           
-          <p>Created by <a class="text-color" href="http://lewihussey.com" target="_blank">Code Smashers</a></p>
+          <p>Created by <a class="text-color" target="_blank">Code Smashers</a></p>
         </div>
       </li>
     </ul>
