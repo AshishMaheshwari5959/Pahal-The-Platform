@@ -218,7 +218,7 @@ if(isset($_POST['org_submit']))
 <div class="container" id="container">
     <div class="form-container sign-up-container">
         <form method="POST">
-            <h1 style="color:#ff6d2a;">Wanna join our mission?<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1>
+            <h1 style="color:#ff6d2a;">Wanna join our mission?<br><p style="color: black; margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1>
             <?php 
             if(isset($_SESSION['error2']) && $count == 0){
                 echo "<div style='color : red'>";
@@ -261,7 +261,7 @@ if(isset($_POST['org_submit']))
     </div>
     <div class="form-container sign-in-container">
         <form method="POST">
-            <h1 style="color:#ff6d2a;">Wanna join us?<br><p style="margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1>
+            <h1 style="color:#ff6d2a;">Wanna join us?<br><p style="color: black; margin: 5px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: medium;">We would love to have you in<span style="font-family: Pacifico; font-size: 20px;"> pahal </span>family</p></h1>
             <?php 
             if(isset($_SESSION['error']) && $count==0){
                 echo "<div style='color : red'>";

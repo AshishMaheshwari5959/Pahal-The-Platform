@@ -63,7 +63,7 @@ function sidebar($userPicture,$username,$profile,$newsfeed,$writeblog,$myblogs,$
                 <input class="file-upload" name="file" id="file" type="file" accept="image/*" />
               </div>
               </i>
-              <em><?php echo $username; ?></em></a>
+              <em class="header_username"> Hi, <?php echo $username; ?></em></a>
             </li>
             <br><hr>
             <li class="<?php echo $profile; ?>">
@@ -163,7 +163,7 @@ function sidebar($userPicture,$username,$profile,$newsfeed,$writeblog,$myblogs,$
                   <input class="file-upload" name="file" id="file" type="file" accept="image/*" />
                 </div>
                 </i>
-                <em class="header_username"> <?php echo $username; ?></em></a>
+                <em class="header_username"> Hi, <?php echo $username; ?></em></a>
               </li>
               <br><hr>
               <li class="<?php echo $profile; ?>">

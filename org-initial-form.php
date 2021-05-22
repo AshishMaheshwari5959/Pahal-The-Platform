@@ -185,7 +185,7 @@ if(isset($_SESSION['org_id'])) {
     <h2 class="fs-title">Essential Details</h2>
     <h3 class="fs-subtitle">It will help us to represent you</h3>
     <input type="text" name="fullname" placeholder="Name of Organization" value="<?php echo $result[0][2];?>"  />
-    <input type="email" name="additional-email" placeholder="Provide your additional email" value=""  required/>
+    <input type="email" name="additional-email" placeholder="Provide your additional email" value=""/>
     <input type="tel" name="mobilenumber" placeholder="Contact Number" value="<?php echo $result[0][3]; ?>"  />
     <input type="text" name="website" placeholder="Your official website link" value=""  />
     <select name="state" onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt"></select>

@@ -125,7 +125,7 @@ if(isset($_SESSION['user_id']))
               echo 'border-color: orangered;">';
               echo  $username;
               echo '<i class="bi bi-chevron-down"></i></a>';
-              echo '<ul><li><a href="profile.php">Profile</a></li><li><a href="userfeed.php">News Feed</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="job-post.php">Create a Job</a></li><li><a href="org_myjobs.php">Track Jobs</a></li>';
+              echo '<ul><li><a href="org-profile.php">Profile</a></li><li><a href="user-feed.php">News Feed</a></li><li><a href="myblogs.php">My Blogs</a></li><li><a href="job-post.php">Create a Job</a></li><li><a href="org-myjobs.php">Track Jobs</a></li>';
               echo '<li><a href="logout.php">Logout</a></li></ul></li>';
               echo '';
             }
@@ -147,7 +147,7 @@ if(isset($_SESSION['user_id']))
       <h2>A Platform to Empower The Women</h2>
       <div class="d-flex">
         <a href="#about-boxes" class="btn-get-started scrollto"><b>Get Started</b></a>
-        <a href="https://www.youtube.com/watch?v=6elzSKCRuGg" class="glightbox btn-watch-video" style="color: #ff6d2a"><i class="bi bi-play-circle" style="color: #ff6d2a"></i><span><b>Watch Tutorial</b></span></a>
+        <a href="https://youtu.be/kpaWAo9LGSw" class="glightbox btn-watch-video" style="color: #ff6d2a"><i class="bi bi-play-circle" style="color: #ff6d2a"></i><span><b>Watch Tutorial</b></span></a>
       </div>
     </div>
   </section><!-- End Hero -->

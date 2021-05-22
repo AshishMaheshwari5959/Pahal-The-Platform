@@ -26,6 +26,7 @@ if(isset($_SESSION['user_id']))
 } else{
   $userPicture = 'assets/img/user.jpg';
   $userPictureURL = $userPicture;
+  $username='';
 }
  ?>           
 <!DOCTYPE html>
